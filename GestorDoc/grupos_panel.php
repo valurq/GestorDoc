@@ -6,8 +6,8 @@ $consultas=new Consultas();
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Categoria','Observacion'];
-$campos=['cat_informe','nota'];
+$cabecera=['Grupo','Proposito','Observacion'];
+$campos=['grupo','proposito','obs'];
 
 ?>
 <html lang="en" dir="ltr">
@@ -47,8 +47,9 @@ $campos=['cat_informe','nota'];
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'cat_informes');?>
+            <?php  $consultas->crearTabla($cabecera,$campos,'grupos');?>
         </div>
+
     </body>
 
 </html>

@@ -31,7 +31,7 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
                 width: 100%;
             }
         </style>
-        <title>Categorias</title>
+        <title>VALURQ_SRL</title>
     </head>
 
     <body>
