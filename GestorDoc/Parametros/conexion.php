@@ -30,6 +30,7 @@ class Conexion{
        return true;
     }
 }
+//CLASE HEREDADA DE CONEXION
 class Consultas extends Conexion{
     public function __construct(){
         parent::__construct();
