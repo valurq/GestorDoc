@@ -6,6 +6,7 @@
     if((isset($id))&&(isset($origen))){
         $consultas->eliminarDato($origen,'id',$id);
     }
+    echo 1;
 
 
 

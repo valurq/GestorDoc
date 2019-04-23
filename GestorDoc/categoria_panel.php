@@ -12,7 +12,11 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
 <html lang="en" dir="ltr">
 
     <head>
-        <script src="Js/funciones.js"></script>
+        <script
+			  src="https://code.jquery.com/jquery-3.4.0.js"
+			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+			  crossorigin="anonymous"></script>
+        <script type="text/javascript" src="Js/funciones.js"></script>
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
