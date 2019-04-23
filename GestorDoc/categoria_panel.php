@@ -12,16 +12,7 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
 <html lang="en" dir="ltr">
 
     <head>
-        <script type="text/javascript">
-            function seleccionarFila(id){
-                if(document.getElementById('seleccionado').value!=''){
-                    var anterior=document.getElementById('seleccionado').value;
-                    document.getElementById(anterior).style.backgroundColor='white';
-                }
-                document.getElementById(id).style.backgroundColor='red';
-                document.getElementById('seleccionado').value=id;
-            }
-        </script>
+        <script src="Js/funciones.js"></script>
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -35,14 +26,14 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
     </head>
 
     <body>
-        <form class="" action="index.html" method="post">
+        <form id="formularioMultiuso" action="" method="post">
             <input type="hidden" name="seleccionado" id="seleccionado">
         </form>
 
         <div class="menu-panel" >
             <input type="button" name="Nuevo" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar">
+            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('remision_enviada')">
         </div>
 
         <div class="mostrar-tabla">
