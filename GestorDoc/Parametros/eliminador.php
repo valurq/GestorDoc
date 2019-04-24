@@ -7,8 +7,4 @@
         $consultas->eliminarDato($origen,'id',$id);
     }
     echo 1;
-
-
-
-
  ?>

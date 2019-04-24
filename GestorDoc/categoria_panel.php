@@ -37,7 +37,7 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
         <div class="menu-panel" >
             <input type="button" name="Nuevo" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('remision_enviada')">
+            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('remision_enviada')" >
         </div>
 
         <div class="mostrar-tabla">
