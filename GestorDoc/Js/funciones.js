@@ -24,16 +24,17 @@ function buscarTabla(obj,tabla) {
 
 function eliminar(tabla){
    var sel=document.getElementById('seleccionado').value;
-   if((sel=="")||(sel==' ')||(sel>0)){
+  // alert(sel)
+   if((sel=="")||(sel==' ')||(sel==0)){
        popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLO");
    }else {
-       alert(sel);
            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
-           $.post("Parametros/eliminador.php", {id : sel , origen : tabla}, function(mensaje) {
-               if(mensaje==1){
+           $.post("Parametros/eliminador.php", {id : sel , origen : tabla}, function(msg) {
+            //   alert(msg);
+               if(msg==1){
                    location.reload();
                }else{
-                   popup('E',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLOssss");
+                   popup('E',"ERROR EN LA ELIMINACION DEL REGISTRO");
                }
             });
    }
@@ -49,14 +50,18 @@ function popup(simbolo,mensaje){
     }
     document.getElementById("imagenPopup").style.backgroundImage=seleccionarImagen(simbolo);
     document.getElementById("mensajePopup").value=mensaje;
+    $("#popup")
 }
 function seleccionarImagen(identificador){
     var devolver;
     switch (identificador) {
-        case 'W':
-            devolver="Imagenes/warning.png"
+        case 'Error':
+            devolver="Imagenes/error.png"
             break;
-        case 'A':
+        case 'Advertencia':
+            devolver="Imagenes/advertencia.png"
+            break;
+        case 'Informacion':
             devolver="Imagenes/advertencia.png"
             break;
         default:
@@ -70,8 +75,27 @@ function crearPopup(){
     popImg.id="imagenPopup";
     var popMsj=document.createElement('textarea');
     popMsj.id="mensajePopup";
+    var popBoton=document.createElement('input');
+    popBoton.type='Button';
+    popBoton.id="btPopupAceptar"
+    popBoton.value='Aceptar';
+    popBoton.addEventListener( 'click', cerrarPopup);
     document.body.appendChild(pop);
     document.getElementById('popup').appendChild(popImg);
     document.getElementById('popup').appendChild(popMsj);
+    document.getElementById('popup').appendChild(popBoton);
+}
+function cerrarPopup(){
+    document.getElementById('popup').style.display="none";
 }
 //incluirJQuery();
+
+
+/*
+SECCION VALIDACIONES
+*/
+
+function esVacio(objeto){
+    var resultado;
+    ((objeto.value!="")&&(objeto.value!=" ")&&((objeto.value).strlenght>0))?resultado =true:resultado= false ;
+}

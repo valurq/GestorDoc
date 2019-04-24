@@ -44,14 +44,15 @@ class Consultas extends Conexion{
 
 
     public function eliminarDato($tabla,$campo,$identificador){
-        mysqli_query("Delete from ".$tabla." where ".$campo."= ".$identificador." ");
+        $this->conexion->query("Delete from ".$tabla." where ".$campo."= '".$identificador."'");
+        //echo ("Delete from ".$tabla." where ".$campo."= ".$identificador."");
     }
-
-
+    /*
+    $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'")
+    */
     public function insertarDato($tabla,$campos,$valores){
-        $this->conexion->query( "INSERT INTO ".$tabla." ".(implode(",", $campos))." VALUES (".$valores.")" );
+        $this->conexion->query("INSERT INTO ".$tabla." ".(implode(",", $campos))." VALUES (".$valores.")");
     }
-
 
     public function crearTabla($cabecera,$camposBD,$tabla,$condicion="",$tamanhos=['*']){
         echo "<table style='width:100%'>";
