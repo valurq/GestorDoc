@@ -36,7 +36,7 @@ $campos=['categoria','obs','fecreacion'];
         <div class="menu-panel" >
             <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('remision_enviada')">
+            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
         </div>
 
         <div class="mostrar-tabla">
