@@ -2,11 +2,10 @@
 <?php
 include("Parametros/conexion.php");
 $consultas=new Consultas();
-$cabecera=['Categoria','Fecha de Creacion','Comentario'];
 
 //PRUEBAS CON DATOS
-$cabecera=['fecha','numero','N. Oportunidad','Cliente','Destino','id'];
-$campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id = remision_enviada.oportunidad_id)','dsc_cliente','(select deposito from deposito where deposito.id= remision_enviada.deposito_id)'];
+$cabecera=['Categoria','Comentario','Fecha de Creacion'];
+$campos=['categoria','obs','fecreacion'];
 
 ?>
 <html lang="en" dir="ltr">
@@ -40,13 +39,13 @@ $campos=['fecha','numero','(Select numero from oportunidad where oportunidad.id 
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" value="Nuevo">
+            <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
             <input type="button" name="Eliminar" value="Eliminar">
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'remision_enviada');?>
+            <?php  $consultas->crearTabla($cabecera,$campos,'categoria');?>
         </div>
     </body>
 

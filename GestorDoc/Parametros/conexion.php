@@ -14,8 +14,8 @@ $infoHost=$mysqli->host_info . "\n";*/
 class Conexion{
     private $user="root";
     private $ip="localhost";
-    private $bd="ssd";
-    private $pass="";
+    private $bd="gestordoc";
+    private $pass="valurq123";
     public $conexion;
 
 
@@ -35,16 +35,24 @@ class Consultas extends Conexion{
     public function __construct(){
         parent::__construct();
     }
+
+
     public function consultarDatos($campos,$tabla,$condicion=""){
         $texto=(implode(",", $campos));
         return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ");
     }
+
+
     public function eliminarDato($tabla,$campo,$identificador){
-        mysqli_query("Delete from ".$tabla." where ".$campo."= ".$identificador."");
+        mysqli_query("Delete from ".$tabla." where ".$campo."= ".$identificador." ");
     }
+
+
     public function insertarDato($tabla,$campos,$valores){
-        mysqli_query("INSERT INTO ".$tabla." ".(implode(",", $campos))." VALUES (".$valores.")");
+        $this->conexion->query( "INSERT INTO ".$tabla." ".(implode(",", $campos))." VALUES (".$valores.")" );
     }
+
+
     public function crearTabla($cabecera,$camposBD,$tabla,$condicion="",$tamanhos=['*']){
         echo "<table style='width:100%'>";
         array_unshift($camposBD,"id");
@@ -52,6 +60,8 @@ class Consultas extends Conexion{
         $res=$this->consultarDatos($camposBD,$tabla,$condicion);
         $this->crearContenidoTabla($res);
     }
+
+
     public function crearCabeceraTabla($titulos,$tamanhos=['*']){
         echo"<thead style='width:100%'>";
         echo "<tr>";
@@ -65,6 +75,8 @@ class Consultas extends Conexion{
         echo "</tr>";
         echo"</thead>";
     }
+
+
     public function crearContenidoTabla($resultadoConsulta){
         echo "<tbody>";
         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
