@@ -6,8 +6,8 @@ $consultas=new Consultas();
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Categoria','Titulo de reporte','Observacion'];
-$campos=['(select cat_informe from cat_informes where id = cat_informes_id)','titulo','obs'];
+$cabecera=['Categoria','Titulo de reporte','Observacion','URL'];
+$campos=['(select cat_informe from cat_informes where id = cat_informes_id)','titulo','substr(obs,1,50)','url'  ];
 
 ?>
 <html lang="en" dir="ltr">
@@ -41,7 +41,7 @@ $campos=['(select cat_informe from cat_informes where id = cat_informes_id)','ti
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" value="Nuevo">
+            <input type="button" name="Nuevo" onclick = "location='informes_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
             <input type="button" name="Eliminar" value="Eliminar">
         </div>
