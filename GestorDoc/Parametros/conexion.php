@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="valurq123";
+    private $pass="";
     public $conexion;
 
 
@@ -89,6 +89,18 @@ class Consultas extends Conexion{
             echo "</tr>";
         }
         echo"</tbody>";
+    }
+    public function consultarMenu($usuario){
+        $sql="SELECT link_acceso,icono,titulo_menu,(SELECT habilita FROM acceso
+             WHERE menu_opcion_id = menu_opcion.id AND
+              perfil_id=(SELECT perfil_id FROM usuario WHERE id=".$usuario." ))
+              AS habilitar
+        FROM menu_opcion
+        WHERE id IN( SELECT menu_opcion_id FROM acceso
+            WHERE perfil_id = ( SELECT perfil_id FROM usuario
+                WHERE id= '".$usuario."' ) )";
+        $resultado=$this->conexion->query($sql);
+        return $resultado;
     }
 }
 
