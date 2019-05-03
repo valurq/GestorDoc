@@ -35,6 +35,7 @@ class Consultas extends Conexion{
         parent::__construct();
     }
     public function consultarDatos($campos,$tabla,$condicion=""){
+    // public function consultarDatos($campos,$tabla){
         $texto=(implode(",", $campos));
         return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ");
     }
