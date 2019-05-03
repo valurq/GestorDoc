@@ -99,3 +99,32 @@ function esVacio(objeto){
     var resultado;
     ((objeto.value!="")&&(objeto.value!=" ")&&((objeto.value).strlenght>0))?resultado =true:resultado= false ;
 }
+function crearMenu(dir,imagen,titulo,permiso){
+    var dire=document.createElement("a");
+    dire.className="url";
+    dire.id="a-"+cont;
+    dire.href=dir;
+    var item=document.createElement("div");
+    item.className="menu-opcion";
+    item.id="b-"+cont;
+    var icono=document.createElement("div");
+    icono.className="icono-opcion";
+    icono.id="c-"+cont;
+    icono.style.backgroundImage=imagen;
+    var titu=document.createElement("div");
+    titu.className="titulo-opcion";
+    titu.id="d-"+cont;
+    titu.innerText=titulo;
+    if(permiso=="NO"){
+        dire.href="#";
+        item.className+=" desactivado";
+    }
+    dire.appendChild(item);
+    item.appendChild(icono);
+    item.appendChild(titu);
+    document.getElementById('menu-items').appendChild(dire);
+    document.getElementById("a-"+cont).appendChild(item);
+    document.getElementById("b-"+cont).appendChild(icono);
+    document.getElementById("b-"+cont).appendChild(titu);
+    cont++;
+}
