@@ -1,12 +1,12 @@
 .menu-contenedor{
     height: 98vh;
     display: grid;
-    grid-gap: 1%;
+    grid-gap: 0.5%;
     grid-template-columns: 15% auto auto;
     grid-template-rows: 10% auto auto;
 }
 .lateral-izquierdo{
-    background-color: darkblue;
+    background-color:#034285;
     grid-column-start: 1;
     grid-column-end: 1;
     grid-row-start: 1;
@@ -28,9 +28,15 @@
     grid-row-start: 2;
     grid-row-end: 4;
 }
-
+/*
+#034285
+:#eeeeee
+*/
 #logo{
-    background-color: white;
+    background-image:url("../Imagenes/valurq2.ico");
+    background-size: 50% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 90%;
     height: 100px;
     margin:5%;
@@ -46,13 +52,23 @@
 .menu-opcion{
     width: 100%;
     min-height: 60px;
-    background: lightblue;
+    background-color: #d9d9d9;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     box-sizing: border-box;
     padding: 10px;
+    z-index: 3;
 }
+.menu-opcion:hover{
+     background-color:#b5b5b5;
+     z-index: 4;
+}
+/*
+#499bea
+#d9d9d9
+*/
+
 .icono-opcion{
     min-height: 50px;
     min-width: 50px;
@@ -70,4 +86,6 @@
 }
 .desactivado{
     cursor:not-allowed;
+    background-color: #b5b5b5;
+    color:#808080
 }
