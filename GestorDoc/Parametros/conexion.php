@@ -77,6 +77,36 @@ class Consultas extends Conexion{
         echo"</thead>";
     }
 
+    /*
+        LLAMADA
+            $obj->crearMenuDesplegable("nombre_para_el_select","nombre_de_campo_id_en_tabla","nombre_de_campo_descripcion_o_nombre_a_mostrar","tabla_donde_consultar")
+    */
+        public function crearMenuDesplegable($nombreLista,$campoID,$campoDescripcion,$tabla){
+            $lista="<select name='".$nombreLista."'>";
+            $campos= array($campoID,$campoDescripcion );
+            $resultado=$this->consultarDatos($campos,$tabla);
+            $lista.=$this->crearOpciones($resultado);
+            $lista.="</select>";
+            echo $lista;
+        }
+
+    public function crearOpciones($resultadoConsulta){
+       $opciones="";
+       while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
+               $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
+       }
+       return $opciones;
+   }
+
+   public function opciones_sino($nombreOpcion)
+   {
+     $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+     $opcion_sino.= "<option value='si'>SI</option>" ;
+     $opcion_sino.= "<option value='no'>NO</option>" ;
+     $opcion_sino.="</select>";
+     echo $opcion_sino;
+   }
+
 
     public function crearContenidoTabla($resultadoConsulta){
         echo "<tbody>";
