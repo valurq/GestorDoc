@@ -6,8 +6,8 @@ $consultas=new Consultas();
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Perfil','Elimina?','Modifica?','Notas','F.creacion'];
-$campos=['perfil','elimina_doc','modifica_doc','comentario','fecreacion'];
+$cabecera=['Titulo','URL','Observacion','Icono'];
+$campos=['titulo_menu','link_acceso','obs','icono'  ];
 
 ?>
 <html lang="en" dir="ltr">
@@ -19,7 +19,7 @@ $campos=['perfil','elimina_doc','modifica_doc','comentario','fecreacion'];
                     var anterior=document.getElementById('seleccionado').value;
                     document.getElementById(anterior).style.backgroundColor='white';
                 }
-                document.getElementById(id).style.backgroundColor='red';
+                document.getElementById(id).style.backgroundColor='grey';
                 document.getElementById('seleccionado').value=id;
             }
         </script>
@@ -41,13 +41,13 @@ $campos=['perfil','elimina_doc','modifica_doc','comentario','fecreacion'];
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" onclick = "location='perfil_form.php';" value="Nuevo">
+            <input type="button" name="Nuevo" onclick = "location='menu_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
             <input type="button" name="Eliminar" value="Eliminar">
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'perfil');?>
+            <?php  $consultas->crearTabla($cabecera,$campos,'menu_opcion');?>
         </div>
 
     </body>

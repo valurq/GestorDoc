@@ -15,14 +15,13 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="";
+    private $pass="valurq123";
     public $conexion;
 
 
     public function __construct(){
         $this->conexion= new mysqli($this->ip,$this->user,$this->pass,$this->bd);
-       //  if ($this->conexion == 0) DIE("Lo sentimos, no se ha podido conectar con MySQL: " . mysql_error());
-       // return true;
+
     }
     public function __construct1($user,$ip,$bd,$pass){
         $conexion=mysql_connect($ip,$user,$pass,$bd);
@@ -38,6 +37,10 @@ class Consultas extends Conexion{
 
 
     public function consultarDatos($campos,$tabla,$orden="",$condicion=""){
+      // objetivo: obtiene datos de una tabla
+      // sintaxis:   xx = new consultas() ;
+      //                xx->consultarDatos([campos a obtener],[nombre de tabla],[opcional]);
+      // nota: include de conexion
         $texto=(implode(",", $campos));
         return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ".$orden);
     }
@@ -45,7 +48,7 @@ class Consultas extends Conexion{
 
     public function eliminarDato($tabla,$campo,$identificador){
         $this->conexion->query("Delete from ".$tabla." where ".$campo."= '".$identificador."'");
-        //echo ("Delete from ".$tabla." where ".$campo."= ".$identificador."");
+
     }
     /*
     $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'")
@@ -78,6 +81,17 @@ class Consultas extends Conexion{
     }
 
 
+
+   public function opciones_sino($nombreOpcion)
+   {
+     $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+     $opcion_sino.= "<option value='si'>SI</option>" ;
+     $opcion_sino.= "<option value='no'>NO</option>" ;
+     $opcion_sino.="</select>";
+     echo $opcion_sino;
+   }
+
+
     public function crearContenidoTabla($resultadoConsulta){
         echo "<tbody>";
         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
@@ -98,7 +112,7 @@ class Consultas extends Conexion{
         FROM menu_opcion
         WHERE id IN( SELECT menu_opcion_id FROM acceso
             WHERE perfil_id = ( SELECT perfil_id FROM usuario
-                WHERE id= '".$usuario."' ) )";
+                WHERE id= '".$usuario."' ) ) order by posicion asc";
         $resultado=$this->conexion->query($sql);
         return $resultado;
     }
