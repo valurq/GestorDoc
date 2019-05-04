@@ -96,7 +96,7 @@
 </div>
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:140px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Usuario *:</font></div>
+<div><font color="#333333" class="ws11">Login *:</font></div>
 </div></div>
 
 <div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:240px; width:150px; height:23px; z-index:4">
@@ -113,8 +113,9 @@
 </body>
 
 <?php
-    //include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
+if (isset($_POST['usuario'])){
+
 
     //======================================================================================
     // NUEVO REGISTRO
@@ -127,12 +128,13 @@
     $obs     =trim($_POST['nota']);
     $mail     =trim($_POST['mail']);
     $perfil_id     =trim($_POST['Perfil']);
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(usuario','nombre','apellido','cargo','dpto','obs','perfil_id','mail)' );
-    $valores="'".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$perfil_id."','".$mail."'"   ;
+    $campos = array( '(usuario','nombre','apellido','cargo','dpto','obs','perfil_id','creador','mail)' );
+    $valores="'".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$perfil_id."','".$creador."','".$mail."'"   ;
 
     $inserta_Datos->insertarDato('usuario',$campos,$valores);
-
+}
 ?>
 <script type="text/javascript">
 

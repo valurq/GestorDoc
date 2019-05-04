@@ -103,6 +103,7 @@
 <?php
     //include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
+if(isset( $_POST['perfil'] )) {
 
     //======================================================================================
     // NUEVO REGISTRO
@@ -111,13 +112,14 @@
     $elimina_doc     =trim($_POST['elimina']);
     $modifica_doc        =trim($_POST['modifica']);
     $obs        =trim($_POST['nota']);
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(perfil','elimina_doc','modifica_doc','comentario)' );
-    $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$obs."'";
+    $campos = array( '(perfil','elimina_doc','modifica_doc','creador','comentario)' );
+    $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$creador."','".$obs."'";
 
 
     $inserta_Datos->insertarDato('perfil',$campos,$valores);
-
+}
 ?>
 <script type="text/javascript">
 

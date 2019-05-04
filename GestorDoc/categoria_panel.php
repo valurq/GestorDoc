@@ -3,19 +3,22 @@
 include("Parametros/conexion.php");
 $consultas=new Consultas();
 
-//PRUEBAS CON DATOS
+// DATOS
 $cabecera=['Categoria','Comentario','Fecha de Creacion'];
-$campos=['categoria','obs','fecreacion'];
+$campos=['categoria','substr(obs,1,40)','fecreacion'];
 
 ?>
 <html lang="en" dir="ltr">
 
     <head>
+
         <script
-			  src="https://code.jquery.com/jquery-3.4.0.js"
-			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
-			  crossorigin="anonymous"></script>
+  			  src="https://code.jquery.com/jquery-3.4.0.js"
+  			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+  			  crossorigin="anonymous">
+      </script>
         <script type="text/javascript" src="Js/funciones.js"></script>
+
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -34,6 +37,13 @@ $campos=['categoria','obs','fecreacion'];
         </form>
 
         <div class="menu-panel" >
+                        
+                  <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
+                        <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA</B></font>
+                  </div>
+
+          <br><br>
+
             <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
             <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
@@ -42,7 +52,6 @@ $campos=['categoria','obs','fecreacion'];
         <div class="mostrar-tabla">
             <?php
              $consultas->crearTabla($cabecera,$campos,'categoria');
-            //$consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
 
             ?>
         </div>

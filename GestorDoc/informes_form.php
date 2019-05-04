@@ -97,23 +97,21 @@
 <?php
     //include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
-
+if(isset( $_POST['titulo']  )){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $titulo     =trim($_POST['titulo']);
     $url        =trim($_POST['url']);
     $obs        =trim($_POST['nota']);
-    $idcate        =trim($_POST['categoria']);
+    $idcate     =trim($_POST['categoria']);
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(titulo','url','cat_informes_id','obs)' );
-    $valores="'".$titulo."','".$url."','".$idcate."','".$obs."'";
-
-//   forma de uso :
-//  $inserta_Datos->insertarDato('tabla',$campos,$valores);
+    $campos = array( '(titulo','url','cat_informes_id','creador','obs)' );
+    $valores="'".$titulo."','".$url."','".$idcate."','".$creador."','".$obs."'";
 
     $inserta_Datos->insertarDato('informes',$campos,$valores);
-
+}
 ?>
 <script type="text/javascript">
 

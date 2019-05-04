@@ -62,7 +62,7 @@
 
       <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
       <div class="wpmd">
-      <div><font color="#333333" class="ws11">Nombre :</font></div>
+      <div><font color="#333333" class="ws11">Nombre *:</font></div>
       </div></div>
 
       <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
@@ -79,16 +79,19 @@
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
 
+if (isset($_POST['nombre'])  ){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $nombre     =trim($_POST['nombre']);
     $obs        =trim($_POST['nota']);
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(mueble','obs)' ) ;
-    $valores="'".$nombre."','".$obs."'" ;
+    $campos = array( '(mueble','creador','obs)' ) ;
+    $valores="'".$nombre."','".$creador."','".$obs."'" ;
 
     $inserta_Datos->insertarDato('ubi_mueble',$campos,$valores);
+}
 
 ?>
 <script type="text/javascript">

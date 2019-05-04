@@ -65,7 +65,7 @@
 
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:100px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Titulo :</font></div>
+<div><font color="#333333" class="ws11">Titulo *:</font></div>
 </div></div>
 
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:150px; height:23px; z-index:4">
@@ -81,7 +81,7 @@
 
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:190px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Posicion:</font></div>
+<div><font color="#333333" class="ws11">Posicion *:</font></div>
 </div></div>
 
 <div id="text3" style="position:absolute; overflow:hidden; left:23px; top:212px; width:150px; height:23px; z-index:5">
@@ -107,10 +107,10 @@ if ( isset($_POST['titulo']) ) {
     $icono        =trim($_POST['icono']);
     $posi        =trim($_POST['posi']);
     $obs        =trim($_POST['nota']);
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(titulo_menu','link_acceso','icono','posicion','obs)' );
-    $valores="'".$titulo."','".$url."','".$icono."','".$posi."','".$obs."'";
-
+    $campos = array( '(titulo_menu','link_acceso','icono','posicion','creador','obs)' );
+    $valores="'".$titulo."','".$url."','".$icono."','".$posi."','".$creador."','".$obs."'";
 
     $inserta_Datos->insertarDato('menu_opcion',$campos,$valores);
   }
@@ -125,11 +125,11 @@ if ( isset($_POST['titulo']) ) {
 	function verificar()
 	{
 
-		if( (document.getElementById('grupo').value !='')  ){
+		if( (document.getElementById('titulo').value !='') && (document.getElementById('posi').value !='')    ){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar el nombre del grupo..!') ;
+       popup('A','Es necesario ingresar los datos requeridos..!') ;
        return false ;
 
 		}

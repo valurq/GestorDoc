@@ -77,20 +77,19 @@
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
 
+if (isset($_POST['categoria'])) {
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $categoria =trim($_POST['categoria']);
     $obs       =trim($_POST['obs']);
+    $creador    ="UsuarioLogin";
 
-    $campos = array( '(categoria','obs)' );
-    $valores="'".$categoria."','".$obs."'";
+    $campos = array( '(categoria','creador','obs)' );
+    $valores="'".$categoria."','".$creador."','".$obs."'";
 
     $inserta_Datos->insertarDato('categoria',$campos,$valores);
-
-
-
-
+}
 ?>
 <script type="text/javascript">
 

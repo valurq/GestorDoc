@@ -82,25 +82,22 @@
 <?php
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
-
+    
+if(isset($_POST['grupo']  )){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $grupo     =trim($_POST['grupo']);
     $proposito =trim($_POST['proposito']);
     $obs        =trim($_POST['nota']);
+    $creador    ="UsuarioLogin";
 
-    $campos = array( '(grupo','proposito','obs)' );
-    $valores="'".$grupo."','".$proposito."','".$obs."'";
-
-//   forma de uso :
-//  $inserta_Datos->insertarDato('tabla',$campos,$valores);
+    $campos = array( '(grupo','proposito','creador','obs)' );
+    $valores="'".$grupo."','".$proposito."','".$creador."','".$obs."'";
 
     $inserta_Datos->insertarDato('grupos',$campos,$valores);
 
-
-
-
+}
 ?>
 <script type="text/javascript">
 
