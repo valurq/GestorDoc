@@ -45,10 +45,11 @@
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="menu" method="POST" onsubmit="return verificar()" style="margin:0px" >
 
-  <input name="titulo" id ="titulo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="url" id ="url" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
-  <input name="icono" id ="icono" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:177px;z-index:2">
-  <textarea name="nota" style="position:absolute;left:134px;top:212px;width:379px;height:97px;z-index:3"></textarea>
+  <input name="titulo" id ="titulo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
+  <input name="url" id ="url" type="text"  style="position:absolute;width:200px;left:133px;top:130px;z-index:2">
+  <input name="icono" id ="icono" type="text"  style="position:absolute;width:200px;left:133px;top:160px;z-index:2">
+  <input name="posi" id ="posi" type="text"  style="position:absolute;width:200px;left:133px;top:190px;z-index:2">
+  <textarea name="nota" style="position:absolute;left:134px;top:220px;width:379px;height:97px;z-index:3"></textarea>
 
 
   <!-- BOTONES -->
@@ -62,20 +63,25 @@
 <div><font color="#808080" class="ws12"><B>Definicion de opciones de menu</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:100px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Titulo :</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">URL:</font></div>
 </div></div>
 
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:177px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Icono:</font></div>
+</div></div>
+
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:190px; width:150px; height:23px; z-index:4">
+<div class="wpmd">
+<div><font color="#333333" class="ws11">Posicion:</font></div>
 </div></div>
 
 <div id="text3" style="position:absolute; overflow:hidden; left:23px; top:212px; width:150px; height:23px; z-index:5">
@@ -91,20 +97,23 @@
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
 
+if ( isset($_POST['titulo']) ) {
+
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $titulo     =trim($_POST['titulo']);
     $url        =trim($_POST['url']);
+    $icono        =trim($_POST['icono']);
+    $posi        =trim($_POST['posi']);
     $obs        =trim($_POST['nota']);
 
-    $campos = array( '(titulo','url','obs)' );
-    $valores="'".$titulo."','".$url."','".$obs."'";
+    $campos = array( '(titulo_menu','link_acceso','icono','posicion','obs)' );
+    $valores="'".$titulo."','".$url."','".$icono."','".$posi."','".$obs."'";
 
-//   forma de uso :
-//  $inserta_Datos->insertarDato('tabla',$campos,$valores);
 
-    $inserta_Datos->insertarDato('informes',$campos,$valores);
+    $inserta_Datos->insertarDato('menu_opcion',$campos,$valores);
+  }
 
 ?>
 <script type="text/javascript">

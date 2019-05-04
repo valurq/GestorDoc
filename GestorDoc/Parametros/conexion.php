@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="";
+    private $pass="valurq123";
     public $conexion;
 
 
@@ -77,26 +77,7 @@ class Consultas extends Conexion{
         echo"</thead>";
     }
 
-    /*
-        LLAMADA
-            $obj->crearMenuDesplegable("nombre_para_el_select","nombre_de_campo_id_en_tabla","nombre_de_campo_descripcion_o_nombre_a_mostrar","tabla_donde_consultar")
-    */
-        public function crearMenuDesplegable($nombreLista,$campoID,$campoDescripcion,$tabla){
-            $lista="<select name='".$nombreLista."'>";
-            $campos= array($campoID,$campoDescripcion );
-            $resultado=$this->consultarDatos($campos,$tabla);
-            $lista.=$this->crearOpciones($resultado);
-            $lista.="</select>";
-            echo $lista;
-        }
 
-    public function crearOpciones($resultadoConsulta){
-       $opciones="";
-       while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
-               $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
-       }
-       return $opciones;
-   }
 
    public function opciones_sino($nombreOpcion)
    {
@@ -128,7 +109,7 @@ class Consultas extends Conexion{
         FROM menu_opcion
         WHERE id IN( SELECT menu_opcion_id FROM acceso
             WHERE perfil_id = ( SELECT perfil_id FROM usuario
-                WHERE id= '".$usuario."' ) )";
+                WHERE id= '".$usuario."' ) ) order by posicion asc";
         $resultado=$this->conexion->query($sql);
         return $resultado;
     }

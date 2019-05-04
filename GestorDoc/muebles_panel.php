@@ -41,7 +41,7 @@ $campos=['mueble','obs','fecreacion'];
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" value="Nuevo">
+            <input type="button" name="Nuevo" onclick = "location='muebles_form.php';" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
             <input type="button" name="Eliminar" value="Eliminar">
         </div>

@@ -6,9 +6,6 @@ $consultas=new Consultas();
 //PRUEBAS CON DATOS
 $cabecera=['Categoria','Comentario','Fecha de Creacion'];
 $campos=['categoria','obs','fecreacion'];
-$cabecera=["titulo_menu","link_acceso","icono","obs"];
-$campos=["titulo_menu","link_acceso","icono","obs"];
-
 
 ?>
 <html lang="en" dir="ltr">
@@ -43,8 +40,9 @@ $campos=["titulo_menu","link_acceso","icono","obs"];
         </div>
 
         <div class="mostrar-tabla">
-            <?php // $consultas->crearTabla($cabecera,$campos,'menu_opcion');
-            $consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
+            <?php
+             $consultas->crearTabla($cabecera,$campos,'menu_opcion');
+            //$consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
 
             ?>
         </div>

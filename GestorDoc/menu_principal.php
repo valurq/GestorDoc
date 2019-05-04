@@ -36,46 +36,10 @@
 
     </body>
     <?php
-/*      $menu=array(
-            array("'menu_administracion.php'","'iconotest.png'","'Administracion'",'1'),
-            array("'menu_administracion.php'","'iconotest.png'","'Operacion'",'1'),
-            array("'menu_administracion.php'","'iconotest.png'","'Negocios'",'1'),
-            array("'menu_administracion.php'","'iconotest.png'","'Movimientos'",'0'),
-            array("'menu_administracion.php'","'iconotest.png'","'Pruebas'",'1')
-        );*/
-        $menu=$consulta->consultarMenu(4);
+        $menu=$consulta->consultarMenu(1);
         while ($fila=mysqli_fetch_array($menu)) {
                 echo "<script>crearMenu('".$fila[0]."','".$fila[1]."','".$fila[2]."','".$fila[3]."')</script>";
         }
 
-
-        /*
-        <a class="url" href="#">
-            <div class="menu-opcion">
-                <div class="icono-opcion"></div>
-                <div class="titulo-opcion">Administracion</div>
-            </div>
-        </a>
-        <a class="url" href="#">
-            <div class="menu-opcion">
-                <div class="icono-opcion"></div>
-                <div class="titulo-opcion">Administracion</div>
-            </div>
-        </a>
-        <a class="url" href="#">
-            <div class="menu-opcion desactivado">
-                <div class="icono-opcion"></div>
-                <div class="titulo-opcion">Administracion</div>
-            </div>
-        </a>
-        <a class="url" href="#">
-            <div class="menu-opcion">
-                <div class="icono-opcion"></div>
-                <div class="titulo-opcion">Administracion</div>
-            </div>
-        </a>
-
-
-        */
      ?>
 </html>
