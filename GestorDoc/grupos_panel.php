@@ -41,9 +41,9 @@ $campos=['grupo','proposito','obs'];
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" value="Nuevo">
+            <input type="button" name="Nuevo" onclick = "location='grupos_form.php';"  value="Nuevo">
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar">
+            <input type="button" name="Eliminar" onclick="eliminar('cat_informes')" value="Eliminar">
         </div>
 
         <div class="mostrar-tabla">
