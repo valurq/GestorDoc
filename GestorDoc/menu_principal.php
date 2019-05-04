@@ -6,6 +6,7 @@
  ?>
     <head>
         <script>
+            var cont=1;
             /*var a=alpha();
             var cont=1;
             function alpha(){
