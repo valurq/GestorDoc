@@ -29,9 +29,10 @@ function eliminar(tabla){
        popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLO");
    }else {
            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
-           $.post("Parametros/eliminador.php", {id : sel , origen : tabla}, function(msg) {
+           $.post("Parametros/eliminador.php", {id : sel , tabla : tabla}, function(msg) {
             //   alert(msg);
                if(msg==1){
+                   document.getElementById('seleccionado').value="";
                    location.reload();
                }else{
                    popup('E',"ERROR EN LA ELIMINACION DEL REGISTRO");
@@ -87,7 +88,29 @@ function crearPopup(){
 }
 function cerrarPopup(){
     document.getElementById('popup').style.display="none";
-}
+}/*
+function crearPopupConfirmacion(){
+    var pop=document.createElement('div');
+    pop.id="popupConfirmacion";
+    var popImg=document.createElement('div');
+    popImg.id="imagenPopup";
+    var popMsj=document.createElement('textarea');
+    popMsj.id="mensajePopup";
+    var popBoton=document.createElement('input');
+    popBoton.type='Button';
+    popBoton.id="btPopupAceptar"
+    popBoton.value='Aceptar';
+    popBoton.addEventListener( 'click', aceptarPopup);
+    var popBoton=document.createElement('input');
+    popBoton.type='Button';
+    popBoton.id="btPopupCancelar"
+    popBoton.value='Cancelar';
+    popBoton.addEventListener( 'click', cerrarPopup);
+    document.body.appendChild(pop);
+    document.getElementById('popup').appendChild(popImg);
+    document.getElementById('popup').appendChild(popMsj);
+    document.getElementById('popup').appendChild(popBoton);
+}*/
 //incluirJQuery();
 
 
@@ -104,6 +127,7 @@ function crearMenu(dir,imagen,titulo,permiso){
     dire.className="url";
     dire.id="a-"+cont;
     dire.href=dir;
+    dire.target="frame-trabajo"
     var item=document.createElement("div");
     item.className="menu-opcion";
     item.id="b-"+cont;
@@ -116,7 +140,7 @@ function crearMenu(dir,imagen,titulo,permiso){
     titu.id="d-"+cont;
     titu.innerText=titulo;
     if(permiso=="NO"){
-        dire.href="#";
+        dire.href="about:blank";
         item.className+=" desactivado";
     }
     dire.appendChild(item);

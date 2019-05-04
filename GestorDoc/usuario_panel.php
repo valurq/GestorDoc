@@ -13,6 +13,12 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
 <html lang="en" dir="ltr">
 
     <head>
+        <script
+                src="https://code.jquery.com/jquery-3.4.0.js"
+                integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+                crossorigin="anonymous"></script>
+          <script type="text/javascript" src="Js/funciones.js">
+        </script>
         <script type="text/javascript">
             function seleccionarFila(id){
                 if(document.getElementById('seleccionado').value!=''){
@@ -43,7 +49,7 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
         <div class="menu-panel" >
             <input type="button" name="Nuevo" value="Nuevo">
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar">
+            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('usuario')">
         </div>
 
         <div class="mostrar-tabla">
