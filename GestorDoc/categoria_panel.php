@@ -41,7 +41,7 @@ $campos=['categoria','obs','fecreacion'];
 
         <div class="mostrar-tabla">
             <?php
-             $consultas->crearTabla($cabecera,$campos,'menu_opcion');
+             $consultas->crearTabla($cabecera,$campos,'categoria');
             //$consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
 
             ?>

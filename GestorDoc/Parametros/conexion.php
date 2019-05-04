@@ -21,8 +21,7 @@ class Conexion{
 
     public function __construct(){
         $this->conexion= new mysqli($this->ip,$this->user,$this->pass,$this->bd);
-       //  if ($this->conexion == 0) DIE("Lo sentimos, no se ha podido conectar con MySQL: " . mysql_error());
-       // return true;
+
     }
     public function __construct1($user,$ip,$bd,$pass){
         $conexion=mysql_connect($ip,$user,$pass,$bd);
@@ -38,6 +37,10 @@ class Consultas extends Conexion{
 
 
     public function consultarDatos($campos,$tabla,$condicion=""){
+      // objetivo: obtiene datos de una tabla
+      // sintaxis:   xx = new consultas() ;
+      //                xx->consultarDatos([campos a obtener],[nombre de tabla],[opcional]);
+      // nota: include de conexion
         $texto=(implode(",", $campos));
         return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ");
     }
@@ -45,7 +48,7 @@ class Consultas extends Conexion{
 
     public function eliminarDato($tabla,$campo,$identificador){
         $this->conexion->query("Delete from ".$tabla." where ".$campo."= '".$identificador."'");
-        //echo ("Delete from ".$tabla." where ".$campo."= ".$identificador."");
+
     }
     /*
     $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'")
