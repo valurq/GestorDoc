@@ -1,6 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+    <?php
+        include("Parametros/conexion.php");
+        $inserta_Datos=new Consultas();
+        $id=0;
+        $resultado="";
+        if(isset($_POST['seleccionado'])){
+            $id=$_POST['seleccionado'];
+            $campos=array('categoria','obs');
+            $resultado=$inserta_Datos->consultarDatos($campos,'categoria',"","id",$id );
+            $resultado=$resultado->fetch_array(MYSQLI_NUM);
+            //echo implode(",",$resultado);
+        }
+    ?>
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -44,8 +57,8 @@
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="CATEGORIA" method="POST" onsubmit="return verificar()" style="margin:0px" >
-
-  <input name="categoria" id ="categoria" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
+  <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
+  <input name="categoria" id ="categoria" type="text"   maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2" >
   <textarea name="obs" style="position:absolute;left:134px;top:137px;width:379px;height:97px;z-index:3"></textarea>
 
   <!-- BOTONES -->
@@ -74,20 +87,23 @@
 </body>
 
 <?php
-    include("Parametros/conexion.php");
-    $inserta_Datos=new Consultas();
+
 
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
+    if(isset($_POST['categoria'])){
     $categoria =trim($_POST['categoria']);
     $obs       =trim($_POST['obs']);
-
-    $campos = array( '(categoria','obs)' );
-    $valores="'".$categoria."','".$obs."'";
-
-    $inserta_Datos->insertarDato('categoria',$campos,$valores);
-
+        $idForm=$_POST['Idformulario'];
+        $campos = array( 'categoria','obs' );
+        $valores="'".$categoria."','".$obs."'";
+        if(isset($idForm)&&($idForm!=0)){
+            $inserta_Datos->modificarDato('categoria',$campos,$valores,'id',$idForm);
+        }else{
+            $inserta_Datos->insertarDato('categoria',$campos,$valores);
+        }
+    }
 
 
 

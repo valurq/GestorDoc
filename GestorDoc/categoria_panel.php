@@ -6,9 +6,9 @@ $consultas=new Consultas();
 //PRUEBAS CON DATOS
 $cabecera=['Categoria','Comentario','Fecha de Creacion'];
 $campos=['categoria','obs','fecreacion'];
-$cabecera=["titulo_menu","link_acceso","icono","obs"];
+/*$cabecera=["titulo_menu","link_acceso","icono","obs"];
 $campos=["titulo_menu","link_acceso","icono","obs"];
-
+*/
 
 ?>
 <html lang="en" dir="ltr">
@@ -31,20 +31,21 @@ $campos=["titulo_menu","link_acceso","icono","obs"];
         <title>VALURQ_SRL</title>
     </head>
 
-    <body>
+    <body style="background-color:white">
         <form id="formularioMultiuso" action="" method="post">
-            <input type="hidden" name="seleccionado" id="seleccionado">
+            <input type="hidden" name="seleccionado" id="seleccionado" value="0">
         </form>
 
         <div class="menu-panel" >
             <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
-            <input type="button" name="Editar" value="Editar">
+            <input type="button" name="Editar" value="Editar" onclick="editar('categoria_form.php')">
             <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
         </div>
 
         <div class="mostrar-tabla">
-            <?php // $consultas->crearTabla($cabecera,$campos,'menu_opcion');
-            $consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
+            <?php
+             $consultas->crearTabla($cabecera,$campos,'categoria');
+            //$consultas->crearMenuDesplegable("menus","id","titulo_menu","menu_opcion");
 
             ?>
         </div>
