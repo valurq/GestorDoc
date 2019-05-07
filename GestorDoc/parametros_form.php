@@ -43,76 +43,56 @@
 </head>
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
-<form name="GRUPOS" method="POST" onsubmit="return verificar()" style="margin:0px" >
+<form name="PARAMETROS" method="POST" onsubmit="return verificar()" style="margin:0px" >
+
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="idformulario" id="idformulario" value="0" >
 
-  <input name="titulo" id ="titulo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="url" id ="url" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
-
-  <div id=lisbox style="position:absolute;left:133px;top:177px;width:379px;height:97px;z-index:3">
-  <?php
-    include("Parametros/conexion.php");
-    $listbox=new Consultas();
-    $listbox->crearMenuDesplegable("categoria","id","cat_informe","cat_informes") ;
-  ?>
-  </div>
-
-  <textarea name="nota" style="position:absolute;left:134px;top:222px;width:379px;height:97px;z-index:3"></textarea>
+  <input name="empresa" id ="empresa" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
+  <input name="logo" id ="logo" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
 
   <!-- BOTONES -->
-  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:330px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='informes_panel.php';" style="position:absolute;left:131px;top:330px;z-index:7">
+  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:280px;z-index:6">
+  <input name="volver" type="button" value="Volver" onclick = "location='parametros_panel.php';" style="position:absolute;left:131px;top:280px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
 <div id="text1" style="position:absolute; overflow:hidden; left:20px; top:21px; width:224px; height:22px; z-index:1">
 <div class="wpmd">
-<div><font color="#808080" class="ws12"><B>Definicion de informes</B></font></div>
+<div><font color="#808080" class="ws12"><B>Datos de parametros</B></font></div>
 </div></div>
 
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Titulo *:</font></div>
+<div><font color="#333333" class="ws11">Empresa :</font></div>
 </div></div>
 
 <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">URL *:</font></div>
+<div><font color="#333333" class="ws11">Logotipo :</font></div>
 </div></div>
 
-
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:177px; width:150px; height:23px; z-index:5">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Categoria:</font></div>
-</div></div>
-
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:222px; width:150px; height:23px; z-index:5">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Comentarios:</font></div>
-</div></div>
 
   <!-- Fin titulos y etiquetas -->
 
 </body>
 
 <?php
-    //include("Parametros/conexion.php");
+    include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
-if(isset( $_POST['titulo']  )){
+
+if(isset($_POST['empresa']  )){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
-    $titulo     =trim($_POST['titulo']);
-    $url        =trim($_POST['url']);
-    $obs        =trim($_POST['nota']);
-    $idcate     =trim($_POST['categoria']);
-    $creador    ="UsuarioLogin" ;
+    $empresa     =trim($_POST['empresa']);
+    $logo =trim($_POST['logo']);
 
-    $campos = array( '(titulo','url','cat_informes_id','creador','obs)' );
-    $valores="'".$titulo."','".$url."','".$idcate."','".$creador."','".$obs."'";
+    $campos = array( '(empresa','logo)' );
+    $valores="'".$empresa."','".$logo."'";
 
-    $inserta_Datos->insertarDato('informes',$campos,$valores);
+    $inserta_Datos->insertarDato('parametros',$campos,$valores);
+
 }
 ?>
 <script type="text/javascript">
@@ -124,11 +104,11 @@ if(isset( $_POST['titulo']  )){
 	function verificar()
 	{
 
-		if( (document.getElementById('titulo').value !='') && (document.getElementById('url').value !='') ){
+		if( (document.getElementById('empresa').value !='')  ){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar los datos requeridos..!') ;
+       popup('A','Es necesario ingresar el nombre de la empresa.!') ;
        return false ;
 
 		}

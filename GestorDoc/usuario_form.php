@@ -44,6 +44,8 @@
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="menu" method="POST" onsubmit="return verificar()" style="margin:0px" >
+  <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
+    <input type="hidden" name="idformulario" id="idformulario" value="0" >
 
   <input name="nombre" id ="nombre" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:90px;z-index:2">
   <input name="apellido" id ="apellido" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:115px;z-index:2">

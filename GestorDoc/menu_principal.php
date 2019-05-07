@@ -6,22 +6,16 @@
  ?>
     <head>
         <script>
-            /*var a=alpha();
             var cont=1;
-            function alpha(){
-                alert("testing");
-            }
-            function yes(){
-                alert("test");
-                a();
-            }
-            */
         </script>
+
         <script
               src="https://code.jquery.com/jquery-3.4.0.js"
               integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
               crossorigin="anonymous"></script>
         <script type="text/javascript" src="Js/funciones.js"></script>
+
+
         <link rel="stylesheet" href="CSS/menu.css">
         <meta charset="utf-8">
         <title></title>
@@ -29,17 +23,17 @@
     <body style="">
         <div class="menu-contenedor">
             <div class="lateral-izquierdo">
-                <div id="logo" onclick="yes()"></div>
+                <div id="logo"></div>
                 <div id="menu-items">
 
                 </div>
             </div>
             <div class="superior">
-                <div id="logo-empresa" ></div>
+                <div id="logo-empresa"></div>
                 <div id="usuario"></div>
             </div>
             <div class="area-trabajo">
-                <iframe src="" frameborder="0" name="frame-trabajo" id="frame-trabajo"></iframe>
+                <iframe src="" frameborder="0"></iframe>
             </div>
         </div>
 

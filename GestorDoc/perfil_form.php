@@ -44,6 +44,8 @@
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="perfilForm" method="POST" onsubmit="return verificar()" style="margin:0px" >
+  <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
+    <input type="hidden" name="idformulario" id="idformulario" value="0" >
 
   <input name="perfil" id ="perfil" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
 

@@ -41,9 +41,9 @@ $campos=['empresa'];
         </form>
 
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" value="Nuevo">
+            <!-- <input type="button" name="Nuevo" value="Nuevo" > -->
             <input type="button" name="Editar" value="Editar">
-            <input type="button" name="Eliminar" value="Eliminar">
+            <!-- <input type="button" name="Eliminar" value="Eliminar"> -->
         </div>
 
         <div class="mostrar-tabla">

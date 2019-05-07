@@ -44,7 +44,9 @@
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="GRUPOS" method="POST" onsubmit="return verificar()" style="margin:0px" >
-
+  <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
+    <input type="hidden" name="idformulario" id="idformulario" value="0" >
+    
   <input name="grupo" id ="grupo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
   <input name="proposito" id ="proposito" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
   <textarea name="nota" style="position:absolute;left:134px;top:177px;width:379px;height:97px;z-index:3"></textarea>
@@ -82,7 +84,7 @@
 <?php
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
-    
+
 if(isset($_POST['grupo']  )){
     //======================================================================================
     // NUEVO REGISTRO
