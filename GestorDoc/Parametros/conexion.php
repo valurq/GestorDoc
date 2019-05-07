@@ -36,13 +36,13 @@ class Consultas extends Conexion{
     }
 
 
-    public function consultarDatos($campos,$tabla,$condicion=""){
+    public function consultarDatos($campos,$tabla,$orden="",$condicion=""){
       // objetivo: obtiene datos de una tabla
       // sintaxis:   xx = new consultas() ;
       //                xx->consultarDatos([campos a obtener],[nombre de tabla],[opcional]);
       // nota: include de conexion
         $texto=(implode(",", $campos));
-        return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ");
+        return $this->conexion->query("SELECT ".$texto." FROM ".$tabla." ".$orden);
     }
 
 
@@ -129,6 +129,7 @@ class Consultas extends Conexion{
         $lista.="</select>";
         echo $lista;
     }
+
     public function crearOpciones($resultadoConsulta){
         $opciones="";
         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
