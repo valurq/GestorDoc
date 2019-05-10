@@ -60,7 +60,7 @@ class Consultas extends Conexion{
         $query="SELECT ".$texto." FROM ".$tabla." ".$orden;
         if(($campoCondicion!="")&&($valorCondicion!="")){
             $query.="WHERE ".$campoCondicion." = '".$valorCondicion."' ";
-            echo $query;
+            //echo $query;
         }
         return $this->conexion->query($query);
     }

@@ -46,7 +46,7 @@
 
     </body>
     <?php
-        $menu=$consulta->consultarMenu(4);
+        $menu=$consulta->consultarMenu(1);
         while ($fila=mysqli_fetch_array($menu)) {
                 echo "<script>crearMenu('".$fila[0]."','".$fila[1]."','".$fila[2]."','".$fila[3]."')</script>";
         }

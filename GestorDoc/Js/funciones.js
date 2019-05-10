@@ -133,6 +133,7 @@ SECCION VALIDACIONES
 function esVacio(objeto){
     var resultado;
     ((objeto.value!="")&&(objeto.value!=" ")&&((objeto.value).strlenght>0))?resultado =true:resultado= false ;
+    return resultado;
 }
 function crearMenu(dir,imagen,titulo,permiso){
     var dire=document.createElement("a");
