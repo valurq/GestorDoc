@@ -7,6 +7,7 @@ $consultas=new Consultas();
 $cabecera=['Categoria','Comentario','Fecha de Creacion'];
 $campos=['categoria','substr(obs,1,40)','fecreacion'];
 
+
 ?>
 <html lang="en" dir="ltr">
 
@@ -31,9 +32,9 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
         <title>VALURQ_SRL</title>
     </head>
 
-    <body>
+    <body style="background-color:white">
         <form id="formularioMultiuso" action="" method="post">
-            <input type="hidden" name="seleccionado" id="seleccionado">
+            <input type="hidden" name="seleccionado" id="seleccionado" value="0">
         </form>
 
         <div class="menu-panel" >
@@ -45,7 +46,7 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
           <br><br>
 
             <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
-            <input type="button" name="Editar" value="Editar">
+            <input type="button" name="Editar" value="Editar" onclick="editar('categoria_form.php')">
             <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
         </div>
 

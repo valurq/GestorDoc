@@ -4,7 +4,7 @@ function incluirJQuery(){
     document.head.appendChild(script);
 }
 function seleccionarFila(id){
-    if(document.getElementById('seleccionado').value!=''){
+    if((document.getElementById('seleccionado').value!='')&&(document.getElementById('seleccionado').value!=0)){
         var anterior=document.getElementById('seleccionado').value;
         document.getElementById(anterior).style.backgroundColor='white';
     }
@@ -40,10 +40,21 @@ function eliminar(tabla){
             });
    }
 }
-function editar(pagina){
+function editar(direccion){
+    var sel=document.getElementById('seleccionado').value;
+   // alert(sel)
+    if((sel=="")||(sel==' ')||(sel==0)){
+        popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
+    }else {
+        document.getElementById("formularioMultiuso").action=direccion;
+        document.getElementById("formularioMultiuso").submit();
+   }
+}
+
+/*function editar(pagina){
     document.getElementById("formularioMultiuso").action=pagina;
     document.getElementById("formularioMultiuso").submit();
-}
+}*/
 //FUNCION PARA LEVANTAR MENSAJES EN PANTALLA
 function popup(simbolo,mensaje){
     if(!(document.getElementById("popup"))){
@@ -88,7 +99,8 @@ function crearPopup(){
 }
 function cerrarPopup(){
     document.getElementById('popup').style.display="none";
-}/*
+}
+/*
 function crearPopupConfirmacion(){
     var pop=document.createElement('div');
     pop.id="popupConfirmacion";
@@ -121,6 +133,7 @@ SECCION VALIDACIONES
 function esVacio(objeto){
     var resultado;
     ((objeto.value!="")&&(objeto.value!=" ")&&((objeto.value).strlenght>0))?resultado =true:resultado= false ;
+    return resultado;
 }
 function crearMenu(dir,imagen,titulo,permiso){
     var dire=document.createElement("a");
