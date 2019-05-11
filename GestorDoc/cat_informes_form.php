@@ -112,8 +112,10 @@ if(isset($_POST['cat_informe'])){
     $idForm=$_POST['Idformulario'];
 
     if(isset($idForm)&&($idForm!=0)){
+      // Si el acceso al form fue para una modificacion
             $inserta_Datos->modificarDato('cat_informe',$campos,$valores,'id',$idForm);
         }else{
+      // Si el acceso para el form fue para agregar un nuevo registro.    
             $inserta_Datos->insertarDato('cat_informe',$campos,$valores);
         }
 
