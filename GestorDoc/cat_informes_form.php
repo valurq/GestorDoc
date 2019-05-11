@@ -1,6 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+
+  <?php
+  //===============================================================================
+  // CODIGO PHP QUE PERMITE CARGAR DATOS DESDE LA BASE DE DATOS AL FORMULARIO PARA
+  // SU EDICION.
+  //===============================================================================
+      include("Parametros/conexion.php");
+      $inserta_Datos=new Consultas();
+      $id=0;
+      $resultado="";
+      if(isset($_POST['seleccionado'])){
+          $id=$_POST['seleccionado'];
+          $campos=array('categoria','obs');
+          $resultado=$inserta_Datos->consultarDatos($campos,'cat_informe',"","id",$id );
+          $resultado=$resultado->fetch_array(MYSQLI_NUM);
+
+      }
+  ?>
+
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -42,8 +61,12 @@
 
 </head>
 <body>
+
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="CAT_INFORME" method="POST" onsubmit="return verificar()" style="margin:0px" >
+
+<!-- Campo oculto para controlar EDICION DEL REGISTRO -->
+  <input type="hidden" name="idformulario" id="idformulario" value="0" >
 
   <input name="cat_informe" id ="cat_informe" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
   <textarea name="nota" style="position:absolute;left:134px;top:137px;width:379px;height:97px;z-index:3"></textarea>
@@ -76,24 +99,25 @@
 <?php
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
+if(isset($_POST['cat_informe'])){
 
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $categoria =trim($_POST['cat_informe']);
     $obs       =trim($_POST['nota']);
+    $creador   ='usuarioLogin';
+    $campos = array( 'cat_informe','creador','nota' );
+    $valores="'".$categoria."','".$creador."','".$obs."'";
+    $idForm=$_POST['Idformulario'];
 
-    $campos = array( '(cat_informe','nota)' );
-    $valores="'".$categoria."','".$obs."'";
+    if(isset($idForm)&&($idForm!=0)){
+            $inserta_Datos->modificarDato('cat_informe',$campos,$valores,'id',$idForm);
+        }else{
+            $inserta_Datos->insertarDato('cat_informe',$campos,$valores);
+        }
 
-//   forma de uso :
-//  $inserta_Datos->insertarDato('tabla',$campos,$valores);
-
-    $inserta_Datos->insertarDato('cat_informes',$campos,$valores);
-
-
-
-
+}
 ?>
 <script type="text/javascript">
 

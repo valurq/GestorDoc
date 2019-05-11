@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="";
+    private $pass="valurq123";
     public $conexion;
 
 
@@ -25,8 +25,7 @@ class Conexion{
             $variable=new Conexion()
         */
         $this->conexion= new mysqli($this->ip,$this->user,$this->pass,$this->bd);
-       //  if ($this->conexion == 0) DIE("Lo sentimos, no se ha podido conectar con MySQL: " . mysql_error());
-       // return true;
+
     }
     public function __construct1($user,$ip,$bd,$pass){
         /*
@@ -50,12 +49,14 @@ class Consultas extends Conexion{
     }
 
 
+
     public function consultarDatos($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion=""){
         /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
             $objetoConsultas->consultarDatos(<Array de campos a consultar>,<tabla de la bd>,<Metodo de ordenar>,<condicion para la consulta>)
             Ej: $objetoConsultas->consultarDatos(['id','descripcion','categorias','order by id DESC']);
         */
+
         $texto=(implode(",", $campos));
         $query="SELECT ".$texto." FROM ".$tabla." ".$orden;
         if(($campoCondicion!="")&&($valorCondicion!="")){
@@ -74,7 +75,7 @@ class Consultas extends Conexion{
 
         */
         $this->conexion->query("Delete from ".$tabla." where ".$campo."= '".$identificador."'");
-        //echo ("Delete from ".$tabla." where ".$campo."= ".$identificador."");
+
     }
 
     public function insertarDato($tabla,$campos,$valores){
@@ -142,8 +143,17 @@ class Consultas extends Conexion{
         echo"</thead>";
     }
 
+   public function opciones_sino($nombreOpcion)
+   {
+     $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+     $opcion_sino.= "<option value='si'>SI</option>" ;
+     $opcion_sino.= "<option value='no'>NO</option>" ;
+     $opcion_sino.="</select>";
+     echo $opcion_sino;
+   }
 
-    private function crearContenidoTabla($resultadoConsulta){
+
+   private function crearContenidoTabla($resultadoConsulta){
         /*
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
             $objetoConsultas->crearContenidoTabla(<Resultado de consulta a la base de datos>);
@@ -171,7 +181,7 @@ class Consultas extends Conexion{
         FROM menu_opcion
         WHERE id IN( SELECT menu_opcion_id FROM acceso
             WHERE perfil_id = ( SELECT perfil_id FROM usuario
-                WHERE id= '".$usuario."' ) )";
+                WHERE id= '".$usuario."' ) ) order by posicion asc";
         $resultado=$this->conexion->query($sql);
         return $resultado;
     }

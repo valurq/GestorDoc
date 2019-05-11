@@ -88,6 +88,7 @@
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="CATEGORIA" method="POST" onsubmit="return verificar()" style="margin:0px" >
+  <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
   <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
   <input name="categoria" id ="categoria" type="text"   maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2" >
   <textarea name="obs" id="obs" style="position:absolute;left:134px;top:137px;width:379px;height:97px;z-index:3"></textarea>
@@ -132,15 +133,18 @@
     }
 
 
+if (isset($_POST['categoria'])) {
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     if(isset($_POST['categoria'])){
     $categoria =trim($_POST['categoria']);
     $obs       =trim($_POST['obs']);
+
         $idForm=$_POST['Idformulario'];
-        $campos = array( 'categoria','obs' );
-        $valores="'".$categoria."','".$obs."'";
+        $creador    ="UsuarioLogin";
+        $campos = array( '(categoria','creador','obs)' );
+        $valores="'".$categoria."','".$creador."','".$obs."'";
         /*
             VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
         */
@@ -150,8 +154,6 @@
             $inserta_Datos->insertarDato('categoria',$campos,$valores);
         }
     }
-
-
 
 ?>
 <script type="text/javascript">

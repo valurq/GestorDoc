@@ -43,39 +43,35 @@
 </head>
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
-<form name="GRUPOS" method="POST" onsubmit="return verificar()" style="margin:0px" >
+<form name="mueble_form" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="idformulario" id="idformulario" value="0" >
-    
-  <input name="grupo" id ="grupo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="proposito" id ="proposito" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
-  <textarea name="nota" style="position:absolute;left:134px;top:177px;width:379px;height:97px;z-index:3"></textarea>
+
+  <input name="nombre" id ="nombre" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
+  <textarea name="nota" style="position:absolute;left:134px;top:130px;width:379px;height:97px;z-index:3"></textarea>
 
   <!-- BOTONES -->
-  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:280px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='grupos_panel.php';" style="position:absolute;left:131px;top:280px;z-index:7">
+  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:320px;z-index:6">
+  <input name="volver" type="button" value="Volver" onclick = "location='muebles_panel.php';" style="position:absolute;left:131px;top:320px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
-<div id="text1" style="position:absolute; overflow:hidden; left:20px; top:21px; width:224px; height:22px; z-index:1">
-<div class="wpmd">
-<div><font color="#808080" class="ws12"><B>Definicion de grupos</B></font></div>
-</div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Grupo :</font></div>
-</div></div>
+      <div id="text1" style="position:absolute; overflow:hidden; left:20px; top:21px; width:254px; height:22px; z-index:1">
+      <div class="wpmd">
+      <div><font color="#808080" class="ws12"><B>Definicion de muebles</B></font></div>
+      </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Proposito :</font></div>
-</div></div>
+      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
+      <div class="wpmd">
+      <div><font color="#333333" class="ws11">Nombre *:</font></div>
+      </div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:177px; width:150px; height:23px; z-index:5">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">comentarios:</font></div>
-</div></div>
+      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
+      <div class="wpmd">
+      <div><font color="#333333" class="ws11">Comentario :</font></div>
+      </div></div>
+
 
   <!-- Fin titulos y etiquetas -->
 
@@ -85,21 +81,20 @@
     include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
 
-if(isset($_POST['grupo']  )){
+if (isset($_POST['nombre'])  ){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
-    $grupo     =trim($_POST['grupo']);
-    $proposito =trim($_POST['proposito']);
+    $nombre     =trim($_POST['nombre']);
     $obs        =trim($_POST['nota']);
-    $creador    ="UsuarioLogin";
+    $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(grupo','proposito','creador','obs)' );
-    $valores="'".$grupo."','".$proposito."','".$creador."','".$obs."'";
+    $campos = array( '(mueble','creador','obs)' ) ;
+    $valores="'".$nombre."','".$creador."','".$obs."'" ;
 
-    $inserta_Datos->insertarDato('grupos',$campos,$valores);
-
+    $inserta_Datos->insertarDato('ubi_mueble',$campos,$valores);
 }
+
 ?>
 <script type="text/javascript">
 
@@ -110,11 +105,11 @@ if(isset($_POST['grupo']  )){
 	function verificar()
 	{
 
-		if( (document.getElementById('grupo').value !='')  ){
+		if( (document.getElementById('nombre').value !='')  ){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar el nombre del grupo..!') ;
+       popup('A','Es necesario ingresar dato requerido.!') ;
        return false ;
 
 		}

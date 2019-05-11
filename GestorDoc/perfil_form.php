@@ -43,51 +43,57 @@
 </head>
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
-<form name="GRUPOS" method="POST" onsubmit="return verificar()" style="margin:0px" >
+<form name="perfilForm" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="idformulario" id="idformulario" value="0" >
 
-  <input name="titulo" id ="titulo" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="url" id ="url" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
+  <input name="perfil" id ="perfil" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
 
-  <div id=lisbox style="position:absolute;left:133px;top:177px;width:379px;height:97px;z-index:3">
+  <div id="elimina_doc" style="position:absolute;left:133px;top:130px;width:379px;height:97px;z-index:3">
   <?php
     include("Parametros/conexion.php");
-    $listbox=new Consultas();
-    $listbox->crearMenuDesplegable("categoria","id","cat_informe","cat_informes") ;
+    $elimina=new Consultas();
+    $elimina->opciones_sino("elimina") ;
   ?>
   </div>
 
-  <textarea name="nota" style="position:absolute;left:134px;top:222px;width:379px;height:97px;z-index:3"></textarea>
+
+    <div id="modifica_doc" style="position:absolute;left:133px;top:160px;width:379px;height:97px;z-index:3">
+    <?php
+      $modifica=new Consultas();
+      $modifica->opciones_sino("modifica") ;
+    ?>
+    </div>
+
+  <textarea name="nota" style="position:absolute;left:134px;top:190px;width:379px;height:97px;z-index:3"></textarea>
 
   <!-- BOTONES -->
   <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:330px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='informes_panel.php';" style="position:absolute;left:131px;top:330px;z-index:7">
+  <input name="volver" type="button" value="Volver" onclick = "location='perfil_panel.php';" style="position:absolute;left:131px;top:330px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
 <div id="text1" style="position:absolute; overflow:hidden; left:20px; top:21px; width:224px; height:22px; z-index:1">
 <div class="wpmd">
-<div><font color="#808080" class="ws12"><B>Definicion de informes</B></font></div>
+<div><font color="#808080" class="ws12"><B>Definicion de perfiles</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:100px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Titulo *:</font></div>
+<div><font color="#333333" class="ws11">Perfil *:</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">URL *:</font></div>
+<div><font color="#333333" class="ws11">Elimina doc? *:</font></div>
 </div></div>
 
-
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:177px; width:150px; height:23px; z-index:5">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:150px; height:23px; z-index:4">
 <div class="wpmd">
-<div><font color="#333333" class="ws11">Categoria:</font></div>
+<div><font color="#333333" class="ws11">Modifica doc? *:</font></div>
 </div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:222px; width:150px; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:190px; width:150px; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
@@ -99,20 +105,22 @@
 <?php
     //include("Parametros/conexion.php");
     $inserta_Datos=new Consultas();
-if(isset( $_POST['titulo']  )){
+if(isset( $_POST['perfil'] )) {
+
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
-    $titulo     =trim($_POST['titulo']);
-    $url        =trim($_POST['url']);
+    $perfil     =trim($_POST['perfil']);
+    $elimina_doc     =trim($_POST['elimina']);
+    $modifica_doc        =trim($_POST['modifica']);
     $obs        =trim($_POST['nota']);
-    $idcate     =trim($_POST['categoria']);
     $creador    ="UsuarioLogin" ;
 
-    $campos = array( '(titulo','url','cat_informes_id','creador','obs)' );
-    $valores="'".$titulo."','".$url."','".$idcate."','".$creador."','".$obs."'";
+    $campos = array( '(perfil','elimina_doc','modifica_doc','creador','comentario)' );
+    $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$creador."','".$obs."'";
 
-    $inserta_Datos->insertarDato('informes',$campos,$valores);
+
+    $inserta_Datos->insertarDato('perfil',$campos,$valores);
 }
 ?>
 <script type="text/javascript">
@@ -124,11 +132,11 @@ if(isset( $_POST['titulo']  )){
 	function verificar()
 	{
 
-		if( (document.getElementById('titulo').value !='') && (document.getElementById('url').value !='') ){
+		if( (document.getElementById('perfil').value !='')){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar los datos requeridos..!') ;
+       popup('A','Es necesario ingresar el datos requeridos..!') ;
        return false ;
 
 		}
