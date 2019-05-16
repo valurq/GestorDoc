@@ -68,9 +68,6 @@
         <script type="text/javascript">
             function cargarCampos(camposform,valores){
                 var campo;
-                //camposform='"'+camposform+'"';
-            //    alert(camposform);
-            //    alert(valores)
                 camposform=camposform.split(",");
                 valores=valores.split(",");
                 for(var i=0;i<camposform.length;i++){

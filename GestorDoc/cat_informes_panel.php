@@ -43,19 +43,19 @@ $campos=['cat_informe','substr(nota,1,40)'];
         <title>VALURQ_SRL</title>
     </head>
 
-    <body>
+    <body style="background-color:white">
         <form class="" action="index.html" method="post">
             <input type="hidden" name="seleccionado" id="seleccionado">
         </form>
 
-        <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
+        <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:540px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA DE INFORMES</B></font>
         </div>
         <br><br>
 
         <div class="menu-panel" >
             <input type="button" name="Nuevo" onclick = "location='cat_informes_form.php';"  value="Nuevo">
-            <input type="button" name="Editar" value="Editar">
+            <input type="button" name="Editar" value="Editar" onclick="editar('cat_informes_form.php')" >
             <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('cat_informes')" >
         </div>
 
