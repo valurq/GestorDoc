@@ -60,9 +60,10 @@ function popup(simbolo,mensaje){
     if(!(document.getElementById("popup"))){
         crearPopup();
     }
-    document.getElementById("imagenPopup").style.backgroundImage=seleccionarImagen(simbolo);
+    document.getElementById('popup').style.display="block";
+    document.getElementById("imagenPopup").style.backgroundImage="url('"+seleccionarImagen(simbolo)+"')";
     document.getElementById("mensajePopup").value=mensaje;
-    $("#popup")
+
 }
 function seleccionarImagen(identificador){
     var devolver;
@@ -71,14 +72,15 @@ function seleccionarImagen(identificador){
             devolver="Imagenes/error.png"
             break;
         case 'Advertencia':
-            devolver="Imagenes/advertencia.png"
+            devolver="Imagenes/warning.png"
             break;
         case 'Informacion':
-            devolver="Imagenes/advertencia.png"
+            devolver="Imagenes/info.png"
             break;
         default:
             devolver='';
     }
+    return devolver;
 }
 function crearPopup(){
     var pop=document.createElement('div');
@@ -136,18 +138,22 @@ function esVacio(objeto){
     return resultado;
 }
 function crearMenu(dir,imagen,titulo,permiso){
+
     var dire=document.createElement("a");
     dire.className="url";
     dire.id="a-"+cont;
     dire.href=dir;
     dire.target="frame-trabajo"
+
     var item=document.createElement("div");
     item.className="menu-opcion";
     item.id="b-"+cont;
+
     var icono=document.createElement("div");
     icono.className="icono-opcion";
     icono.id="c-"+cont;
     icono.style.backgroundImage=imagen;
+
     var titu=document.createElement("div");
     titu.className="titulo-opcion";
     titu.id="d-"+cont;
@@ -164,4 +170,21 @@ function crearMenu(dir,imagen,titulo,permiso){
     document.getElementById("b-"+cont).appendChild(icono);
     document.getElementById("b-"+cont).appendChild(titu);
     cont++;
+}
+
+function cargarCampos(camposform,valores){
+    var campo;
+    //camposform='"'+camposform+'"';
+//    alert(camposform);
+//    alert(valores)
+    camposform=camposform.split(",");
+    valores=valores.split(",");
+    for(var i=0;i<camposform.length;i++){
+        campo=document.getElementById(camposform[i]);
+        console.log(camposform[i]+" ->"+valores[i]);
+        //campo=document.getElementById("frame-trabajo").contentWindow.document.getElementById(camposform[i]);
+        if((campo.tagName=="INPUT")||(campo.tagName=="TEXTAREA")){
+            campo.value=valores[i];
+        }
+    }
 }

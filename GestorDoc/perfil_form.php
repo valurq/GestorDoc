@@ -1,6 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+    <?php
+        /*
+        SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
+        ========================================================================
+        */
+        include("Parametros/conexion.php");
+        $objConsulta=new Consultas();
+        $id=0;
+        $resultado="";
+
+        /*
+            VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO
+        */
+        if(isset($_POST['seleccionado'])){
+            $id=$_POST['seleccionado'];
+            $campos=array('categoria','obs');
+            /*
+                CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
+            */
+            $resultado=$objConsulta->consultarDatos($campos,'categoria',"","id",$id );
+            $resultado=$resultado->fetch_array(MYSQLI_NUM);
+            /*
+                CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
+            */
+            $camposIdForm=array('categoria,obs');
+        }
+    ?>
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -32,7 +59,6 @@
        margin-bottom: 0px;
       }
 </style>
-
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -45,23 +71,20 @@
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="perfilForm" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
-    <input type="hidden" name="idformulario" id="idformulario" value="0" >
+    <input type="hidden" name="idformulario" id="idformulario" value=<?php echo $id;?> >
 
   <input name="perfil" id ="perfil" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
 
   <div id="elimina_doc" style="position:absolute;left:133px;top:130px;width:379px;height:97px;z-index:3">
   <?php
-    include("Parametros/conexion.php");
-    $elimina=new Consultas();
-    $elimina->opciones_sino("elimina") ;
+    $objConsulta->opciones_sino("elimina") ;
   ?>
   </div>
 
 
     <div id="modifica_doc" style="position:absolute;left:133px;top:160px;width:379px;height:97px;z-index:3">
     <?php
-      $modifica=new Consultas();
-      $modifica->opciones_sino("modifica") ;
+      $objConsulta->opciones_sino("modifica") ;
     ?>
     </div>
 
@@ -104,12 +127,22 @@
 
 <?php
     //include("Parametros/conexion.php");
-    $inserta_Datos=new Consultas();
+    if(($id!=0 )){
+        /*
+            CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
+        */
+        $valores=implode(",",$resultado);
+        $camposIdForm=implode(",",$camposIdForm);
+        //LLAMADA A LA FUNCION JS
+        echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+    }
+
 if(isset( $_POST['perfil'] )) {
 
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
+    $idForm=$_POST['Idformulario'];
     $perfil     =trim($_POST['perfil']);
     $elimina_doc     =trim($_POST['elimina']);
     $modifica_doc        =trim($_POST['modifica']);
@@ -118,9 +151,11 @@ if(isset( $_POST['perfil'] )) {
 
     $campos = array( '(perfil','elimina_doc','modifica_doc','creador','comentario)' );
     $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$creador."','".$obs."'";
-
-
-    $inserta_Datos->insertarDato('perfil',$campos,$valores);
+    if(isset($idForm)&&($idForm!=0)){
+        $inserta_Datos->modificarDato('perfil',$campos,$valores,'id',$idForm);
+    }else{
+        $inserta_Datos->insertarDato('perfil',$campos,$valores);
+    }
 }
 ?>
 <script type="text/javascript">
