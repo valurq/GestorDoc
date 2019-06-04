@@ -60,9 +60,10 @@ function popup(simbolo,mensaje){
     if(!(document.getElementById("popup"))){
         crearPopup();
     }
-    document.getElementById("imagenPopup").style.backgroundImage=seleccionarImagen(simbolo);
+    document.getElementById('popup').style.display="block";
+    document.getElementById("imagenPopup").style.backgroundImage="url('"+seleccionarImagen(simbolo)+"')";
     document.getElementById("mensajePopup").value=mensaje;
-    $("#popup")
+
 }
 function seleccionarImagen(identificador){
     var devolver;
@@ -71,14 +72,15 @@ function seleccionarImagen(identificador){
             devolver="Imagenes/error.png"
             break;
         case 'Advertencia':
-            devolver="Imagenes/advertencia.png"
+            devolver="Imagenes/warning.png"
             break;
         case 'Informacion':
-            devolver="Imagenes/advertencia.png"
+            devolver="Imagenes/info.png"
             break;
         default:
             devolver='';
     }
+    return devolver;
 }
 function crearPopup(){
     var pop=document.createElement('div');

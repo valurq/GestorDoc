@@ -59,7 +59,7 @@
        margin-bottom: 0px;
       }
 </style>
-
+<link rel="stylesheet" href="CSS/popup.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -142,18 +142,14 @@ if (isset($_POST['categoria'])) {
 //======================================================================
 // FUNCION QUE VALIDA EL FORMULARIO Y LUEGO ENVIA LOS DATOS A GRABACION
 //======================================================================
-	function verificar()
-	{
-
+	function verificar(){
 		if( (document.getElementById('categoria').value !='')  ){
-		      return true ;
+		    return true ;
 
-		}	else{
-       popup('A','Es necesario ingresar la descipcion de la categoria') ;
-       return false ;
-
+		}else{
+            popup('Error','Es necesario ingresar la descipcion de la categoria') ;
+            return false ;
 		}
-
 	}
   </script>
 
