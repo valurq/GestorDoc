@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
 <head>
     <?php
@@ -65,25 +65,6 @@
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
 			  crossorigin="anonymous"></script>
         <script type="text/javascript" src="Js/funciones.js"></script>
-        <script type="text/javascript">
-            function cargarCampos(camposform,valores){
-                var campo;
-                //camposform='"'+camposform+'"';
-            //    alert(camposform);
-            //    alert(valores)
-                camposform=camposform.split(",");
-                valores=valores.split(",");
-                for(var i=0;i<camposform.length;i++){
-                    campo=document.getElementById(camposform[i]);
-                    console.log(camposform[i]+" ->"+valores[i]);
-                    //campo=document.getElementById("frame-trabajo").contentWindow.document.getElementById(camposform[i]);
-                    if((campo.tagName=="INPUT")||(campo.tagName=="TEXTAREA")){
-                        campo.value=valores[i];
-                    }
-                }
-            }
-        </script>
-
 </head>
 <body>
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
@@ -138,12 +119,11 @@ if (isset($_POST['categoria'])) {
     // NUEVO REGISTRO
     //======================================================================================
     if(isset($_POST['categoria'])){
-    $categoria =trim($_POST['categoria']);
-    $obs       =trim($_POST['obs']);
-
+        $categoria =trim($_POST['categoria']);
+        $obs       =trim($_POST['obs']);
         $idForm=$_POST['Idformulario'];
         $creador    ="UsuarioLogin";
-        $campos = array( '(categoria','creador','obs)' );
+        $campos = array( 'categoria','creador','obs' );
         $valores="'".$categoria."','".$creador."','".$obs."'";
         /*
             VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
@@ -154,7 +134,7 @@ if (isset($_POST['categoria'])) {
             $inserta_Datos->insertarDato('categoria',$campos,$valores);
         }
     }
-
+}
 ?>
 <script type="text/javascript">
 

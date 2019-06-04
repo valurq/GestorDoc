@@ -136,18 +136,22 @@ function esVacio(objeto){
     return resultado;
 }
 function crearMenu(dir,imagen,titulo,permiso){
+
     var dire=document.createElement("a");
     dire.className="url";
     dire.id="a-"+cont;
     dire.href=dir;
     dire.target="frame-trabajo"
+
     var item=document.createElement("div");
     item.className="menu-opcion";
     item.id="b-"+cont;
+
     var icono=document.createElement("div");
     icono.className="icono-opcion";
     icono.id="c-"+cont;
     icono.style.backgroundImage=imagen;
+
     var titu=document.createElement("div");
     titu.className="titulo-opcion";
     titu.id="d-"+cont;
@@ -164,4 +168,21 @@ function crearMenu(dir,imagen,titulo,permiso){
     document.getElementById("b-"+cont).appendChild(icono);
     document.getElementById("b-"+cont).appendChild(titu);
     cont++;
+}
+
+function cargarCampos(camposform,valores){
+    var campo;
+    //camposform='"'+camposform+'"';
+//    alert(camposform);
+//    alert(valores)
+    camposform=camposform.split(",");
+    valores=valores.split(",");
+    for(var i=0;i<camposform.length;i++){
+        campo=document.getElementById(camposform[i]);
+        console.log(camposform[i]+" ->"+valores[i]);
+        //campo=document.getElementById("frame-trabajo").contentWindow.document.getElementById(camposform[i]);
+        if((campo.tagName=="INPUT")||(campo.tagName=="TEXTAREA")){
+            campo.value=valores[i];
+        }
+    }
 }

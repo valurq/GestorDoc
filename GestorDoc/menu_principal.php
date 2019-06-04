@@ -33,7 +33,7 @@
                 <div id="usuario"></div>
             </div>
             <div class="area-trabajo">
-                <iframe src="" frameborder="0"></iframe>
+                <iframe src="" frameborder="0" name="frame-trabajo" id="frame-trabajo"></iframe>
             </div>
         </div>
 
