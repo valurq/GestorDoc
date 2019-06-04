@@ -60,13 +60,13 @@
       </script>
 
 </head>
-<body>
+<body style="background-color:white">
 
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="CAT_INFORME" method="POST" onsubmit="return verificar()" style="margin:0px" >
 
 <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
-  <input type="hidden" name="idformulario" id="idformulario" value="0" >
+  <input type="hidden" name="idformulario" id="idformulario" value=<?php echo $id;?> >
 
   <input name="cat_informe" id ="cat_informe" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
   <textarea name="nota" style="position:absolute;left:134px;top:137px;width:379px;height:97px;z-index:3"></textarea>
@@ -115,7 +115,7 @@ if(isset($_POST['cat_informe'])){
       // Si el acceso al form fue para una modificacion
             $inserta_Datos->modificarDato('cat_informe',$campos,$valores,'id',$idForm);
         }else{
-      // Si el acceso para el form fue para agregar un nuevo registro.    
+      // Si el acceso para el form fue para agregar un nuevo registro.
             $inserta_Datos->insertarDato('cat_informe',$campos,$valores);
         }
 
