@@ -21,16 +21,6 @@ $campos=['cat_informe','substr(nota,1,40)'];
       </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
 
-        <script type="text/javascript">
-            function seleccionarFila(id){
-                if(document.getElementById('seleccionado').value!=''){
-                    var anterior=document.getElementById('seleccionado').value;
-                    document.getElementById(anterior).style.backgroundColor='white';
-                }
-                document.getElementById(id).style.backgroundColor='red';
-                document.getElementById('seleccionado').value=id;
-            }
-        </script>
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -44,9 +34,13 @@ $campos=['cat_informe','substr(nota,1,40)'];
     </head>
 
     <body style="background-color:white">
-        <form class="" action="index.html" method="post">
-            <input type="hidden" name="seleccionado" id="seleccionado">
-        </form>
+      <!--============================================================================= -->
+            <!--CAMPO OCULTO UTILIZADO PARA LA EDICION -->
+      <!--============================================================================= -->
+              <form id="formularioMultiuso" action="" method="post">
+                  <input type="hidden" name="seleccionado" id="seleccionado" value="0">
+              </form>
+      <!--============================================================================= -->
 
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:540px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA DE INFORMES</B></font>

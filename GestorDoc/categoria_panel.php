@@ -20,6 +20,7 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
       </script>
         <script type="text/javascript" src="Js/funciones.js"></script>
 
+
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -33,12 +34,16 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
     </head>
 
     <body style="background-color:white">
+<!--============================================================================= -->
+      <!--CAMPO OCULTO UTILIZADO PARA LA EDICION -->
+<!--============================================================================= -->
         <form id="formularioMultiuso" action="" method="post">
             <input type="hidden" name="seleccionado" id="seleccionado" value="0">
         </form>
+<!--============================================================================= -->
 
         <div class="menu-panel" >
-                        
+
                   <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
                         <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA</B></font>
                   </div>

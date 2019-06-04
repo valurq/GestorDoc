@@ -135,6 +135,27 @@ function esVacio(objeto){
     ((objeto.value!="")&&(objeto.value!=" ")&&((objeto.value).strlenght>0))?resultado =true:resultado= false ;
     return resultado;
 }
+
+function crearAcceso(dir,titulo){
+
+  var dire=document.createElement("a");
+  dire.className="url";
+  dire.id="a-"+cont;
+  dire.href=dir;
+  dire.target="_blank";
+
+  var titu=document.createElement("div");
+  titu.className="titulo-opcion-informes";
+  titu.id="b-"+cont;
+  titu.innerText=titulo;
+
+  dire.appendChild(titu);
+
+  document.getElementById('menu-items').appendChild(dire);
+  document.getElementById("a-"+cont).appendChild(titu);
+  cont++;
+}
+
 function crearMenu(dir,imagen,titulo,permiso){
     var dire=document.createElement("a");
     dire.className="url";
