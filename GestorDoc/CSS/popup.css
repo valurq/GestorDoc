@@ -1,0 +1,43 @@
+#popup{
+    background-color: white;
+    width: 400px;
+    height: 150px;
+    position: absolute;
+    left: 30%;
+    top:30%;
+    margin-top:-75px;
+    margin-left: -200px;
+    box-sizing: border-box;
+    border:1px solid black;
+    border-radius: 20px;
+    z-index: 10;
+    padding: 15px;
+    padding-top: 30px;
+}
+#imagenPopup{
+    width: 40px;
+    height: 40px;
+    background-size: 100% 100%;
+    float: left;
+}
+#mensajePopup{
+    float: left;
+    margin-left: 10px;
+    border: 0px solid black;
+    width: 300px;
+    height: 50px;
+    clear:right;
+    resize: none;
+}
+#btPopupAceptar{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    margin-top: 10px;
+    margin-left: auto;
+
+}
+#btPopupAceptar:hover{
+    background-color: #007ce8;
+    border-color: black;
+}

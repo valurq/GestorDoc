@@ -1,12 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-  <?php
+    <?php
         /*
         SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
         ========================================================================
         */
         include("Parametros/conexion.php");
+
         $inserta_Datos=new Consultas();
         $id=0;
         $resultado="" ;
@@ -31,7 +32,6 @@
             $camposIdForm=array('perfil,nota');
         }
     ?>
-
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -63,7 +63,6 @@
        margin-bottom: 0px;
       }
 </style>
-
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -93,22 +92,21 @@
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="perfilForm" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
+    <input type="hidden" name="idformulario" id="idformulario" value=<?php echo $id;?> >
     <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
   <input name="perfil" id ="perfil" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
 
   <div id="elimina_doc" style="position:absolute;left:133px;top:130px;width:379px;height:97px;z-index:3">
   <?php
-    $elimina=new Consultas();
-    $elimina->opciones_sino("elimina",$eliminaDoc) ;
+    $inserta_Datos->opciones_sino("elimina",$eliminaDoc) ;
   ?>
   </div>
 
 
     <div id="modifica_doc" style="position:absolute;left:133px;top:160px;width:379px;height:97px;z-index:3">
     <?php
-      $modifica=new Consultas();
-      $modifica->opciones_sino("modifica",$modificaDoc) ;
+      $inserta_Datos->opciones_sino("modifica",$modificaDoc) ;
     ?>
     </div>
 
@@ -164,7 +162,16 @@ if(($id!=0 )){
 }
 
     //include("Parametros/conexion.php");
-    $inserta_Datos=new Consultas();
+    if(($id!=0 )){
+        /*
+            CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
+        */
+        $valores=implode(",",$resultado);
+        $camposIdForm=implode(",",$camposIdForm);
+        //LLAMADA A LA FUNCION JS
+        echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+    }
+
 if(isset( $_POST['perfil'] )) {
 
     //======================================================================================
@@ -179,8 +186,6 @@ if(isset( $_POST['perfil'] )) {
 
     $campos = array( 'perfil','elimina_doc','modifica_doc','creador','comentario' );
     $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$creador."','".$obs."'";
-
-
   /*
     VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
   */

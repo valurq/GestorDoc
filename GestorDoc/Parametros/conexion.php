@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="valurq123";
+    private $pass="";
     public $conexion;
 
 
@@ -136,12 +136,13 @@ class Consultas extends Conexion{
             if(count($tamanhos)<$i+1){
                 echo"<td class='titulo-tabla'>".$titulos[$i]."</td>";
             }else{
-                echo"<td style='width:>".$tamanhos[$i]."' class='titulo-tabla'>".$titulos[$i]."</td>";
+                echo"<td style='width:".$tamanhos[$i]."' class='titulo-tabla'>".$titulos[$i]."</td>";
             }
         }
         echo "</tr>";
         echo"</thead>";
     }
+
 
    public function opciones_sino($nombreOpcion,$valor)
    {
