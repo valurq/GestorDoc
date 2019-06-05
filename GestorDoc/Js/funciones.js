@@ -44,7 +44,7 @@ function editar(direccion){
     var sel=document.getElementById('seleccionado').value;
    // alert(sel)
     if((sel=="")||(sel==' ')||(sel==0)){
-        popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
+        popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
     }else {
         document.getElementById("formularioMultiuso").action=direccion;
         document.getElementById("formularioMultiuso").submit();
