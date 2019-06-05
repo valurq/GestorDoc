@@ -1,6 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+  <?php
+          /*
+          SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
+          ========================================================================
+          */
+          include("Parametros/conexion.php");
+          $inserta_Datos=new Consultas();
+          $id=0;
+          $resultado="";
+
+          /*
+              VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO
+          */
+          if(isset($_POST['seleccionado'])){
+              $id=$_POST['seleccionado'];
+              $campos=array('nombre','apellido','usuario','cargo','dpto','mail','obs','perfil_id');
+              /*
+                  CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
+              */
+              $resultado=$inserta_Datos->consultarDatos($campos,'usuario',"","id",$id );
+              $resultado=$resultado->fetch_array(MYSQLI_NUM);
+              $idPerfil=$resultado[7];
+              /*
+                  CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
+              */
+              $camposIdForm=array('nombre,apellido,usuario,cargo,dpto,mail,nota,idperfil');
+          }
+      ?>
+
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -37,15 +66,32 @@
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
 			  crossorigin="anonymous"></script>
-        <script type="text/javascript" src="Js/funciones.js">
-      </script>
+        <script type="text/javascript" src="Js/funciones.js"></script>
+
+      <script type="text/javascript">
+
+              function cargarCampos(camposform,valores){
+                  var campo;
+                  camposform=camposform.split(",");
+                  valores=valores.split(",");
+                  for(var i=0;i<camposform.length;i++){
+                      campo=document.getElementById(camposform[i]);
+                      console.log(camposform[i]+" ->"+valores[i]);
+                      if((campo.tagName=="INPUT")||(campo.tagName=="TEXTAREA")){
+                          campo.value=valores[i];
+                      }
+                  }
+              }
+
+          </script>
 
 </head>
-<body>
+<body style="background-color:white" >
+
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="menu" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
-    <input type="hidden" name="idformulario" id="idformulario" value="0" >
+  <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
   <input name="nombre" id ="nombre" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:90px;z-index:2">
   <input name="apellido" id ="apellido" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:115px;z-index:2">
@@ -53,13 +99,13 @@
   <input name="cargo" id ="cargo" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:165px;z-index:2">
   <input name="dpto" id ="dpto" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:190px;z-index:2">
   <input name="mail" id ="mail" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:215px;z-index:2">
-  <textarea name="nota" style="position:absolute;left:134px;top:265px;width:379px;height:97px;z-index:3"></textarea>
+  <textarea name="nota" id="nota" style="position:absolute;left:134px;top:265px;width:379px;height:97px;z-index:3"></textarea>
+  <input type="hidden" name="idperfil" id="idperfil" maxlength=100 >
 
-<div id=lisbox style="position:absolute;left:133px;top:240px;width:379px;height:97px;z-index:3">
+<div id=lisbox style="position:absolute;left:133px;top:240px;width:379px;height:20px;z-index:3">
 <?php
-  include("Parametros/conexion.php");
   $listbox=new Consultas();
-  $listbox->crearMenuDesplegable("Perfil","id","perfil","perfil") ;
+  $listbox->DesplegableElegido($idPerfil,"perfil","id","perfil","perfil") ;
 ?>
 </div>
 
@@ -75,37 +121,38 @@
 <div><font color="#808080" class="ws12"><B>Definicion de usuarios</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:90px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:90px; width:70px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Nombre *:</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:115px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:115px; width:70px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Apellido *:</font></div>
 </div></div>
 
-<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:165px; width:150px; height:23px; z-index:4">
-  <font color="#333333" class="ws11">Cargo:</font>
-</div>
-
-<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:190px; width:150px; height:23px; z-index:4">
-  <font color="#333333" class="ws11">Dpto:</font>
-</div>
-
-<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:215px; width:150px; height:23px; z-index:4">
-  <font color="#333333" class="ws11">Mail:</font>
-</div>
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:140px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:140px; width:70px; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Login *:</font></div>
 </div></div>
 
-<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:240px; width:150px; height:23px; z-index:4">
+<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:165px; width:70px; height:23px; z-index:4">
+  <font color="#333333" class="ws11">Cargo:</font>
+</div>
+
+<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:190px; width:70px; height:23px; z-index:4">
+  <font color="#333333" class="ws11">Dpto:</font>
+</div>
+
+<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:215px; width:70px; height:23px; z-index:4">
+  <font color="#333333" class="ws11">Mail:</font>
+</div>
+
+<div class="wpmd" id="text2" style="position:absolute; overflow:hidden; left:24px; top:240px; width:70px; height:23px; z-index:4">
   <font color="#333333" class="ws11">Perfil:</font>
 </div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:265px; width:150px; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:265px; width:70px; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
@@ -115,7 +162,20 @@
 </body>
 
 <?php
-    $inserta_Datos=new Consultas();
+/*
+LLAMADA A FUNCION JS CORRESPONDIENTE A CARGAR DATOS EN LOS CAMPOS DEL FORMULARIO HTML
+*/
+if(($id!=0 )){
+    /*
+        CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
+    */
+    $valores=implode(",",$resultado);
+    $camposIdForm=implode(",",$camposIdForm);
+    //LLAMADA A LA FUNCION JS
+    echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+}
+
+
 if (isset($_POST['usuario'])){
 
 
@@ -129,13 +189,20 @@ if (isset($_POST['usuario'])){
     $dpto     =trim($_POST['dpto']);
     $obs     =trim($_POST['nota']);
     $mail     =trim($_POST['mail']);
-    $perfil_id     =trim($_POST['Perfil']);
+    $perfil_id     =$_POST['perfil'];
     $creador    ="UsuarioLogin" ;
+    $idForm = $_POST['Idformulario'];
 
-    $campos = array( '(usuario','nombre','apellido','cargo','dpto','obs','perfil_id','creador','mail)' );
-    $valores="'".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$perfil_id."','".$creador."','".$mail."'"   ;
 
-    $inserta_Datos->insertarDato('usuario',$campos,$valores);
+    $campos = array( 'perfil_id','usuario','nombre','apellido','cargo','dpto','obs','mail','creador' );
+    $valores="'".$perfil_id."','".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$mail."','".$creador."'" ;
+
+    /*    VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO     */
+      if(isset($idForm)&&($idForm!=0)){
+          $inserta_Datos->modificarDato('usuario',$campos,$valores,'id',$idForm);
+      }else{
+        $inserta_Datos->insertarDato('usuario',$campos,$valores);
+      }
 }
 ?>
 <script type="text/javascript">

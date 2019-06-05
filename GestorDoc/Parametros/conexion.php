@@ -106,7 +106,7 @@ class Consultas extends Conexion{
             NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
         */
         //$this->crearPaqueteModificacion($campos,$valores);
-        echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
+        //echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
         $this->conexion->query("UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'");
 
     }
@@ -143,11 +143,29 @@ class Consultas extends Conexion{
         echo"</thead>";
     }
 
-   public function opciones_sino($nombreOpcion){
-     $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
-     $opcion_sino.= "<option value='si'>SI</option>" ;
-     $opcion_sino.= "<option value='no'>NO</option>" ;
-     $opcion_sino.="</select>";
+
+   public function opciones_sino($nombreOpcion,$valor)
+   {
+    if($valor=="si" || $valor=="no" ) {
+      // MODIFICA REGISTRO
+          $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+          if($valor=="si"){
+            $opcion_sino.= "<option value='no'>NO</option>" ;
+            $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+          }else{
+            $opcion_sino.= "<option value='si'>SI</option>" ;
+            $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+            }
+          $opcion_sino.="</select>";
+        }else{
+          // NUEVO REGISTRO
+          $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+          $opcion_sino.= "<option value='si'>SI</option>" ;
+          $opcion_sino.= "<option value='no'>NO</option>" ;
+          $opcion_sino.="</select>";
+        }
+
+
      echo $opcion_sino;
    }
 
@@ -168,6 +186,8 @@ class Consultas extends Conexion{
         }
         echo"</tbody>";
     }
+
+
     public function consultarMenu($usuario){
         /*
             METODO PARA PODER CONSULTAR DATOS REFERENTES AL MENU
@@ -185,6 +205,16 @@ class Consultas extends Conexion{
         return $resultado;
     }
 
+    public function consultarInformes(){
+        /*
+            METODO PARA PODER CONSULTAR OPCIONES DE LOS INFORMES
+            $objetoConsultas->consultarInformes()
+        */
+        $sql="SELECT url,titulo FROM informes order by titulo asc";
+        $resultado=$this->conexion->query($sql);
+        return $resultado;
+    }
+
     public function crearMenuDesplegable($nombreLista,$campoID,$campoDescripcion,$tabla){
         /*
             METODO PARA CREAR UN MENU DESPLEGALBE CON LOS CAMPOS DE DESCRIPCION COMO VALOR MOSTRADO Y EL ID EN EL VALOR DE CADA OPCION/
@@ -196,6 +226,39 @@ class Consultas extends Conexion{
         $lista.=$this->crearOpciones($resultado);
         $lista.="</select>";
         echo $lista;
+    }
+
+    public function DesplegableElegido($idElegido, $nombreLista,$campoID,$campoDescripcion,$tabla){
+        /*
+            Metodo que permite mostrar una opcion seleccionada y grabada
+            previamente. Utilizado par EDICION / MODIFICA y que traiga el valor
+            de la tabla.
+            parametros :
+            $idElegido : identificador del registro a buscar
+            $nombreLista : nombre del select, objeto de $lista
+            $campoID : nombre del campo id en la tabla
+            $campoDescripcion : nombre del campo de la descrip.en la tabla
+            $tabla : nombre de la tabla
+        */
+        $lista="<select name='".$nombreLista."'>";
+        $campos= array($campoID,$campoDescripcion );
+        $resultado=$this->consultarDatos($campos,$tabla);
+        $lista.=$this->OpcionesElegidas($resultado, $idElegido);
+        $lista.="</select>";
+        echo $lista;
+    }
+
+    public function OpcionesElegidas($resultadoConsulta,$idelegido){
+
+        $opciones="";
+        while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
+              if ($datos[0]==$idelegido ){
+                $opciones.="<option selected  value='".$datos[0]."'>".$datos[1]."</option>";
+              }else{
+                $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
+              }
+      }
+        return $opciones;
     }
 
     public function crearOpciones($resultadoConsulta){

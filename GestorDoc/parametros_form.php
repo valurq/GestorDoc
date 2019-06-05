@@ -1,6 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+  <?php
+        /*
+        SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
+        ========================================================================
+        */
+        include("Parametros/conexion.php");
+        $inserta_Datos=new Consultas();
+        $id=0;
+        $resultado="";
+
+        /* VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO */
+        if(isset($_POST['seleccionado'])){
+            $id=$_POST['seleccionado'];
+            $campos=array('empresa','logo_archivo');
+            /*
+                CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
+            */
+            $resultado=$inserta_Datos->consultarDatos($campos,'parametros',"","id",$id );
+            $resultado=$resultado->fetch_array(MYSQLI_NUM);
+            /*
+                CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
+            */
+            $camposIdForm=array('empresa,logo');
+        }
+    ?>
+
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -40,20 +66,37 @@
         <script type="text/javascript" src="Js/funciones.js">
       </script>
 
+  <script type="text/javascript">
+
+        function cargarCampos(camposform,valores){
+            var campo;
+            camposform=camposform.split(",");
+            valores=valores.split(",");
+            for(var i=0;i<camposform.length;i++){
+                campo=document.getElementById(camposform[i]);
+                console.log(camposform[i]+" ->"+valores[i]);
+                if((campo.tagName=="INPUT")||(campo.tagName=="TEXTAREA")){
+                    campo.value=valores[i];
+                }
+            }
+        }
+
+    </script>
+
 </head>
-<body>
+<body style="background-color:white" >
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="PARAMETROS" method="POST" onsubmit="return verificar()" style="margin:0px" >
 
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
-    <input type="hidden" name="idformulario" id="idformulario" value="0" >
+  <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
-  <input name="empresa" id ="empresa" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="logo" id ="logo" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:142px;z-index:2">
+  <input name="empresa" id ="empresa" type="text" maxlength=80  style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
+  <input name="logo"    id ="logo"    type="text" maxlength=100 style="position:absolute;width:200px;left:133px;top:142px;z-index:2">
 
   <!-- BOTONES -->
   <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:280px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='parametros_panel.php';" style="position:absolute;left:131px;top:280px;z-index:7">
+  <input name="volver" type="button" value="Volver" id="volver" onclick = "location='parametros_panel.php';" style="position:absolute;left:131px;top:280px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
@@ -62,12 +105,12 @@
 <div><font color="#808080" class="ws12"><B>Datos de parametros</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:70px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Empresa :</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:70px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Logotipo :</font></div>
 </div></div>
@@ -78,21 +121,39 @@
 </body>
 
 <?php
-    include("Parametros/conexion.php");
-    $inserta_Datos=new Consultas();
+/*
+LLAMADA A FUNCION JS CORRESPONDIENTE A CARGAR DATOS EN LOS CAMPOS DEL FORMULARIO HTML
+*/
+if(($id!=0 )){
+    /*
+        CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
+    */
+    $valores=implode(",",$resultado);
+    $camposIdForm=implode(",",$camposIdForm);
+    //LLAMADA A LA FUNCION JS
+    echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+}
+
 
 if(isset($_POST['empresa']  )){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
     $empresa     =trim($_POST['empresa']);
-    $logo =trim($_POST['logo']);
+    $logo       =trim($_POST['logo']);
+    $idForm     =$_POST['Idformulario'];
 
-    $campos = array( '(empresa','logo)' );
+    $campos = array( 'empresa','logo_archivo' );
     $valores="'".$empresa."','".$logo."'";
-
-    $inserta_Datos->insertarDato('parametros',$campos,$valores);
-
+    /*
+      VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
+    */
+    if(isset($idForm)&&($idForm!=0)){
+        $inserta_Datos->modificarDato('parametros',$campos,$valores,'id',$idForm);
+    }else{
+        $inserta_Datos->insertarDato('parametros',$campos,$valores);
+    }
+        echo '<script>document.getElementById("volver").click(); </script>';
 }
 ?>
 <script type="text/javascript">

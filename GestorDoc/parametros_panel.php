@@ -6,23 +6,19 @@ $consultas=new Consultas();
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Empresa'];
-$campos=['empresa'];
+$cabecera=['Empresa','Arc.logotipo'];
+$campos=['empresa','logo_archivo'];
 
 ?>
 <html lang="en" dir="ltr">
 
     <head>
-        <script type="text/javascript">
-            function seleccionarFila(id){
-                if(document.getElementById('seleccionado').value!=''){
-                    var anterior=document.getElementById('seleccionado').value;
-                    document.getElementById(anterior).style.backgroundColor='white';
-                }
-                document.getElementById(id).style.backgroundColor='red';
-                document.getElementById('seleccionado').value=id;
-            }
-        </script>
+      <script
+        src="https://code.jquery.com/jquery-3.4.0.js"
+        integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+        crossorigin="anonymous">
+      </script>
+      <script type="text/javascript" src="Js/funciones.js"></script>
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -35,14 +31,19 @@ $campos=['empresa'];
         <title>VALURQ_SRL</title>
     </head>
 
-    <body>
-        <form class="" action="index.html" method="post">
-            <input type="hidden" name="seleccionado" id="seleccionado">
-        </form>
+    <body style="background-color:white" >
+      <!--============================================================================= -->
+      <!--CAMPO OCULTO UTILIZADO PARA LA EDICION -->
+      <!--============================================================================= -->
+              <form id="formularioMultiuso" action="" method="post">
+                  <input type="hidden" name="seleccionado" id="seleccionado" value="0">
+              </form>
+      <!--============================================================================= -->
+
 
         <div class="menu-panel" >
             <!-- <input type="button" name="Nuevo" value="Nuevo" > -->
-            <input type="button" name="Editar" value="Editar">
+            <input type="button" name="Editar" value="Editar" onclick="editar('parametros_form.php')">
             <!-- <input type="button" name="Eliminar" value="Eliminar"> -->
         </div>
 
