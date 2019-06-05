@@ -32,6 +32,13 @@
     grid-row-start: 2;
     grid-row-end: 4;
 }
+.area-trabajo2{
+    background-color: white;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
 /*
 #034285
 :#eeeeee
@@ -102,6 +109,12 @@
     font-size: 10pt;
     font-family: Arial;
     margin-left: 15px;
+}
+.titulo-opcion-informes{
+    font-size: 12pt;
+    font-style: normal;
+    font-family: Arial;
+    margin-left: 25px;
 }
 .url{
     width: 100%;

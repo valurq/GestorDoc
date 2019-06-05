@@ -28,6 +28,8 @@
             $camposIdForm=array('categoria,obs');
         }
     ?>
+
+
     <title>VALURQ_SRL</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="generator" content="Web Page Maker">
@@ -66,7 +68,7 @@
 			  crossorigin="anonymous"></script>
         <script type="text/javascript" src="Js/funciones.js"></script>
 </head>
-<body>
+<body style="background-color:white">
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
 <form name="CATEGORIA" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
@@ -85,12 +87,12 @@
 <div><font color="#808080" class="ws12"><B>Categoria de documentos</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:150px; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:70px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Descripcion :</font></div>
 </div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:135px; width:150px; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:135px; width:70px;; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
