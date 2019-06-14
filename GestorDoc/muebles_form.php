@@ -60,7 +60,7 @@
        margin-bottom: 0px;
       }
 </style>
-
+      <link rel="stylesheet" href="CSS/popup.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -111,7 +111,7 @@
       <div><font color="#333333" class="ws11">Nombre *:</font></div>
       </div></div>
 
-      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:70px;; height:23px; z-index:4">
+      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:100px;; height:23px; z-index:4">
       <div class="wpmd">
       <div><font color="#333333" class="ws11">Comentario :</font></div>
       </div></div>
@@ -174,7 +174,7 @@ if (isset($_POST['nombre'])  ){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar dato requerido.!') ;
+       popup('Advertencia','Es necesario ingresar dato requerido.!') ;
        return false ;
 
 		}

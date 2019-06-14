@@ -6,9 +6,9 @@ function incluirJQuery(){
 function seleccionarFila(id){
     if((document.getElementById('seleccionado').value!='')&&(document.getElementById('seleccionado').value!=0)){
         var anterior=document.getElementById('seleccionado').value;
-        document.getElementById(anterior).style.backgroundColor='white';
+        document.getElementById(anterior).style.backgroundColor="#669ee8";
     }
-    document.getElementById(id).style.backgroundColor='red';
+    document.getElementById(id).style.backgroundColor= "#669ee8";
     document.getElementById("seleccionado").value=id;
 }
 //FUNCION QUE ES LLAMADA POR EL CAMPO DE BUSQUEDA PARA REALIZAR CONSULTAS A LA BASE DE DATOS Y MOSTRAR EN LA TABLA CORRESPONDIENTE
@@ -24,18 +24,16 @@ function buscarTabla(obj,tabla) {
 
 function eliminar(tabla){
    var sel=document.getElementById('seleccionado').value;
-  // alert(sel)
    if((sel=="")||(sel==' ')||(sel==0)){
-       popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLO");
+       popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLO");
    }else {
            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
            $.post("Parametros/eliminador.php", {id : sel , tabla : tabla}, function(msg) {
-            //   alert(msg);
                if(msg==1){
                    document.getElementById('seleccionado').value="";
                    location.reload();
                }else{
-                   popup('E',"ERROR EN LA ELIMINACION DEL REGISTRO");
+                   popup('Error',"ERROR EN LA ELIMINACION DEL REGISTRO");
                }
             });
    }
@@ -44,7 +42,7 @@ function editar(direccion){
     var sel=document.getElementById('seleccionado').value;
    // alert(sel)
     if((sel=="")||(sel==' ')||(sel==0)){
-        popup('A',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
+        popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
     }else {
         document.getElementById("formularioMultiuso").action=direccion;
         document.getElementById("formularioMultiuso").submit();

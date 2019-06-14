@@ -13,6 +13,9 @@ $campos=['empresa','logo_archivo'];
 <html lang="en" dir="ltr">
 
     <head>
+
+      <link rel="stylesheet" href="CSS/popup.css">
+      <link rel="stylesheet" href="CSS/paneles.css">
       <script
         src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -43,7 +46,7 @@ $campos=['empresa','logo_archivo'];
 
         <div class="menu-panel" >
             <!-- <input type="button" name="Nuevo" value="Nuevo" > -->
-            <input type="button" name="Editar" value="Editar" onclick="editar('parametros_form.php')">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('parametros_form.php')">
             <!-- <input type="button" name="Eliminar" value="Eliminar"> -->
         </div>
 

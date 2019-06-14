@@ -12,7 +12,8 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
 <html lang="en" dir="ltr">
 
     <head>
-
+          <link rel="stylesheet" href="CSS/popup.css">
+          <link rel="stylesheet" href="CSS/paneles.css">
         <script
   			  src="https://code.jquery.com/jquery-3.4.0.js"
   			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -50,9 +51,9 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
 
           <br><br>
 
-            <input type="button" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
-            <input type="button" name="Editar" value="Editar" onclick="editar('categoria_form.php')">
-            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
+            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('categoria_form.php')">
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('categoria')">
         </div>
 
         <div class="mostrar-tabla">

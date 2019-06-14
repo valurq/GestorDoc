@@ -6,8 +6,11 @@ $consultas=new Consultas();
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Titulo','URL','Posicion','Icono'];
-$campos=['titulo_menu','link_acceso','posicion','icono'  ];
+$cabecera=['ID','F.Doc.','N.Doc.','Titulo','Categoria','Mueble','Gabeta','F.vto'];
+$campos=['id','bus_fecha','bus_numero',
+'titulo','(SELECT categoria FROM categoria WHERE id = documento.categoria_id)',
+'(SELECT mueble FROM ubi_mueble WHERE id=(SELECT ubi_mueble_id FROM ubi_gabetas WHERE id=documento.ubi_gabetas_id))',
+'(SELECT etiqueta FROM ubi_gabetas WHERE id=ubi_gabetas_id)','CONCAT(DAY(fecha_vto),"/",MONTH(fecha_vto),"/",YEAR(fecha_vto)) AS f_vto'  ];
 
 ?>
 <html lang="en" dir="ltr">
@@ -44,18 +47,18 @@ $campos=['titulo_menu','link_acceso','posicion','icono'  ];
         </form>
 <!--============================================================================= -->
 
-        <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
-              <font color="#808080" class="ws12"><B>PANEL DE MENUES</B></font>
+        <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:324px; height:22px; z-index:1">
+              <font color="#808080" class="ws12"><B>PANEL DE DOCUMENTOS / ARCHIVOS</B></font>
         </div>
 <br><br>
         <div class="menu-panel" >
-            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='menu_form.php';" value="Nuevo">
-            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('menu_form.php')">
-            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('menu_opcion')" >
+            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='doc_form.php';" value="Nuevo">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('doc_form.php')">
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento')" >
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'menu_opcion');?>
+            <?php  $consultas->crearTabla($cabecera,$campos,'documento');?>
         </div>
 
     </body>

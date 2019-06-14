@@ -1,0 +1,64 @@
+/* titulo-tabla : titulo de columna  */
+/* datos-tabla : datos del panel  */
+/* mostrar-tabla: espacio de los botones*/
+
+.titulo-tabla{
+      background-color: #668cff;
+      font-family: Arial;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: bold;
+      border-top: 1px solid black;
+      border-bottom:  1px solid black;
+
+
+}
+.menu-panel{
+  /*Margen de boton y titulo del panel*/
+  margin-bottom: 10px;
+  
+}
+.boton_panel{
+  /* propiedades de los botones del panel*/
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    margin-top: 10px;
+    margin-left: auto;
+    font-weight: normal;
+    font-family: arial;
+    padding: 5px 15px;
+
+}
+.boton_panel:hover{
+  /*Propiedad de posicionar encima del boton el mouse en el panel*/
+    background-color: #61b0f4;
+    border-color: black;
+}
+/*
+Colores intercalados en la tabla de paneles, la parte de datos.
+*/
+tr:nth-child(odd) {
+    background-color:#d3d6da;
+}
+tr:nth-child(even) {
+    background-color:#ffffff;
+}
+tr:hover {
+  /*Color de fondo al pasar el mouse sobre cada linea
+  de la tabla en panels*/
+background-color: #4b85ba;
+}
+
+.datos-tabla{
+background-color:#f0d657;
+
+
+}
+.mostrar-tabla{
+  font-weight: normal;
+  font-family: arial;
+  font-size: 15px;
+
+
+}

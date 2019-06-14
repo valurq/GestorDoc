@@ -13,7 +13,8 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
 <html lang="en" dir="ltr">
 
     <head>
-
+          <link rel="stylesheet" href="CSS/popup.css">
+          <link rel="stylesheet" href="CSS/paneles.css">
       <script
         src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -48,9 +49,9 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
       </div>
 <br><br>
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" onclick = "location='muebles_form.php';" value="Nuevo">
-            <input type="button" name="Editar" value="Editar" onclick="editar('muebles_form.php')" >
-            <input type="button" name="Eliminar" value="Eliminar" onclick="eliminar('ubi_mueble')" >
+            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='muebles_form.php';" value="Nuevo">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('muebles_form.php')" >
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('ubi_mueble')" >
         </div>
 
         <div class="mostrar-tabla">
