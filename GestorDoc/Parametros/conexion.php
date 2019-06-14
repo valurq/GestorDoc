@@ -65,6 +65,18 @@ class Consultas extends Conexion{
         }
         return $this->conexion->query($query);
     }
+    public function buscarDato($campos,$tabla,$campoCondicion,$valorCondicion){
+        /*
+            METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
+            $objetoConsultas->consultarDatos(<Array de campos a consultar>,<tabla de la bd>,<Metodo de ordenar>,<condicion para la consulta>)
+            Ej: $objetoConsultas->consultarDatos(['id','descripcion','categorias','order by id DESC']);
+        */
+        //$texto=(implode(",", $campos));
+        $campos=implode(",",$campos);
+        $query="SELECT ".$campos." FROM ".$tabla." WHERE ".$campoCondicion." LIKE '%".$valorCondicion."%' ";
+            //echo $query;
+        return $this->conexion->query($query);
+    }
 
 
     public function eliminarDato($tabla,$campo,$identificador){
@@ -117,7 +129,7 @@ class Consultas extends Conexion{
             $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
             $objetoConsultas->crearTabla(['ID','Categoria'],['id','nom_categoria'],'categorias')
         */
-        echo "<table style='width:100%'>";
+        echo "<table id='tablaPanel' style='width:100%'>";
         array_unshift($camposBD,"id");
         $this->crearCabeceraTabla($cabecera,$tamanhos);
         $res=$this->consultarDatos($camposBD,$tabla,$condicion);
@@ -144,8 +156,7 @@ class Consultas extends Conexion{
     }
 
 
-   public function opciones_sino($nombreOpcion,$valor)
-   {
+   public function opciones_sino($nombreOpcion,$valor) {
     if($valor=="si" || $valor=="no" ) {
       // MODIFICA REGISTRO
           $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
@@ -175,7 +186,7 @@ class Consultas extends Conexion{
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
             $objetoConsultas->crearContenidoTabla(<Resultado de consulta a la base de datos>);
         */
-        echo "<tbody>";
+        echo "<tbody id='datosPanel'>";
         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
             echo "<tr onclick='seleccionarFila($datos[0])' id='".$datos[0]."'>";
             array_shift($datos);
@@ -228,6 +239,15 @@ class Consultas extends Conexion{
         echo $lista;
     }
 
+
+    public function crearOpciones($resultadoConsulta){
+
+        $opciones="";
+        while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
+                $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
+        }
+        return $opciones;
+    }
     public function DesplegableElegido($idElegido, $nombreLista,$campoID,$campoDescripcion,$tabla){
         /*
             Metodo que permite mostrar una opcion seleccionada y grabada
@@ -258,15 +278,6 @@ class Consultas extends Conexion{
                 $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
               }
       }
-        return $opciones;
-    }
-
-    public function crearOpciones($resultadoConsulta){
-
-        $opciones="";
-        while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
-                $opciones.="<option value='".$datos[0]."'>".$datos[1]."</option>";
-        }
         return $opciones;
     }
 }
