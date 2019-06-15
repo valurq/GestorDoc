@@ -20,7 +20,7 @@
 
         <link rel="stylesheet" href="CSS/menu.css">
         <meta charset="utf-8">
-        <title></title>
+        <title>SGD-VALURQ SRL</title>
     </head>
 
     <body style="">

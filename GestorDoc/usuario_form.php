@@ -16,7 +16,7 @@
           */
           if(isset($_POST['seleccionado'])){
               $id=$_POST['seleccionado'];
-              $campos=array('nombre','apellido','usuario','cargo','dpto','mail','obs','perfil_id');
+              $campos=array('nombre','apellido','usuario','cargo','dpto','mail','obs','perfil_id','pass');
               /*
                   CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
               */
@@ -26,7 +26,7 @@
               /*
                   CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
               */
-              $camposIdForm=array('nombre,apellido,usuario,cargo,dpto,mail,nota,idperfil');
+              $camposIdForm=array('nombre,apellido,usuario,cargo,dpto,mail,nota,idperfil,pass');
           }
       ?>
 
@@ -61,7 +61,7 @@
        margin-bottom: 0px;
       }
 </style>
-
+      <link rel="stylesheet" href="CSS/popup.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -99,7 +99,7 @@
   <input name="cargo" id ="cargo" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:165px;z-index:2">
   <input name="dpto" id ="dpto" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:190px;z-index:2">
   <input name="mail" id ="mail" type="text" maxlength=100 style="position:absolute;width:380px;left:133px;top:215px;z-index:2">
-  <textarea name="nota" id="nota" style="position:absolute;left:134px;top:265px;width:379px;height:97px;z-index:3"></textarea>
+  <textarea name="nota" id="nota" style="position:absolute;left:134px;top:290px;width:379px;height:97px;z-index:3"></textarea>
   <input type="hidden" name="idperfil" id="idperfil" maxlength=100 >
 
 <div id=lisbox style="position:absolute;left:133px;top:240px;width:379px;height:20px;z-index:3">
@@ -108,11 +108,11 @@
   $listbox->DesplegableElegido($idPerfil,"perfil","id","perfil","perfil") ;
 ?>
 </div>
-
+<input name="pass" id ="pass" type="password" maxlength=100 style="position:absolute;width:380px;left:133px;top:265px;z-index:2">
 
   <!-- BOTONES -->
-  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:370px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='usuario_panel.php';" style="position:absolute;left:131px;top:370px;z-index:7">
+  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:395px;z-index:6">
+  <input name="volver" type="button" value="Volver" onclick = "location='usuario_panel.php';" style="position:absolute;left:131px;top:395px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
@@ -152,7 +152,12 @@
   <font color="#333333" class="ws11">Perfil:</font>
 </div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:265px; width:70px; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:265px; width:100px; height:23px; z-index:5">
+<div class="wpmd">
+<div><font color="#333333" class="ws11">Contraseña:</font></div>
+</div></div>
+
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:290px; width:100px; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
@@ -190,12 +195,13 @@ if (isset($_POST['usuario'])){
     $obs     =trim($_POST['nota']);
     $mail     =trim($_POST['mail']);
     $perfil_id     =$_POST['perfil'];
+    $pass = md5($_POST['pass'] ) ;
     $creador    ="UsuarioLogin" ;
     $idForm = $_POST['Idformulario'];
 
 
-    $campos = array( 'perfil_id','usuario','nombre','apellido','cargo','dpto','obs','mail','creador' );
-    $valores="'".$perfil_id."','".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$mail."','".$creador."'" ;
+    $campos = array( 'perfil_id','usuario','nombre','apellido','cargo','dpto','obs','mail','creador','pass' );
+    $valores="'".$perfil_id."','".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$mail."','".$creador."','".$pass."'" ;
 
     /*    VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO     */
       if(isset($idForm)&&($idForm!=0)){
@@ -218,7 +224,7 @@ if (isset($_POST['usuario'])){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar los datos requeridos..!') ;
+       popup('Advertencia','Es necesario ingresar los datos requeridos..!') ;
        return false ;
 
 		}
