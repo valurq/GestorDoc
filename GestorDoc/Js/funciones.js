@@ -13,15 +13,35 @@ function seleccionarFila(id){
 }
 //FUNCION QUE ES LLAMADA POR EL CAMPO DE BUSQUEDA PARA REALIZAR CONSULTAS A LA BASE DE DATOS Y MOSTRAR EN LA TABLA CORRESPONDIENTE
 //PARAMETROS : OBJETO (EL INPUT BUSCADOR)   ;  TABLA: TABLA CORRESPONDIENTE A LA BASE DE DATOS DONDE SE REALIZARA LA BUSQUEDA
-function buscarTabla(obj,tabla) {
-        var id=obj.id;
-        var textoBusqueda = $("#"+id).val();
-            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
-            $.post("Parametros/buscador.php", {valor: textoBusqueda ,origen:tabla}, function(mensaje) {
-                $("#resultadoBusqueda").html(mensaje);
-             });
+function buscarTablaPaneles(camposResultado,valor,tabla,campo) {
+    $.post("Parametros/buscador.php", {camposResultado: camposResultado ,dato:valor,tabla:tabla,campoBusqueda:campo}, function(resultado) {
+        //$("#resultadoBusqueda").html(resultado);
+        var i;
+        //console.log(resultado);
+        $("#datosPanel tr").remove();
+        resultado=JSON.parse(resultado);
+        for(i=1 ; i<resultado.length;i++){
+            cargarTabla(resultado[i],"datosPanel");
+        }
+     });
+}
+function cargarTabla(datos,tablaId){
+    var i,columna="";
+    var fila=document.createElement('tr');
+    fila.id=datos[0];
+    fila.addEventListener('click',function() {seleccionarFila(datos[0])} );
+    document.getElementById(tablaId).appendChild(fila);
+    for( i=1;i<datos.length;i++){
+        console.log(datos[i]);
+        if(datos[i]!="null"|| datos[i]!=null){
+            columna=columna.concat("<td>"+datos[i]+"</td>");
+        }else{
+            columna=columna.concat("<td>  </td>");
+        }
     }
-
+    console.log(columna);
+    document.getElementById(datos[0]).innerHTML=columna;
+}
 function eliminar(tabla){
    var sel=document.getElementById('seleccionado').value;
    if((sel=="")||(sel==' ')||(sel==0)){

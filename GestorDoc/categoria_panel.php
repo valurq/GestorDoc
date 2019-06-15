@@ -20,7 +20,9 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
   			  crossorigin="anonymous">
       </script>
         <script type="text/javascript" src="Js/funciones.js"></script>
-
+        <script type="text/javascript">
+            var campos=['categoria','obs','fecreacion'];
+        </script>
 
         <meta charset="utf-8">
         <style media="screen">
@@ -45,11 +47,11 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
 
         <div class="menu-panel" >
 
-                  <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
-                        <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA</B></font>
-                  </div>
-
-          <br><br>
+            <br><br>
+            <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'categoria','categoria')">
+            <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
+                <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA</B></font>
+            </div>
 
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='categoria_form.php';" value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('categoria_form.php')">
