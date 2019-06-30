@@ -66,7 +66,7 @@ class Consultas extends Conexion{
         return $this->conexion->query($query);
     }
     public function buscarDato($campos,$tabla,$campoCondicion,$valorCondicion){
-        /*
+         /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
             $objetoConsultas->consultarDatos(<Array de campos a consultar>,<tabla de la bd>,<Metodo de ordenar>,<condicion para la consulta>)
             Ej: $objetoConsultas->consultarDatos(['id','descripcion','categorias','order by id DESC']);
@@ -154,33 +154,6 @@ class Consultas extends Conexion{
         echo "</tr>";
         echo"</thead>";
     }
-
-
-   public function opciones_sino($nombreOpcion,$valor) {
-    if($valor=="si" || $valor=="no" ) {
-      // MODIFICA REGISTRO
-          $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
-          if($valor=="si"){
-            $opcion_sino.= "<option value='no'>NO</option>" ;
-            $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
-          }else{
-            $opcion_sino.= "<option value='si'>SI</option>" ;
-            $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
-            }
-          $opcion_sino.="</select>";
-        }else{
-          // NUEVO REGISTRO
-          $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
-          $opcion_sino.= "<option value='si'>SI</option>" ;
-          $opcion_sino.= "<option value='no'>NO</option>" ;
-          $opcion_sino.="</select>";
-        }
-
-
-     echo $opcion_sino;
-   }
-
-
    private function crearContenidoTabla($resultadoConsulta){
         /*
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
@@ -196,6 +169,29 @@ class Consultas extends Conexion{
             echo "</tr>";
         }
         echo"</tbody>";
+    }
+    public function opciones_sino($nombreOpcion,$valor) {
+     if($valor=="si" || $valor=="no" ) {
+       // MODIFICA REGISTRO
+           $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+           if($valor=="si"){
+             $opcion_sino.= "<option value='no'>NO</option>" ;
+             $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+           }else{
+             $opcion_sino.= "<option value='si'>SI</option>" ;
+             $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+             }
+           $opcion_sino.="</select>";
+         }else{
+           // NUEVO REGISTRO
+           $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+           $opcion_sino.= "<option value='si'>SI</option>" ;
+           $opcion_sino.= "<option value='no'>NO</option>" ;
+           $opcion_sino.="</select>";
+         }
+
+
+      echo $opcion_sino;
     }
 
 
