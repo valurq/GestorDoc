@@ -63,6 +63,8 @@
        margin-bottom: 0px;
       }
 </style>
+
+      <link rel="stylesheet" href="CSS/popup.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -128,17 +130,17 @@
 <div><font color="#333333" class="ws11">Perfil *:</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:70px;; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:100px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Elimina doc? *:</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:70px;; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:110px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Modifica doc? *:</font></div>
 </div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:190px; width:70px;; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:190px; width:100px;; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
@@ -209,7 +211,7 @@ if(isset( $_POST['perfil'] )) {
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar el datos requeridos..!') ;
+       popup('Advertencia','Es necesario ingresar el datos requeridos..!') ;
        return false ;
 
 		}

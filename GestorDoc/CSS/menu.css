@@ -26,7 +26,7 @@
     grid-column-end: 4;
 }
 .area-trabajo{
-    background-color: blue;
+    background-color: white;
     grid-column-start: 2;
     grid-column-end: 4;
     grid-row-start: 2;
@@ -44,12 +44,12 @@
 :#eeeeee
 */
 #logo{
-    background-image:url("../Imagenes/valurq2.png");
+    background-image:url("../Imagenes/logitovalurq.png");
     background-size: 50% 100%;
     background-position: center;
     background-repeat: no-repeat;
-    width: 90%;
-    height: 100px;
+    width: 60%;
+    height: 60px;
     margin:5%;
 }
 #menu-items{
@@ -61,6 +61,7 @@
     flex-direction: column;
 }
 .menu-opcion{
+  /* OPCIONES DEL MENU Y SUS PROPIEDADES*/
     width: 100%;
     min-height: 20px;
     /*background-color: #d9d9d9;*/
@@ -69,11 +70,12 @@
     align-items: center;
     justify-content: flex-start;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 4px;
     z-index: 3;
 }
 .menu-opcion:hover{
-    /* background-color:#b5b5b5;*/
+  /* AL PASAR EL MOUSE SOBRE LOS ITEMS DEL MENU */
+  /* background-color:#b5b5b5;    */
     color:white;
      z-index: 4;
 }

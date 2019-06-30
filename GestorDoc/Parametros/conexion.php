@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="";
+    private $pass="valurq123";
     public $conexion;
 
 
@@ -129,7 +129,7 @@ class Consultas extends Conexion{
             $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
             $objetoConsultas->crearTabla(['ID','Categoria'],['id','nom_categoria'],'categorias')
         */
-        echo "<table id='tablaPanel' style='width:100%'>";
+        echo "<table id='tablaPanel' cellspacing='0' style='width:100%'>";
         array_unshift($camposBD,"id");
         $this->crearCabeceraTabla($cabecera,$tamanhos);
         $res=$this->consultarDatos($camposBD,$tabla,$condicion);
@@ -154,6 +154,10 @@ class Consultas extends Conexion{
         echo "</tr>";
         echo"</thead>";
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 22a49d8ae0c19c086c41526436875ffefded16d6
    private function crearContenidoTabla($resultadoConsulta){
         /*
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
@@ -161,7 +165,7 @@ class Consultas extends Conexion{
         */
         echo "<tbody id='datosPanel'>";
         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
-            echo "<tr onclick='seleccionarFila($datos[0])' id='".$datos[0]."'>";
+            echo "<tr class='datos-tabla' onclick='seleccionarFila($datos[0])' id='".$datos[0]."'>";
             array_shift($datos);
             foreach( $datos as $valor ){
                 echo "<td>".$valor." </td>";
@@ -194,6 +198,31 @@ class Consultas extends Conexion{
       echo $opcion_sino;
     }
 
+       public function opciones_sino($nombreOpcion,$valor)
+       {
+        if($valor=="si" || $valor=="no" ) {
+          // MODIFICA REGISTRO
+              $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+              if($valor=="si"){
+                $opcion_sino.= "<option value='no'>NO</option>" ;
+                $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+              }else{
+                $opcion_sino.= "<option value='si'>SI</option>" ;
+                $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
+                }
+              $opcion_sino.="</select>";
+            }else{
+              // NUEVO REGISTRO
+              $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
+              $opcion_sino.= "<option value='si'>SI</option>" ;
+              $opcion_sino.= "<option value='no'>NO</option>" ;
+              $opcion_sino.="</select>";
+            }
+
+
+         echo $opcion_sino;
+       }
+
 
     public function consultarMenu($usuario){
         /*
@@ -208,6 +237,7 @@ class Consultas extends Conexion{
         WHERE id IN( SELECT menu_opcion_id FROM acceso
             WHERE perfil_id = ( SELECT perfil_id FROM usuario
                 WHERE id= '".$usuario."' ) ) order by posicion asc";
+
         $resultado=$this->conexion->query($sql);
         return $resultado;
     }

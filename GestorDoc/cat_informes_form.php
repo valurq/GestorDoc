@@ -62,7 +62,7 @@
        margin-bottom: 0px;
       }
 </style>
-
+      <link rel="stylesheet" href="CSS/popup.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -115,7 +115,7 @@
 <div><font color="#333333" class="ws11">Categoria :</font></div>
 </div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:135px; width:70px;; height:23px; z-index:5">
+<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:135px; width:100px;; height:23px; z-index:5">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Comentarios:</font></div>
 </div></div>
@@ -171,7 +171,7 @@ if(isset($_POST['cat_informe'])){
 		      return true ;
 
 		}	else{
-       popup('A','Es necesario ingresar la descipcion de la categoria..!') ;
+       popup('Advertencia','Es necesario ingresar la descripcion de la categoria..!') ;
        return false ;
 
 		}

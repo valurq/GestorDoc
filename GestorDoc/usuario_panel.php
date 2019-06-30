@@ -13,7 +13,8 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
 <html lang="en" dir="ltr">
 
     <head>
-
+          <link rel="stylesheet" href="CSS/popup.css">
+          <link rel="stylesheet" href="CSS/paneles.css">
       <script
         src="https://code.jquery.com/jquery-3.4.0.js"
         integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -47,9 +48,9 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
         </div>
 <br><br>
         <div class="menu-panel" >
-            <input type="button" name="Nuevo" onclick = "location='usuario_form.php';" value="Nuevo">
-            <input type="button" name="Editar" value="Editar" onclick="editar('usuario_form.php')">
-            <input type="button" name="Eliminar" value="Eliminar"  onclick="eliminar('usuario')" >
+            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='usuario_form.php';" value="Nuevo">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('usuario_form.php')">
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar"  onclick="eliminar('usuario')" >
         </div>
 
         <div class="mostrar-tabla">
