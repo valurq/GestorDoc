@@ -20,7 +20,9 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
   			  crossorigin="anonymous">
       </script>
         <script type="text/javascript" src="Js/funciones.js"></script>
+
         <script type="text/javascript">
+        // para busqueda en paneles
             var campos=['categoria','obs','fecreacion'];
         </script>
 
@@ -48,6 +50,7 @@ $campos=['categoria','substr(obs,1,40)','fecreacion'];
         <div class="menu-panel" >
 
             <br><br>
+            <!--campo buscador en el panel -->
             <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'categoria','categoria')">
             <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
                 <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA</B></font>

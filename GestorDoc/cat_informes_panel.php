@@ -22,6 +22,11 @@ $campos=['cat_informe','substr(nota,1,40)'];
       </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
 
+      <script type="text/javascript">
+      // para busqueda en paneles
+          var campos=['cat_informe','substr(nota,1,40)'];
+      </script>
+
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -43,13 +48,15 @@ $campos=['cat_informe','substr(nota,1,40)'];
               </form>
       <!--============================================================================= -->
 
+      <div class="menu-panel" >
+      <br><br>
+      <!--campo buscador en el panel -->
+        <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'cat_informes','cat_informe')">
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:540px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE CATEGORIA DE INFORMES</B></font>
         </div>
 
-        <br><br>
 
-        <div class="menu-panel" >
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='cat_informes_form.php';"  value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('cat_informes_form.php')" >
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('cat_informes')" >

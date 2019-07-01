@@ -25,6 +25,13 @@ $campos=['id','bus_fecha','bus_numero',
             </script>
               <script type="text/javascript" src="Js/funciones.js"></script>
 
+              <script type="text/javascript">
+              // para busqueda en paneles
+                  var campos=['id','bus_fecha','bus_numero',
+                  'titulo','(SELECT categoria FROM categoria WHERE id = documento.categoria_id)',
+                  '(SELECT mueble FROM ubi_mueble WHERE id=(SELECT ubi_mueble_id FROM ubi_gabetas WHERE id=documento.ubi_gabetas_id))',
+                  '(SELECT etiqueta FROM ubi_gabetas WHERE id=ubi_gabetas_id)','CONCAT(DAY(fecha_vto),"/",MONTH(fecha_vto),"/",YEAR(fecha_vto)) AS f_vto' ];
+              </script>
 
         <meta charset="utf-8">
         <style media="screen">
@@ -47,11 +54,15 @@ $campos=['id','bus_fecha','bus_numero',
         </form>
 <!--============================================================================= -->
 
+        <div class="menu-panel" >
+          <br><br>
+          <!--campo buscador en el panel -->
+          <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'documento','titulo')">
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:324px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE DOCUMENTOS / ARCHIVOS</B></font>
         </div>
-<br><br>
-        <div class="menu-panel" >
+
+
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='doc_form.php';" value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('doc_form.php')">
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento')" >

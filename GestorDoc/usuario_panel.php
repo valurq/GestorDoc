@@ -22,6 +22,11 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
     </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
 
+      <script type="text/javascript">
+      // para busqueda en paneles
+          var campos=['nombre','apellido','usuario','mail','(select perfil from perfil where id = perfil_id)','fecreacion'];
+      </script>
+
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -42,12 +47,14 @@ $campos=['nombre','apellido','usuario','mail','(select perfil from perfil where 
                   <input type="hidden" name="seleccionado" id="seleccionado" value="0">
               </form>
       <!--============================================================================= -->
-
+<div class="menu-panel" >
+  <br><br>
+      <!--campo buscador en el panel -->
+      <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'usuario','nombre')">
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE USUARIOS</B></font>
         </div>
-<br><br>
-        <div class="menu-panel" >
+
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='usuario_form.php';" value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('usuario_form.php')">
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar"  onclick="eliminar('usuario')" >

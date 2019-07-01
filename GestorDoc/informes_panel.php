@@ -22,6 +22,11 @@ $campos=['(select cat_informe from cat_informes where id = cat_informes_id)','ti
       </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
 
+      <script type="text/javascript">
+      // para busqueda en paneles
+          var campos=['(select cat_informe from cat_informes where id = cat_informes_id)','titulo','substr(obs,1,40)','url' ];
+      </script>
+
         <meta charset="utf-8">
         <style media="screen">
             .menu-panel{
@@ -43,12 +48,14 @@ $campos=['(select cat_informe from cat_informes where id = cat_informes_id)','ti
               </form>
       <!--============================================================================= -->
 
+      <div class="menu-panel" >
+      <br><br>
+      <!--campo buscador en el panel -->
+      <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'informes','titulo')">
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
               <font color="#808080" class="ws12"><B>PANEL DE INFORMES</B></font>
         </div>
-        <br><br>
 
-        <div class="menu-panel" >
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='informes_form.php';" value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar"  onclick="editar('informes_form.php')">
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('informes')" >
