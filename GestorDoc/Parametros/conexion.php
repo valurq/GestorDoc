@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="valurq123";
+    private $pass="";
     public $conexion;
 
 
@@ -154,10 +154,6 @@ class Consultas extends Conexion{
         echo "</tr>";
         echo"</thead>";
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 22a49d8ae0c19c086c41526436875ffefded16d6
    private function crearContenidoTabla($resultadoConsulta){
         /*
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
@@ -197,33 +193,6 @@ class Consultas extends Conexion{
 
       echo $opcion_sino;
     }
-
-       public function opciones_sino($nombreOpcion,$valor)
-       {
-        if($valor=="si" || $valor=="no" ) {
-          // MODIFICA REGISTRO
-              $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
-              if($valor=="si"){
-                $opcion_sino.= "<option value='no'>NO</option>" ;
-                $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
-              }else{
-                $opcion_sino.= "<option value='si'>SI</option>" ;
-                $opcion_sino.= "<option selected value='".$valor."'>".strtoupper($valor)."</option>" ;
-                }
-              $opcion_sino.="</select>";
-            }else{
-              // NUEVO REGISTRO
-              $opcion_sino="<select name='".$nombreOpcion."' style='width:80px'>";
-              $opcion_sino.= "<option value='si'>SI</option>" ;
-              $opcion_sino.= "<option value='no'>NO</option>" ;
-              $opcion_sino.="</select>";
-            }
-
-
-         echo $opcion_sino;
-       }
-
-
     public function consultarMenu($usuario){
         /*
             METODO PARA PODER CONSULTAR DATOS REFERENTES AL MENU

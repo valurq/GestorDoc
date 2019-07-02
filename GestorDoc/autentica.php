@@ -26,7 +26,12 @@
     if($retornoUser==$user){
         if($retornoPass==$pass){
             $respuesta = 'correcto' ;
-
+            session_start();
+            session_name('Privado');
+            $_SESSION['idUsu']=$resultado[0];
+            $_SESSION['usuario']=$resultado[2];
+            $_SESSION['perfil']=$resultado[1];
+            $_SESSION['pass']=$resultado[3];
         }else{
             $respuesta = 'errorPass' ;
 

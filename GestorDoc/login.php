@@ -2,7 +2,6 @@
 <html>
 <head>
 
-
     <title>SGD-Valurq</title>
 
     <meta charset="utf-8">
@@ -48,18 +47,18 @@
 <body>
 
 
-        <div id="image2" style="position:absolute; overflow:hidden; left:-1px; top:1px; width:1350px; height:640px; z-index:0"><img src="imagenes/paste124.jpg" alt="" title="" border=0 width=1350 height=640></div>
+        <div id="image2" style="position:absolute; overflow:hidden; left:-1px; top:1px; width:1350px; height:640px; z-index:0"><img src="Imagenes/paste124.jpg" alt="" title="" border=0 width=1350 height=640></div>
 
-        <div id="shape1" style="position:absolute; overflow:hidden; opacity:0.6;left:-2px; top:183px; width:1350px; height:228px; z-index:1"><img border=0 width="100%" height="100%" alt="" src="imagenes/shape435114343.png"></div>
+        <div id="shape1" style="position:absolute; overflow:hidden; opacity:0.6;left:-2px; top:183px; width:1350px; height:228px; z-index:1"><img border=0 width="100%" height="100%" alt="" src="Imagenes/shape435114343.png"></div>
 
-        <div id="roundrect1" style="position:absolute; overflow:hidden; left:464px; top:190px; width:303px; height:210px; z-index:2"><img border=0 width="100%" height="100%" alt="" src="imagenes/roundrect435135328.png"></div>
+        <div id="roundrect1" style="position:absolute; overflow:hidden; left:464px; top:190px; width:303px; height:210px; z-index:2"><img border=0 width="100%" height="100%" alt="" src="Imagenes/roundrect435135328.png"></div>
 
         <div id="text1" style="position:absolute; overflow:hidden; left:543px; top:194px; width:150px; height:25px; z-index:3">
         <div class="wpmd">
         <div><font color="#FFFFFF" class="ws14">Inicio de sesión</font></div>
         </div></div>
 
-        <div id="image1" style="position:absolute; overflow:hidden; opacity: 0.85; left:562px; top:31px; width:108px; height:108px; z-index:4"><img src="imagenes/valurq2.png" alt="" title="" border=0 width=108 height=108></div>
+        <div id="image1" style="position:absolute; overflow:hidden; opacity: 0.85; left:562px; top:31px; width:108px; height:108px; z-index:4"><img src="Imagenes/valurq2.png" alt="" title="" border=0 width=108 height=108></div>
 
         <div id="text2" style="position:absolute; overflow:hidden; left:13px; top:189px; width:426px; height:49px; z-index:5">
         <div class="wpmd">
@@ -83,7 +82,7 @@
         </div></div>
 
         <input name="INGRESAR" type="button" value="INGRESAR" onclick="valida()"   style="position:absolute;left:568px;top:357px;z-index:10">
-        <div id="shape2" style="position:absolute; overflow:hidden; left:471px; top:222px; width:287px; height:2px; z-index:11"><img border=0 width="100%" height="100%" alt="" src="imagenes/shape435734968.png"></div>
+        <div id="shape2" style="position:absolute; overflow:hidden; left:471px; top:222px; width:287px; height:2px; z-index:11"><img border=0 width="100%" height="100%" alt="" src="Imagenes/shape435734968.png"></div>
 
 </form>
 
@@ -113,9 +112,10 @@ function valida(){
            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
            $.post("autentica.php", {user: vuser, pass: vpass }, function(retorno) {
               vretorno=retorno.trim() ;
-
+              //alert(vretorno);
                if(vretorno=="correcto"){
                  window.location='menu_principal.php';
+                 //docuent.body.innerHTML=
                } ;
 
                if(vretorno=="errorUser"){
