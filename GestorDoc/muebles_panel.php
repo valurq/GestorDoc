@@ -21,7 +21,10 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
         crossorigin="anonymous">
     </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
-
+      <script type="text/javascript">
+      // para busqueda en paneles
+          var campos=['mueble','substr(obs,1,40)','fecreacion'];
+      </script>
 
         <meta charset="utf-8">
         <style media="screen">
@@ -43,12 +46,13 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
             <input type="hidden" name="seleccionado" id="seleccionado" value="0">
         </form>
     <!--============================================================================= -->
-
+<div class="menu-panel" >
+    <br><br>
+    <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'ubi_mueble','mueble')">
       <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:224px; height:22px; z-index:1">
             <font color="#808080" class="ws12"><B>PANEL DE MUEBLES</B></font>
       </div>
-<br><br>
-        <div class="menu-panel" >
+
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='muebles_form.php';" value="Nuevo">
             <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('muebles_form.php')" >
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('ubi_mueble')" >
