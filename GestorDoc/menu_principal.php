@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <?php
+    session_start();
     include("Parametros/conexion.php");
     $consulta= new Consultas();
+    $campos=array('id','perfil_id','usuario','pass');
+    $resultado=$consulta->consultarDatos($campos,'usuario',"","id",$_SESSION['idUSu'] );
+    $resultado=$resultado->fetch_array(MYSQLI_NUM);
+    if(!(($_SESSION['perfil']==$resultado[1])&&($_SESSION['usuario']==$resultado[2])&&($_SESSION['contra']==$resultado[3]))){
+        session_unset();
+        session_write_close();
+        echo "<script>window.location='login.php'</script>";
+    }
+
+
  ?>
     <head>
         <script>
@@ -42,7 +53,8 @@
 
     </body>
     <?php
-        $menu=$consulta->consultarMenu(1);
+        $menu=$consulta->consultarMenu($_SESSION['perfil']);
+
         while ($fila=mysqli_fetch_array($menu)) {
                 echo "<script>crearMenu('".$fila[0]."','".$fila[1]."','".$fila[2]."','".$fila[3]."')</script>";
         }
