@@ -106,13 +106,13 @@ function valida(){
    var vpass=document.getElementById('pass').value;
    var vretorno='' ;
 
-   if((vuser=="")||(vpass=='')) {
+   if((vuser=="")||(vpass=="")) {
        popup('Advertencia',"DEBE INGRESAR USUARIO y CONTRASEÑA");
    }else {
            //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
            $.post("autentica.php", {user: vuser, pass: vpass }, function(retorno) {
               vretorno=retorno.trim() ;
-              //alert(vretorno);
+
                if(vretorno=="correcto"){
                  window.location='menu_principal.php';
                  //docuent.body.innerHTML=

@@ -1,0 +1,10 @@
+HABILITAR REFERENCIAS COMERCIALES SIEMPRE
+------------------------------------------
+1/ Buscar si hay registro en porta_referencia_comercial_clientes
+   para el cod_cliente de la solicitud de credito
+   
+2/ si NO HAY REGISTRO, hacer el sig. INSERT
+ejemplo COD_CLIENTE = 12240
+
+INSERT INTO porta_referencia_comercial_clientes (cod_cliente,comentario) 
+VALUES(12240,'-')
