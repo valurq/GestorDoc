@@ -14,7 +14,7 @@
         /* VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO */
         if(isset($_POST['seleccionado'])){
             $id=$_POST['seleccionado'];
-            $campos=array('empresa','logo_archivo');
+            $campos=array('empresa','logo_archivo','extensiones','prefijo');
             /*
                 CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
             */
@@ -23,7 +23,7 @@
             /*
                 CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
             */
-            $camposIdForm=array('empresa,logo');
+            $camposIdForm=array('empresa','logo','extensiones','prefijo');
         }
     ?>
 
@@ -91,8 +91,10 @@
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
   <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
-  <input name="empresa" id ="empresa" type="text" maxlength=80  style="position:absolute;width:200px;left:133px;top:97px;z-index:2">
-  <input name="logo"    id ="logo"    type="text" maxlength=100 style="position:absolute;width:200px;left:133px;top:142px;z-index:2">
+  <input name="empresa" id ="empresa" type="text" maxlength=80  style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
+  <input name="logo"    id ="logo"    type="text" maxlength=100 style="position:absolute;width:200px;left:133px;top:130px;z-index:2">
+  <input name="extensiones" id ="extensiones" type="text"   style="position:absolute;width:200px;left:133px;top:160px;z-index:2">
+  <input name="prefijo"    id ="prefijo"    type="text"  style="position:absolute;width:200px;left:133px;top:190px;z-index:2">
 
   <!-- BOTONES -->
   <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:280px;z-index:6">
@@ -105,14 +107,24 @@
 <div><font color="#808080" class="ws12"><B>Datos de parametros</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:70px;; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:100px; width:70px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Empresa :</font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:70px;; height:23px; z-index:4">
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:70px;; height:23px; z-index:4">
 <div class="wpmd">
 <div><font color="#333333" class="ws11">Logotipo :</font></div>
+</div></div>
+
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:90px;; height:23px; z-index:4">
+<div class="wpmd">
+<div><font color="#333333" class="ws11">Extensiones :</font></div>
+</div></div>
+
+<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:190px; width:70px;; height:23px; z-index:4">
+<div class="wpmd">
+<div><font color="#333333" class="ws11">Prefijo :</font></div>
 </div></div>
 
 
@@ -141,10 +153,14 @@ if(isset($_POST['empresa']  )){
     //======================================================================================
     $empresa     =trim($_POST['empresa']);
     $logo       =trim($_POST['logo']);
+    $extensiones = trim($_POST['extensiones']) ;
+    $prefijo    = trim($_POST['prefijo']) ;
+
     $idForm     =$_POST['Idformulario'];
 
-    $campos = array( 'empresa','logo_archivo' );
-    $valores="'".$empresa."','".$logo."'";
+    $campos = array('empresa','logo_archivo','extensiones','prefijo' );
+    $valores="'".$empresa."','".$logo."','".$extensiones."','".$prefijo."'";
+
     /*
       VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
     */

@@ -20,7 +20,7 @@
 
     $resultado=$inserta_Datos->consultarDatos($campos,'usuario',"","usuario",$user );
     $resultado=$resultado->fetch_array(MYSQLI_NUM);
-    $retornoPass= $resultado[3] ;
+    $retornoPass=$resultado[3] ;
     $retornoUser=$resultado[2] ;
 
     if($retornoUser==$user){

@@ -63,9 +63,9 @@ $campos=['id','bus_fecha','bus_numero',
         </div>
 
 
-            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='doc_form.php';" value="Nuevo">
-            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('doc_form.php')">
-            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento')" >
+            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='adjunta_form.php';" value="Nuevo">
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('adjunta_form.php')">
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento');" >
         </div>
 
         <div class="mostrar-tabla">

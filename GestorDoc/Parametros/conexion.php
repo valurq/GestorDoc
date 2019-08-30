@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="";
+    private $pass="valurq123";
     public $conexion;
 
 
@@ -97,7 +97,9 @@ class Consultas extends Conexion{
             $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'");
             NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
         */
+        
         $this->conexion->query("INSERT INTO ".$tabla." ( ".(implode(",", $campos))." ) VALUES (".$valores.")");
+
     }
 
     private function crearPaqueteModificacion($campos,$valores){
