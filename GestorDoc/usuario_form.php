@@ -102,7 +102,7 @@
   <textarea name="nota" id="nota" style="position:absolute;left:134px;top:290px;width:379px;height:97px;z-index:3"></textarea>
   <input type="hidden" name="idperfil" id="idperfil" maxlength=100 >
 
-<div id=lisbox style="position:absolute;left:133px;top:240px;width:379px;height:20px;z-index:3">
+<div id="lisbox" style="position:absolute;left:133px;top:240px;width:379px;height:20px;z-index:3">
 <?php
   $listbox=new Consultas();
   $listbox->DesplegableElegido($idPerfil,"perfil","id","perfil","perfil") ;
@@ -209,6 +209,8 @@ if (isset($_POST['usuario'])){
       }else{
         $inserta_Datos->insertarDato('usuario',$campos,$valores);
       }
+
+      echo "<script>window.location='usuario_panel.php'</script>" ;
 }
 ?>
 <script type="text/javascript">

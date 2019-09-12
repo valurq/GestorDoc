@@ -158,6 +158,8 @@ if (isset($_POST['nombre'])  ){
         }else{
             $inserta_Datos->insertarDato('ubi_mueble',$campos,$valores);
           }
+
+          echo "<script>window.location='muebles_panel.php'</script>" ;
 }
 
 ?>

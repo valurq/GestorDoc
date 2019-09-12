@@ -178,6 +178,8 @@ if ( isset($_POST['titulo']) ) {
     }else{
       $inserta_Datos->insertarDato('menu_opcion',$campos,$valores);
     }
+
+    echo "<script>window.location='menu_panel.php'</script>" ;
 }
 
 ?>

@@ -1,0 +1,42 @@
+MAPEO DE DATOS PEGASUS / PORTA
+====================================
+* validar : si cliente existe en pagasus NO insertar/pisar 
+			validacion por numero de cedula
+			
+BD PEGASUS					BD PORTA			
+dbo.clientes				porta_clientes
+---------------------------------------------
+cod_cliente(int)			ci(varchar)
+cod_vendedor(int)			*solicitudes_creditos.cod_vendedor(int)
+nombre_cliente(varchar)		nombres + apellidos
+ruc(varchar)				ci(varchar) ** no hay ese campo 
+direccion(varchar)			direccion(varchar)
+telefono(varchar)			telefono(varchr)
+cod_condicion(int)			4 (valor fijo)
+fecha_alta(datetime)		**fecha de hoy**
+propietario(varchar)		empresa(varchar)
+direccion_otra(varchar)		empresa_direccion(varchar)
+cargo_departamento(varchar)	empresa_cargo(varchar)
+telefono_otro(varchar)		pre_empresa_telefonos + empresa_telefonos
+ciudad(varchar)				ciudad(varchar)
+actividad_basica(varchar)	profesion(varchar)
+limite_credito(decimal)		7500000 (valor fijo)
+cod_categoria(int)			2 (valor fijo)
+lista_precio(int)			1 (valor fijo)
+codigo_cuenta(varchar)		'101030101' (valor fijo)
+estado_cliente(in)			1 (valor fijo)
+pais(varchar)				'Paraguay' (valor fijo)
+tipo_precio(int)			2 (valor fijo)
+ci_nro(varchar)				ci(varchar)
+fecha_nac(datetime)			fecha_nacimiento(date)
+codigo_cuenta_anticipo(varchar)	'2110201000000' (valor fijo)
+vencimiento(datetime)		hoy + 365 dias (calcular)
+autorizado(int)				1 (valor fijo)
+tipo(varchar)				'F' (valor fijo)
+frecuencia_visitas(int)		1 (valor fijo)
+periodo_visitas(int)		30 (valor fijo)
+sin_definir(int)			1 (valor fijo)
+
+
+
+

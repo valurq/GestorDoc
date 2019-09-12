@@ -1,0 +1,84 @@
+MEGARED - BITACORA
+===================
+SERVER acceso por ssh
+--------------------------
+190.128.186.118
+puerto	2230
+user	root
+pass 	Mega@2018
+
+pruebaventa@megared.com.py
+pruebareferencia@megared.com.py  061306688
+pruebaanalista1@megared.com.py
+
+MySQL - BD
+=============
+host	= localhost
+user	= root
+pass	= Paraguay2017
+BD		= app_megared
+**********************************************
+mysql -h localhost -u root -p
+show databases;
+use base_de_datos;
+
+**********************************************
+
+bd-pegasus SQL SERVER
+-----------------------
+user	nvaldez
+pass	nvaldez19
+bd : 	pegasus
+CTOSIP 		192.168.1.202 /255.255.255.0/192.168.1.250
+server	SVR-DBX-MR
+puerto	1402
+
+SISTEMA PEGASUS
+------------------------
+Escritorio remoto 190.128.186.118 directo sin user/pass
+pegasus user : nvaldez / pass 987
+
+Escritorio remoto BASE DE DATOS
+--------------------------------
+190.128.186.118:3302
+usuario : megared\extnvaldez
+pass : Mega@2019
+
+sql management studio
+usuario nvaldez
+pass    nvaldez19
+---------------------------------
+TABLAS
+------
+http://localhost/porta/app/solicitudes_pendientes?id=36831&c=2
+			
+cliente : 19750  NERY VALDEZ 1421745
+20656 MONICA URQUHART 1242435
+
+comprobacion_derecho_detalle.php
+https://servicios.ips.gov.py/consulta_asegurado/comprobacion_de_derecho_externo.php
+			
+view-source:https://servicios.ips.gov.py/consulta_asegurado/comprobacion_derecho_detalle.php
+
+<input type="text" id="the-cliente-form-movil" name="ref_1_nombre" class="form-control ref-off-1 comentario11" readonly="" placeholder="Nombres y Apellidos" value="<?php echo $ref_1_nombre ?>">
+						   
+testing
+cedula : 6030787
+nro.SC : 36831	
+
+
+
+APP-NUBE(MD5-ENCRIPT)  
+===================
+administrador@megared.com.py
+Porta2017
+
+rolando@megared.com.py
+ngo
+
+	
+administrador@megared.com.py
+ecabd5af53a1c4a1fe0693e3149dcd4e = Porta2017
+
+select count(*) from datospoli where nro_cedula < 1047500
+993483 registros

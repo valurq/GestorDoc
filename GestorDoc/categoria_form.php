@@ -135,6 +135,8 @@ if (isset($_POST['categoria'])) {
         }else{
             $inserta_Datos->insertarDato('categoria',$campos,$valores);
         }
+
+        echo "<script>window.location='categoria_panel.php'</script>" ;
     }
 }
 ?>

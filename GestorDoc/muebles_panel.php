@@ -21,6 +21,7 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
         crossorigin="anonymous">
     </script>
       <script type="text/javascript" src="Js/funciones.js"></script>
+
       <script type="text/javascript">
       // para busqueda en paneles
           var campos=['mueble','substr(obs,1,40)','fecreacion'];

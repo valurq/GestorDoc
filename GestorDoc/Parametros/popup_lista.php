@@ -57,8 +57,9 @@
       $campoFiltro=$_GET['campoFiltro'];
       $valorFiltro=$_GET['valorFiltro'] ;
 
+
       $camposConsultar = array($valor,$idvalor) ;
-      $datosConsulta=$acceso_Funciones->consultarDatos($camposConsultar,$tabla,$campoFiltro,$valorFiltro);
+      $datosConsulta=$acceso_Funciones->consultarDatos($camposConsultar,$tabla,"",$campoFiltro,$valorFiltro);
 
       while ($valorDato=$datosConsulta->fetch_row()) {
 //        Ciclo que carga la lista

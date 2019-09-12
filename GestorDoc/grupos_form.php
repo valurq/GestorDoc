@@ -159,6 +159,8 @@ if(isset($_POST['grupo']  )){
     }else{
       $inserta_Datos->insertarDato('grupos',$campos,$valores);
     }
+
+    echo "<script>window.location='grupos_panel.php'</script>" ;
 }
 
 ?>

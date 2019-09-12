@@ -155,7 +155,7 @@ if(isset($_POST['cat_informe'])){
       // Si el acceso para el form fue para agregar un nuevo registro.
             $inserta_Datos->insertarDato('cat_informes',$campos,$valores);
         }
-
+echo "<script>window.location='cat_informes_panel.php'</script>" ;
 }
 ?>
 <script type="text/javascript">

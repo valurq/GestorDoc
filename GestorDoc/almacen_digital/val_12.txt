@@ -1,0 +1,263 @@
+MAPEO DE DATOS - COMPORTAMIENTO FINANACIERO 
+-------------------------------------------
+=================================================================================================
+====  TABLAS EN PORTA ====   ci test : 3851 / 3852 / 3856  /3857
+=================================================================================================
+-- con el nro de solicitud de credito se toma el cod del cliente
+-- ej. de Nro.SC = 37221
+select cod_cliente from solicitudes_creditos where id = 37221
+--> cod_cliente = 19255
+
+-- con el cod de cliente se toma el nro de cedula del cliente y su nombre
+select ci, nombres, apellidos from porta_clientes where id = 19255
+--> ci = 5031168
+--> nombres = Alberto
+--> apellidos = Valdez
+
+=================================================================================================
+=== TABLAS EN PEGASUS === puntos numerados segun excell.
+=================================================================================================
+-- 1 antiguedad 
+select  top 1 fecha from vi_ventas where COD_CLIENTE = 5031168 order by fecha asc 
+--> 2011-12-19
+
+2 fecha ultima vta 
+select  top 1 fecha from vi_ventas where COD_CLIENTE = 5031168 order by fecha desc 
+--> 2019-05-31
+
+3 fecha ultimo pago
+select top 1 fecha_cobro from v_cobros_realizados_consulta
+where cod_cliente = 4224772 and NRO_CUOTA != 900 and valor > 20000
+order by fecha_cobro desc
+--> 2019-06-27
+
+4 deuda actual
+select SUM(saldo) from v_cobros_pendientes where cod_cliente = 1499941 
+--> 8.295.000
+
+5 mora actual(dias)
+select  max(DATEDIFF(day, vencimiento, SYSDATETIME()) ) as mora
+ from CTAS_COBRAR 
+where COD_CLIENTE=4224772 and 
+	cobrado = 0 and 
+	VENCIMIENTO < SYSDATETIME()
+--> 195   ... dias.
+
+6 promedio de pago (ultimos 12 meses)
+select MONTH(fecha_cobro) as mes ,SUM(VALOR_COBRADO) as acumuldo 
+from   v_cobros_realizados_consulta 
+where   COD_CLIENTE = 4162973 and 
+		fecha_cobro between DATEADD(mm,-12,SYSDATETIME()) and SYSDATETIME() and
+		VALOR > 20000 and 
+		TIPO_DOC = 'CREDITO' AND
+		NOTA_CREDITO = 'NO' AND
+		APLICA_NC = 'NO'
+group by MONTH(fecha_cobro) 
+
+7 maxima cuota pagada(ult.12 meses) 
+
+select MONTH(fecha_cobro) as mes ,SUM(valor) as total 
+from   v_cobros_realizados_consulta 
+where   COD_CLIENTE = 4162973 and 
+		fecha_cobro between DATEADD(mm,-12,SYSDATETIME()) and SYSDATETIME() and
+		VALOR > 20000 and 
+		TIPO_DOC = 'CREDITO' AND
+		NOTA_CREDITO = 'NO' AND
+		APLICA_NC = 'NO'
+group by MONTH(fecha_cobro) 
+
+--> trae varios registros, tomar el de mayor monto y ese es el resultado
+
+8 promedio de monto de cuota (ult.12 meses)
+select avg(VALOR) as promediocuota
+	from CTAS_COBRAR 
+	where COD_CLIENTE=7289140 and 
+	valor > 20000 and  
+	NRO_CUOTA <> 900 and 
+	cobrado = 1 and 
+	vencimiento between DATEADD(mm,-12,SYSDATETIME())  and SYSDATETIME()
+
+9 cuotas a  VENCER MES SIGUIENTE(NUEVO TITULO)
+
+*-- si es dentro del año el mes futuro / month(DATEADD(mm,1,SYSDATETIME()))
+SELECT sum(saldo) from v_cobros_pendientes where cod_cliente = '6030787'
+and month(DATEADD(mm,1,SYSDATETIME())) = month(vencimiento) and 
+YEAR(vencimiento)= YEAR(SYSDATETIME())
+
+
+*-- si NO es dentro del año el mes futuro / month(DATEADD(mm,1,SYSDATETIME()))
+SELECT sum(saldo) from v_cobros_pendientes where cod_cliente = '6030787'
+and month(DATEADD(mm,1,SYSDATETIME())) = month(vencimiento) and 
+YEAR(vencimiento)= YEAR(SYSDATETIME())+1
+--> 212.692
+
+***10 maximo atraso dias (ult.12 meses) pend y cobrado  /  excluyo entrega inicial
+=============================
+** de lo cobrado
+=============================
+select max( DATEDIFF(day, vencimiento, FECHA_COBRO) )  as maxAtrasoCobrado
+from v_cobros_realizados_consulta 
+where COD_CLIENTE=4162973 and valor > 20000 and 
+TIPO_DOC='CREDITO' AND
+ NOTA_CREDITO='NO' AND 
+ APLICA_NC='NO'AND
+NRO_CUOTA!=900 and 
+cuotas!=900  and 
+FECHA_COBRO between DATEADD(mm,-12,SYSDATETIME())  and SYSDATETIME()
+=============================
+**de lo pendientes
+=============================
+select  max( DATEDIFF(day, vencimiento, SYSDATETIME()) )  as maxAtrasoPendiente
+ from CTAS_COBRAR 
+where COD_CLIENTE=4162973 and 
+	cobrado = 0 and 
+	VENCIMIENTO < SYSDATETIME()
+**===============================================
+** un solo select
+
+select 0,max(DATEDIFF(day, vencimiento, FECHA_COBRO))  as maxAtraso
+from v_cobros_realizados_consulta 
+where COD_CLIENTE=4162973 and 
+		 valor > 20000 and 
+		 TIPO_DOC='CREDITO' AND
+		 NOTA_CREDITO='NO' AND 
+		 APLICA_NC='NO'AND
+		 NRO_CUOTA!=900 and 
+		 cuotas!=900  and 
+		 FECHA_COBRO between DATEADD(mm,-12,SYSDATETIME())  and SYSDATETIME()
+union
+select  0,max( DATEDIFF(day, vencimiento, SYSDATETIME()) )  as maxAtraso
+ from CTAS_COBRAR 
+where COD_CLIENTE=4162973 and 
+	cobrado = 0 and 
+	VENCIMIENTO < SYSDATETIME()	
+	
+--> resultado final = se busca el mayor entre ambos... de la columna [1] en el array
+    resultado del query
+
+
+***11 prom.atraso en dias, ult.12 meses / excluyo fact x mora y entrega inicial
+=================
+** de lo cobrado
+=================
+select avg(DATEDIFF(day, vencimiento, FECHA_COBRO)) as promAtrasoCobrado
+	from v_cobros_realizados_consulta 
+	where COD_CLIENTE=4162973   and 
+	VALOR > 20000 and 
+	TIPO_DOC='CREDITO' AND
+	NOTA_CREDITO='NO' AND 
+	APLICA_NC='NO'AND
+	NRO_CUOTA!=900 and 
+	cuotas!=900 and
+	FECHA_COBRO between DATEADD(mm,-12,SYSDATETIME())  and SYSDATETIME()
+=====================
+** de lo pendientes
+=====================	
+
+select avg( DATEDIFF(day, vencimiento, SYSDATETIME()) )  as promAtrasoPendiente
+ from CTAS_COBRAR 
+where COD_CLIENTE=4162973 and 
+	cobrado = 0 and 
+	VENCIMIENTO < SYSDATETIME()
+--> resultado final : se suman ambos resultados y se divide entre 2
+
+====================================
+-- un solo select
+select avg(DATEDIFF(day, vencimiento, FECHA_COBRO)) as promAtrasoCobrado
+	from v_cobros_realizados_consulta 
+	where COD_CLIENTE=4162973   and 
+	VALOR > 20000 and 
+	TIPO_DOC='CREDITO' AND
+	NOTA_CREDITO='NO' AND 
+	APLICA_NC='NO'AND
+	NRO_CUOTA!=900 and 
+	cuotas!=900 and
+	FECHA_COBRO between DATEADD(mm,-12,SYSDATETIME())  and SYSDATETIME()
+union 
+select avg( DATEDIFF(day, vencimiento, SYSDATETIME()) )  as promAtrasoPendiente
+ from CTAS_COBRAR 
+where COD_CLIENTE=4162973 and 
+	cobrado = 0 and 
+	VENCIMIENTO < SYSDATETIME()
+--> trae dos registros, se valida si ambos tienen valores mayores a -1 se suman y divide entre 2 para 
+    el resultado final. Si uno de ellos no tiene valor mayor a -1, se toma el que tiene como resultado final	
+	
+
+12 cant cuotas pagadas toda la vida  // excluyo moratorios
+ 
+ 	select COUNT(*) as canCuotasPagadas
+	from v_cobros_realizados_consulta
+	where cod_cliente = 7289140 and VALOR_cobrado > 20000 and 		
+	cuotas!=1  and TIPO_DOC='CREDITO' AND CUOTAS<>900 and 
+    NOTA_CREDITO='NO' AND  APLICA_NC='NO'
+ 
+--> 13 ...
+
+13 cant de cuotas pendientes
+select COUNT(*) as canCuotasPendientes
+from v_cobros_pendientes
+where cod_cliente = 1499941
+--> 39 
+
+14 cantidad de fact.canceladas
+## 1
+select num_doc from CTAS_COBRAR where  COD_CLIENTE=4162973 
+and CUOTAS <> 1  and nro_cuota!= 900 and VALOR>20000 group by num_doc
+
+select COUNT(*) from CTAS_COBRAR where NUM_DOC=2994 
+ and nro_cuota!= 900 and VALOR>20000 and COD_CLIENTE=4162973
+ 
+select COUNT(*) from CTAS_COBRAR where NUM_DOC=2994 and 
+ and nro_cuota!= 900 and VALOR>20000 and COD_CLIENTE=4162973 and cobrado=1
+
+## 2
+
+select num_doc,
+(select COUNT(*) from CTAS_COBRAR where NUM_DOC=c1.NUM_DOC 
+ and nro_cuota!= 900 and VALOR>20000 and COD_CLIENTE=4162973) as sincobrar,
+ (select COUNT(*) from CTAS_COBRAR where NUM_DOC=c1.NUM_DOC 
+ and nro_cuota!= 900 and VALOR>20000 and COD_CLIENTE=4162973 and cobrado=1) as cobrados
+ from CTAS_COBRAR c1
+ where  COD_CLIENTE=4162973 and CUOTAS <> 1  and nro_cuota!= 900 and VALOR>20000 group by num_doc
+
+num_doc	sincobrar	cobrado
+2066	15			12
+2994	15			9
+
+-->el primer select trae la cantidad de facturas
+--> el segundo select la cantidad de cuota de la primera fact
+--> el tercer select la cantidad de cuotas cobradas....
+====> y si coincide la cantidad de los dos ultimos select se cuenta 1 fac.cancelada....y asi 
+en un ciclo
+
+15 cantidad de facturas pendientes / excluyo las fac.por mora.
+select num_doc from ctas_cobrar
+ where COD_CLIENTE = 6030787 and
+ valor > 20000 and valor_cobrado=0
+ group by num_doc
+
+--> retorna varios registros, se debe contar en un ciclo(while)
+y ese recuento es el resultado final
+
+16 Total monto pagado / toda la vida
+select SUM(TOTAL_COB) totalCobrado from COBROS_FAC 
+where cod_cliente=4365057
+--> 2.795.000  ..GS
+
+17 Riesgo total / DEUDA ACTUAL + CRED.NUEVO
+select SUM(SALDO) AS RIESGO_ACTUAL from v_cobros_pendientes
+where cod_cliente=1499941 
+--> factor a = 8.295.000
+--> factor b : se toma del form de la solicitud de credito y seria 
+               el monto del credito que se pide
+--> resultado final = a + b
+
+18 cuota nueva / cuota actual + cuota nueva
+ select num_doc,saldo
+from v_cobros_pendientes 
+where cod_cliente = 1499941   
+group by num_doc,saldo
+
+--> factor a = recorrer el resulado del select y sumar SALDO,
+--> factor b =  monto cuota nueva del form de solicitud de credito - PORTA
+--> resultado final = a + b

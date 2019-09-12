@@ -106,75 +106,32 @@ session_start();
   <?php
     if (isset($_SESSION['message']) && $_SESSION['message'])
     {
-      //echo "  <script type='ext/javascript'> alert(".$_SESSION['message'].") ;  </script>" ;
       printf('<b>%s</b>', $_SESSION['message']);
       unset($_SESSION['message']);
     }
   ?>
 
-  <form method="POST" action="adjunta_graba.php" onsubmit="return validacion() " enctype="multipart/form-data">
+  <form method="POST" action="adjuntaMasivo_graba.php" onsubmit="return validacion() " enctype="multipart/form-data">
 
     <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
-    <div><font color="#808080" class="ws12"><B>INGRESO DE DOCUMENTOS INDIVIDUALES</B></font></div>
+    <div><font color="#808080" class="ws12"><B>INGRESO DE DOCUMENTOS EN FORMA MASIVA</B></font></div>
     <br>
     <div id="upload" style="visibility:visible">
       <!--EVENTO QUE AYUDA A ADJUNTAR ARCHIVO AL SISTEMA, UNO POR UNO -->
-      <input type="file" name="uploadedFile" />
+      <input type="file" name="img[]" multiple>
+<!--      <input type="submit" value="Subir"><br><br>  -->
     </div>
 
-    <div id="vinculo" style="visibility:hidden;position: absolute;left:200px;top:40px;font-family:arial">
-      <!--LINK DE ACCESO A VISUALIZAR EL ARCHIVO YA ADJUNTO O CARGADO AL SISTEMA. -->
-      <a id="vinculo_doc" href="#" target="_blank">Ver adjunto</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Archivo:<input id="nombredoc" name="nombredoc" readonly type="text" style="font-family:arial;font-size:12px;font-weight:bold;border:none">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID :<?php echo $id;?>
-    </div>
-
-<div id="nota" style="visibility:hidden;position: absolute;left:220px;top:75px">
-  <font color="red" style="font-family:arial; font-size:11px"><B>Solo datos del documento son editables</B></font>
-</div>
 <!--
         DATOS BASICOS DEL DOCUMENTO INGRESADO
 -->
     <br>
-    <font color="#000000" class="ws12"><B>Datos del documento</B></font>
+    <font color="#000000" class="ws12"><B>Datos requeridos</B></font>
     <table width="55%" border="0" cellpadding="0" cellspacing="0" style="font-family:arial;font-Size=20px">
       <tr></tr>
-        <tr>
-              <td width="20%"> Titulo *:</td>
-              <td width="35%"><input name="titulo" id="titulo" type="text" placeholder="..algun titulo del documento" style="width:400px;z-index:2"></td>
-        </tr>
-        <tr>
-              <td width="20%">Fecha : </td>
-              <td><input name="fecha" id="fecha" type="date" style="width:160px;z-index:2"></td>
-        </tr>
-        <tr>
-              <td width="20%">Numero : </td>
-              <td><input name="numero" id="numero" type="text" placeholder="...algun numero en documento" style="width:160px;z-index:2"></td>
-        </tr>
-        <tr>
-              <td width="20%">Referencia *: </td>
-              <td><input name="referencia" id="referencia" type="text" placeholder="..referencia corta" style="width:400px;z-index:2"></td>
-        </tr>
-        <tr>
-              <td width="20%">Vencimiento : </td>
 
-              <td><input name="vto" id="vto" type="date" style="width:160px;z-index:2">
-
-                  <div id="notifica" style="width:379px;height:47px;z-index:3">
-                    Notificar ?:
-                  <?php
-                    $inserta_Datos->opciones_sino("notifica_opcion",$notifica_valor) ;
-                  ?>
-                  ....<input name="dias_antes" id="dias_antes" type="text" style="width:20px;z-index:2">
-                  ...dias antes del vto.
-                </div>
-
-              </td>
-
-
-        </tr>
         <tr>
               <td width="20%">Categoria *: </td>
               <td><input name="categoria" id="categoria" type="text" readonly style="width:160px;z-index:2">
@@ -196,78 +153,27 @@ session_start();
                 <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="text" style="visibility:hidden; width:50px;z-index:2">
             </td>
         </tr>
-        <tr>
-              <td width="20%">Observacion : </td>
-              <td><textarea name="obs" id="obs" type="textarea" rows="7" cols="10" placeholder="...comentarios varios." style="width:400px;z-index:2"></textarea></td>
-        </tr>
+
         <tr>
               <td width="20%" align="right"><input type="submit" name="uploadBtn"  class="botones" value="Confirmar" /> </td>
               <td align="right"><input name="volver" type="button"  class="botones" value="Volver" onclick = "location='doc_panel.php';" ></td>
         </tr>
     </table>
+    <br><br>
+<iframe src="docPendientes_panel.php" name="doc_pendientes"  scrolling="yes"   frameborder="1"  id="doc_pendientes" style="margin:0px;padding:0px;width:98%;border-width:0px;height:450px"></iframe>
+
 
   </form>
 
 </body>
 
 
-<?php
-/*
-    LLAMADA A FUNCION JS CORRESPONDIENTE A CARGAR DATOS EN LOS CAMPOS DEL FORMULARIO HTML
-*/
-    if(($id!=0 )){
-        /*
-            CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
-        */
-        $valores=implode(",",$resultado);
-        $camposIdForm=implode(",",$camposIdForm);
-
-        //LLAMADA A LA FUNCION JS
-        echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
-
-// carga adicionalmente los demas datos que solo se tiene el ID
-        $resultado_cate=$inserta_Datos->consultarDatos(array('categoria'),'categoria',"","id",$resultado['5'] );
-        $resultado_cate=$resultado_cate->fetch_array(MYSQLI_NUM);
-        echo '<script>cargarCampos("'."categoria".'","'.$resultado_cate[0].'")</script>';
-
-//      Gaveta descripcion y ID
-        $resultado_gaveta=$inserta_Datos->consultarDatos(array('etiqueta','ubi_mueble_id','id'),'ubi_gabetas',"","id",$resultado['6'] );
-        $resu_gaveta=$resultado_gaveta->fetch_array(MYSQLI_NUM);
-        echo '<script>cargarCampos("'."etiqueta".'","'.$resu_gaveta[0].'")</script>';
-        echo '<script>cargarCampos("'."ubi_gavetas_id".'","'.$resu_gaveta[2].'")</script>';
-
-//      mueble descripcion y ID
-        $resultado_mueble=$inserta_Datos->consultarDatos(array('mueble','id'),'ubi_mueble',"","id",$resu_gaveta['1'] );
-        $resu_mueble=$resultado_mueble->fetch_array(MYSQLI_NUM);
-        echo '<script>cargarCampos("'."ubicacion".'","'.$resu_mueble[0].'")</script>';
-        echo '<script>cargarCampos("'."idubicacion".'","'.$resu_mueble[1].'")</script>';
-
-// datos de documento para el link de acceso
-        $consultaDocumento=$inserta_Datos->consultarDatos(array('path_server','nombre_final'),'documento',"","id",$id );
-        $datoDocumento=$consultaDocumento->fetch_array(MYSQLI_NUM);
-        $link = ".".$datoDocumento[0]."/".$datoDocumento[1] ;
-
-        echo '<script>document.getElementById("upload").style.visibility="hidden";
-                       document.getElementById("vinculo").style.visibility="visible";
-                       document.getElementById("nota").style.visibility="visible";
-                       document.getElementById("vinculo_doc").href="'.$link.'" ;
-                       document.getElementById("nombredoc").value="'.$link.'" ;
-            </script>';
-
-    }
-?>
 
 <script>
 
 function validacion() {
   var retornoValor = true  ;
 
-  if(document.getElementById('titulo').value == ''){
-    retornoValor = false ;
-  }
-  if(document.getElementById('referencia').value == ''){
-    retornoValor = false ;
-  }
   if(document.getElementById('categoria').value == ''){
     retornoValor = false ;
   }

@@ -3,12 +3,14 @@ session_start();
 
 include("Parametros/conexion.php") ;
 $accesoFunciones=new Consultas() ;
-
 $message = '';
-if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar')
+if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar' && $_POST['Idformulario'] == '0')
 {
   if (isset($_FILES['uploadedFile']) && $_FILES['uploadedFile']['error'] === UPLOAD_ERR_OK)
   {
+    /*
+          PROCESO DE GRABACION PARA DOCUMENTO NUEVO
+    */
           $camposConsultar = array('extensiones','prefijo') ;
           $datosParametros = $accesoFunciones->consultarDatos($camposConsultar,'parametros') ;
           $Parametros = $datosParametros->fetch_array(MYSQLI_BOTH);
@@ -39,6 +41,8 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar')
           $titulo     = trim( $_POST['titulo'] ) ;
           $bus_fecha  = trim( $_POST['fecha'] ) ;
           $bus_numero = trim( $_POST['numero'] ) ;
+          $notificar_diasantes = trim( $_POST['dias_antes'] ) ;
+          $notificar  = trim( $_POST['notifica_opcion'] ) ;
           $bus_texto  = trim( $_POST['referencia'] ) ;
           $vto        = trim( $_POST['vto'] ) ;
           $obs        = trim( $_POST['obs'] ) ;
@@ -56,12 +60,13 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar')
 
           $campos = array('titulo','bus_fecha','bus_numero','bus_texto','fecha_vto','obs',
           'nombre_origen','buscarfull','datos_upload','ubi_gabetas_id','categoria_id','creador',
-          'path_server','nombre_final','fec_engabeta') ;
+          'path_server','nombre_final','fec_engabeta','notificar_diasantes','notificar_vto') ;
 
           $valores ="'".$titulo."','".$bus_fecha."','".$bus_numero."','".$bus_texto.
                       "','".$vto."','".$obs."','".$nombreOrigen."','".$buscarFull.
                       "','".$datosUpload."','".$ubi_gabetas_id."','".$categoriaid.
-                      "','".$creador."','".$path_server."','".$newFileName."','".$fec_engabeta."'" ;
+                      "','".$creador."','".$path_server."','".$newFileName."','".$fec_engabeta."','".
+                      $notificar_diasantes."','".$notificar."'" ;
 
           if (in_array($fileExtension, $extensionesPermitidas))
           { //Si la extension del archivo esta dentro de la lista permitida
@@ -72,14 +77,55 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar')
             if(move_uploaded_file($fileTmpPath, $dest_path))
             {
               $accesoFunciones->insertarDato('documento',$campos,$valores);
+
               $message ='Archivo exitosamente cargado.';
             }else{$message = 'Ocurrio un error al mover al directorio destino. Por favor verique si el destino esta habilitado para el servidor web.';}
           }else{$message = 'Fallo la carga. Tipo de archivos permitidos: ' . implode(',', $extensionesPermitidas);}
   }else{$message = 'Hubo algun error en la carga del archivo. Por favor verifique el siguiente error.<br>';
         $message .= 'Error:' . $_FILES['uploadedFile']['error'];}
+        //echo $message ;
+
+        $_SESSION['message'] = $message;
+        header("Location: adjunta_form.php");
+}else{
+
+  /*
+        PROCESO DE GRABACION PARA DOCUMENTO EXISTENTE - EDICION
+  */
+            $titulo     = trim( $_POST['titulo'] ) ;
+            $bus_fecha  = trim( $_POST['fecha'] ) ;
+            $bus_numero = trim( $_POST['numero'] ) ;
+            $bus_texto  = trim( $_POST['referencia'] ) ;
+            $notificar_diasantes = trim( $_POST['dias_antes'] ) ;
+            $notificar  = trim( $_POST['notifica_opcion'] ) ;
+            $vto        = trim( $_POST['vto'] ) ;
+            $obs        = trim( $_POST['obs'] ) ;
+            $ubi_gabetas_id=trim($_POST['ubi_gavetas_id']);
+            $categoriaid = trim($_POST['idcategoria']);
+            $creador     = "creador" ;
+            $path_server = '/almacen_digital' ;
+            $fec_engabeta= date('Y-m-d', time());
+
+            $marca=$_POST['marca'];
+
+            $buscarFull = $bus_fecha.$bus_numero.$bus_texto ;
+
+            $campos = array('titulo','bus_fecha','bus_numero','bus_texto','fecha_vto','obs',
+            'buscarfull','ubi_gabetas_id','categoria_id','creador','fec_engabeta','notificar_diasantes','notificar_vto') ;
+
+            $valores ="'".$titulo."','".$bus_fecha."','".$bus_numero."','".$bus_texto.
+                        "','".$vto."','".$obs."','".$buscarFull.
+                        "','".$ubi_gabetas_id."','".$categoriaid.
+                        "','".$creador."','".$fec_engabeta."','".
+                        $notificar_diasantes."','".$notificar."'" ;
+
+            $accesoFunciones->modificarDato('documento',$campos,$valores,'id',$_POST['Idformulario'] );
+
+            if($marca!='indexa'){
+                $_SESSION['message'] = $message;
+                header("Location: doc_panel.php");
+            }else {
+                header("Location: docPendientes_panel.php");
+            }
 }
-
-//echo $message ;
-
-$_SESSION['message'] = $message;
-header("Location: adjunta_form.php");
+?>

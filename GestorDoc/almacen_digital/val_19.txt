@@ -1,0 +1,48 @@
+MAPEO PARA GENERAR PEDIDO DESDE PORTA --> PEGASUS
+cuando se APRUEBA una solicitud de credito.
+=================================================
+PEGASUS								PORTA
+-------------------------------------------------------
+dbo.pedidos_clientes				
+-------------------------------------------------------
+nro_pedido(int)					solicitudes_creditos.id
+fecha(datetime)					solicitudes_creditos.created
+cod_cliente(int)				solicitudes_creditos.ci
+observacion(text)				'Generado desde porta' (valor fijo)
+cod_vendedor(int)				*solicitudes_creditos.cod_vendedor(int)
+cod_moneda(int)					1 (valor fijo)
+nombre_cliente(varchar)			porta_clientes.nombres + porta_clientes.apellidos
+RUC	(varchar)					porta_clientes.ci
+direccion(varchar)				porta_clientes.direccion
+telefono(varchar)				porta_clientes.telefono(varchr)
+importe_gravado(decim)			solicitudes_creditos.monto / 1,1      (DIVISION)
+importe_impuesto(decim)			solicitudes_creditos.monto / 11		  (DIVISION)
+tipo_documen(int)				** consultar **
+cod_condicion(int)				4 (valor fijo)
+iva_incluido(int)				1 (valor fijo)
+aprobacion(int)					1 (valor fijo)
+fecha_alta(datetime)			** fecha actual
+fecha_aprobacion(datetime)		solicitudes_creditos.created
+usuario(varchar)				tomar de tabla de equivalencia.
+user_aprobacion(varchar)		tomar de tabla de equivalencia.
+entrega_inicial(dec)			solicitudes_creditos.entrega(varchar)
+cantidad_cuotas(dec)			solicitudes_creditos.cuotas(varchar)		
+cod_deposito(int)			    deppgs_sucporta.cod_deposito_pgs	
+tipo_documen(int)			    deppgs_sucporta.cod_doc_pgs
+-------------------------------------------------------
+dbo.pedidos_clientes_det			solicitud_productos
+--------------------------------------------------------
+codigo(varchar)						cod_producto(int)
+descripcion_produc_obs(varchar)		producto(varchar)
+precio(decim)						precio(varchar) / 1,1
+cantidad(dec)						1 (valor fijo para CANTIDAD)
+nro_pedido(int)						solicitudes_creditos.id
+tot_precio(dec)						** sumatoria de precios
+observacion(varcha)					'Geneardo desde porta'  (valor fijo)
+imp_imp(dec)						10 (valor fijo)
+tot_precio(dec)						precio(varchar) / 1,1
+tot_imp(dec)						precio(varchar) / 11
+precio_bruto(dec)					precio(varchar)
+precio_neto(dec)					precio(varchar)
+cantidad_original(dec)				1
+									

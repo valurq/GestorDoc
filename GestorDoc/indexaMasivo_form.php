@@ -117,7 +117,7 @@ session_start();
     <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
-    <div><font color="#808080" class="ws12"><B>INGRESO DE DOCUMENTOS INDIVIDUALES</B></font></div>
+    <div><font color="#808080" class="ws12"><B>INDEXADO DE DOCUMENTO MASIVO</B></font></div>
     <br>
     <div id="upload" style="visibility:visible">
       <!--EVENTO QUE AYUDA A ADJUNTAR ARCHIVO AL SISTEMA, UNO POR UNO -->
@@ -131,13 +131,11 @@ session_start();
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID :<?php echo $id;?>
     </div>
 
-<div id="nota" style="visibility:hidden;position: absolute;left:220px;top:75px">
-  <font color="red" style="font-family:arial; font-size:11px"><B>Solo datos del documento son editables</B></font>
-</div>
+
 <!--
         DATOS BASICOS DEL DOCUMENTO INGRESADO
 -->
-    <br>
+
     <font color="#000000" class="ws12"><B>Datos del documento</B></font>
     <table width="55%" border="0" cellpadding="0" cellspacing="0" style="font-family:arial;font-Size=20px">
       <tr></tr>
@@ -198,14 +196,14 @@ session_start();
         </tr>
         <tr>
               <td width="20%">Observacion : </td>
-              <td><textarea name="obs" id="obs" type="textarea" rows="7" cols="10" placeholder="...comentarios varios." style="width:400px;z-index:2"></textarea></td>
+              <td><textarea name="obs" id="obs" type="textarea" rows="3" cols="10" placeholder="...comentarios varios." style="width:400px;z-index:2"></textarea></td>
         </tr>
         <tr>
               <td width="20%" align="right"><input type="submit" name="uploadBtn"  class="botones" value="Confirmar" /> </td>
-              <td align="right"><input name="volver" type="button"  class="botones" value="Volver" onclick = "location='doc_panel.php';" ></td>
+              <td align="right"><input name="volver" type="button"  class="botones" value="Volver" onclick = "location='docPendientes_panel.php';" ></td>
         </tr>
     </table>
-
+        <input name="marca" id="marca" type="hidden"  value="indexa">
   </form>
 
 </body>
@@ -243,13 +241,13 @@ session_start();
         echo '<script>cargarCampos("'."idubicacion".'","'.$resu_mueble[1].'")</script>';
 
 // datos de documento para el link de acceso
+
         $consultaDocumento=$inserta_Datos->consultarDatos(array('path_server','nombre_final'),'documento',"","id",$id );
         $datoDocumento=$consultaDocumento->fetch_array(MYSQLI_NUM);
         $link = ".".$datoDocumento[0]."/".$datoDocumento[1] ;
 
         echo '<script>document.getElementById("upload").style.visibility="hidden";
                        document.getElementById("vinculo").style.visibility="visible";
-                       document.getElementById("nota").style.visibility="visible";
                        document.getElementById("vinculo_doc").href="'.$link.'" ;
                        document.getElementById("nombredoc").value="'.$link.'" ;
             </script>';

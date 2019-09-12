@@ -56,21 +56,18 @@ $campos=['id','bus_fecha','bus_numero',
 
         <div class="menu-panel" >
           <br><br>
-          <!--campo buscador en el panel -->
-          <input type="text" name="buscador" id="buscador" onkeyup="buscarTablaPaneles(campos, this.value ,'documento','buscarfull')">
+
         <div class="wpmd" id="text1" style="position:absolute; overflow:hidden; left:10px; top:10px; width:324px; height:22px; z-index:1">
-              <font color="#808080" class="ws12"><B>PANEL DE DOCUMENTOS / ARCHIVOS</B></font>
+              <font color="#808080" class="ws12"><B>Documentos sin indexar</B></font>
         </div>
 
+            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('indexaMasivo_form.php')">
+            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento');" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='adjunta_form.php';" value="Nuevo">
-            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('adjunta_form.php')">
-            <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento');" >&nbsp;&nbsp;&nbsp;
-            <input type="button" class="boton_panel" name="Nuevo" onclick = "location='adjuntaMasivo_form.php';" value="Carga masiva">
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'documento','titulo','Sin titulo','distinto');?>
+            <?php  $consultas->crearTabla($cabecera,$campos,'documento','titulo','Sin titulo');?>
         </div>
 
     </body>

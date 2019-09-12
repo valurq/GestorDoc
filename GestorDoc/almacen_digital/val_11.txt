@@ -1,0 +1,6 @@
+--* revision de barrios / clientes / ciudad  / zonas
+--* en PEGASUS
+select top 100 * from clientes_barrios  : SOLO TIENE DESCRIP.DE BARRIOS
+
+select top 100 * from CLIENTES_CIUDAD : SOLO TIENE DESCRIP DE CIUDADES
+

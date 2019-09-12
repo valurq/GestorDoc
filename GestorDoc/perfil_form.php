@@ -29,7 +29,7 @@
             /*
                 CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
             */
-            $camposIdForm=array('perfil,nota');
+            $camposIdForm=array('perfil','nota');
         }
     ?>
     <title>VALURQ_SRL</title>
@@ -95,7 +95,6 @@
 <form name="perfilForm" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
     <input type="hidden" name="idformulario" id="idformulario" value=<?php echo $id;?> >
-    <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
   <input name="perfil" id ="perfil" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
 
@@ -163,17 +162,6 @@ if(($id!=0 )){
     echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
 }
 
-    //include("Parametros/conexion.php");
-    if(($id!=0 )){
-        /*
-            CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
-        */
-        $valores=implode(",",$resultado);
-        $camposIdForm=implode(",",$camposIdForm);
-        //LLAMADA A LA FUNCION JS
-        echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
-    }
-
 if(isset( $_POST['perfil'] )) {
 
     //======================================================================================
@@ -184,7 +172,7 @@ if(isset( $_POST['perfil'] )) {
     $modifica_doc    =trim($_POST['modifica']);
     $obs             =trim($_POST['nota']);
     $creador         ="UsuarioLogin" ;
-    $idForm          = $_POST['Idformulario'];
+    $idForm          = $_POST['idformulario'];
 
     $campos = array( 'perfil','elimina_doc','modifica_doc','creador','comentario' );
     $valores="'".$perfil."','".$elimina_doc."','".$modifica_doc."','".$creador."','".$obs."'";
@@ -196,6 +184,8 @@ if(isset( $_POST['perfil'] )) {
   }else{
       $inserta_Datos->insertarDato('perfil',$campos,$valores);
   }
+
+  echo "<script>window.location='perfil_panel.php'</script>" ;
 }
 ?>
 <script type="text/javascript">

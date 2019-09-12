@@ -1,0 +1,22 @@
+CALCULO DE PRECIO PARA PEDIDOS
+--------------------------------
+select cuotas from solicitudes_creditos
+ where id = [nroSolicitud]
+
+PLAZOSolicitud = cuotas
+
+select coeficiente from porta_coeficientes 
+where plazo = PLAZOSolicitud
+
+-- para cada producto hacer este calculo
+PrecioFinal = round((coeficiente * precioProducto), -3)
+
+
+========================================================
+
+para grabacion de comportamiento : 
+1 / agregar usuario logeado al dato a grabar
+2/ ejecutar con ajax el grabador de comportamiento
+3/ cambiar datos de conexion.php en produccion
+
+

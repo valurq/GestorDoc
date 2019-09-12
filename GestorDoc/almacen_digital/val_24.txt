@@ -1,0 +1,14 @@
+total en cabecera : 3.313.636 + 331.363 = 3.645.000
+
+
+entrega	249.000
+monto cuota = 243.000
+monto credito = 3.645.000
+
+producto 		3824	2.699.000
+plazo 		15  coe: 0.099
+cuota 	267.201	x 15 = 4.005.000
+
+		
+
+insertado item = 4.005.000

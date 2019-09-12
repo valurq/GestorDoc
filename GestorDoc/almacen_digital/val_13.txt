@@ -1,0 +1,17 @@
+DUMP DB - MYSQL
+--------------------
+TODA LA BD
+mysqldump -u username -ppassword database_name  > the_whole_database_dump.sql
+
+TABLAS DE LA BD
+mysqldump -u username -ppassword database_name table_name > single_table_dump.sql
+
+tabla solicitudes_creditos
+36835	rechazadas	2
+36845	aprobadas	4
+		36851	confirmadas	1
+36838	condicionadas 3
+16111	a visitar		5
+
+36784	rechazadas	nery valdez cod.cli 19057
+select * from solicitud_productos where cod_solicitud=36784

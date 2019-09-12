@@ -187,6 +187,7 @@ if(isset( $_POST['titulo']  )){
     }else{
         $inserta_Datos->insertarDato('informes',$campos,$valores);
     }
+    echo "<script>window.location='inforemes_panel.php'</script>" ;
 }
 ?>
 <script type="text/javascript">

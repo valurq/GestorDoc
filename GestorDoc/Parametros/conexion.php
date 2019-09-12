@@ -50,7 +50,7 @@ class Consultas extends Conexion{
 
 
 
-    public function consultarDatos($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion=""){
+    public function consultarDatos($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion="",$tipo=""){
         /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
             $objetoConsultas->consultarDatos(<Array de campos a consultar>,<tabla de la bd>,<Metodo de ordenar>,<condicion para la consulta>)
@@ -60,11 +60,19 @@ class Consultas extends Conexion{
         $texto=(implode(",", $campos));
         $query="SELECT ".$texto." FROM ".$tabla." ".$orden;
         if(($campoCondicion!="")&&($valorCondicion!="")){
-            $query.="WHERE ".$campoCondicion." = '".$valorCondicion."' ";
-            //echo $query;
+          if($tipo==""){
+            $query.="WHERE ".$campoCondicion." = '".$valorCondicion."'";
+          }else{
+            $query.="WHERE ".$campoCondicion." != '".$valorCondicion."'";
+
+          }
+          //  echo $query;
+        //    echo "<script>alert(".$query.")</script>" ;
         }
+
         return $this->conexion->query($query);
     }
+
     public function buscarDato($campos,$tabla,$campoCondicion,$valorCondicion){
          /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
@@ -97,7 +105,7 @@ class Consultas extends Conexion{
             $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'");
             NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
         */
-        
+
         $this->conexion->query("INSERT INTO ".$tabla." ( ".(implode(",", $campos))." ) VALUES (".$valores.")");
 
     }
@@ -125,7 +133,7 @@ class Consultas extends Conexion{
 
     }
 
-    public function crearTabla($cabecera,$camposBD,$tabla,$condicion="",$tamanhos=['*']){
+    public function crearTabla($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
         /*
             METODO PARA PODER CREAR UNA TABLA EN EL LUGAR DONDE FUE INVOCADO EL METODO
             $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
@@ -134,7 +142,12 @@ class Consultas extends Conexion{
         echo "<table id='tablaPanel' cellspacing='0' style='width:100%'>";
         array_unshift($camposBD,"id");
         $this->crearCabeceraTabla($cabecera,$tamanhos);
-        $res=$this->consultarDatos($camposBD,$tabla,$condicion);
+        if($tipo!="") {
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond,$tipo);
+          }else{
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond);
+          }
+
         $this->crearContenidoTabla($res);
     }
 
