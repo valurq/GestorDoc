@@ -11,6 +11,9 @@ function seleccionarFila(id){
     document.getElementById(id).style.backgroundColor= "#669ee8";
     document.getElementById("seleccionado").value=id;
 }
+
+
+
 //FUNCION QUE ES LLAMADA POR EL CAMPO DE BUSQUEDA PARA REALIZAR CONSULTAS A LA BASE DE DATOS Y MOSTRAR EN LA TABLA CORRESPONDIENTE
 //PARAMETROS : OBJETO (EL INPUT BUSCADOR)   ;  TABLA: TABLA CORRESPONDIENTE A LA BASE DE DATOS DONDE SE REALIZARA LA BUSQUEDA
 function buscarTablaPaneles(camposResultado,valor,tabla,campo) {
@@ -25,6 +28,8 @@ function buscarTablaPaneles(camposResultado,valor,tabla,campo) {
         }
      });
 }
+
+
 function cargarTabla(datos,tablaId){
     var i,columna="";
     var fila=document.createElement('tr');
@@ -42,6 +47,48 @@ function cargarTabla(datos,tablaId){
     console.log(columna);
     document.getElementById(datos[0]).innerHTML=columna;
 }
+
+
+//FUNCION QUE ES LLAMADA POR EL CAMPO DE BUSQUEDA PARA REALIZAR CONSULTAS A LA BASE DE DATOS Y MOSTRAR EN LA TABLA CORRESPONDIENTE
+//PARAMETROS : OBJETO (EL INPUT BUSCADOR)   ;  TABLA: TABLA CORRESPONDIENTE A LA BASE DE DATOS DONDE SE REALIZARA LA BUSQUEDA
+function buscarTablaPanelesCheck(camposResultado,valor,tabla,campo) {
+    $.post("Parametros/buscador.php", {camposResultado: camposResultado ,dato:valor,tabla:tabla,campoBusqueda:campo}, function(resultado) {
+        //$("#resultadoBusqueda").html(resultado);
+        var i;
+        //console.log(resultado);
+        $("#datosPanel tr").remove();
+        resultado=JSON.parse(resultado);
+        for(i=1 ; i<resultado.length;i++){
+            cargarTablaCheck(resultado[i],"datosPanel");
+        }
+     });
+}
+
+function cargarTablaCheck(datos,tablaId){
+    var i,columna="";
+    var fila=document.createElement('tr');
+    var secuencia=1 ;
+    fila.id=datos[0];
+    fila.addEventListener('click',function() {seleccionarFila(datos[0])} );
+    document.getElementById(tablaId).appendChild(fila);
+
+    for( i=1;i<datos.length;i++){
+        //console.log(datos[i]);
+        if(datos[i]!="null"|| datos[i]!=null){
+
+          if(i==1){
+            columna=columna.concat("<td> <input type='checkbox' name='check' value='"+datos[i]+"'></td>");
+          }else{
+            columna=columna.concat("<td>"+datos[i]+"</td>");
+          }
+        }else{
+            columna=columna.concat("<td>  </td>");
+        }
+    }
+
+    document.getElementById(datos[0]).innerHTML=columna;
+}
+
 function eliminar(tabla){
    var sel=document.getElementById('seleccionado').value;
    if((sel=="")||(sel==' ')||(sel==0)){

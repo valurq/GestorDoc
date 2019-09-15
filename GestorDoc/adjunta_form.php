@@ -63,6 +63,8 @@ session_start();
       idvalor : identificador del valores
       iddestino : campo del form para cargar el id del valor.-
       */
+      document.getElementById('ubi_gavetas_id').value=0 ;
+      document.getElementById('etiqueta').value='' ;
         var url = "../GestorDoc/parametros/popup_lista.php?destino="+destino+"&tabla="+tabla+"&valor="+valor+"&idvalor="+idvalor+"&iddestino="+iddestino ;
         var configuracion = "width=500,height=300, toolbar=no,titlebar=yes,resizable=0,menubar=no,location=0,directories=no,status=no" ;
         var myWindow = window.open(url,"Opciones", configuracion);
@@ -186,14 +188,14 @@ session_start();
               <td width="20%">Mueble *: </td>
               <td><input name="ubicacion" id="ubicacion" type="text" readonly style="width:160px;z-index:2">
                 <input  type="button"  class="botonlista" onclick = "popup_lista('ubicacion','ubi_mueble','mueble','id','idubicacion');" >
-                  <input name="idubicacion" id="idubicacion" type="text" style="visibility:hidden; width:50px;z-index:2">
+                  <input name="idubicacion" id="idubicacion" type="hidden" style="width:50px;z-index:2">
             </td>
         </tr>
         <tr>
               <td width="20%">Gaveta *: </td>
               <td><input name="etiqueta" id="etiqueta" type="text" readonly style="width:160px;z-index:2">
                 <input  type="button"  class="botonlista" onclick = "popup_listaFiltro('etiqueta','ubi_gabetas','etiqueta','id','ubi_gavetas_id','ubi_mueble_id','idubicacion');" >
-                <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="text" style="visibility:hidden; width:50px;z-index:2">
+                <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="hidden" style="width:50px;z-index:2">
             </td>
         </tr>
         <tr>

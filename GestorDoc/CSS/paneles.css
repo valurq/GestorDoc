@@ -16,7 +16,7 @@
 .menu-panel{
   /*Margen de boton y titulo del panel*/
   margin-bottom: 10px;
-  
+
 }
 .boton_panel{
   /* propiedades de los botones del panel*/
@@ -38,6 +38,8 @@
 /*
 Colores intercalados en la tabla de paneles, la parte de datos.
 */
+
+
 tr:nth-child(odd) {
     background-color:#d3d6da;
 }
@@ -50,6 +52,7 @@ tr:hover {
 background-color: #4b85ba;
 }
 
+
 .datos-tabla{
 background-color:#f0d657;
 
@@ -59,6 +62,7 @@ background-color:#f0d657;
   font-weight: normal;
   font-family: arial;
   font-size: 15px;
+  overflow-y: scroll;
 
 
 }

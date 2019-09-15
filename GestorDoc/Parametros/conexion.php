@@ -151,6 +151,51 @@ class Consultas extends Conexion{
         $this->crearContenidoTabla($res);
     }
 
+    public function crearTablaCheck($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
+        /*
+            METODO PARA PODER CREAR UNA TABLA EN EL LUGAR DONDE FUE INVOCADO EL METODO
+            $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
+            $objetoConsultas->crearTabla(['ID','Categoria'],['id','nom_categoria'],'categorias')
+        */
+        echo "<table id='tablaPanel' cellspacing='0' style='width:100%'>";
+        array_unshift($camposBD,"id");
+        $this->crearCabeceraTabla($cabecera,$tamanhos);
+        if($tipo!="") {
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond,$tipo);
+          }else{
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond);
+          }
+
+        $this->crearContenidoTablaCheck($res);
+    }
+
+
+    private function crearContenidoTablaCheck($resultadoConsulta){
+         /*
+             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA CON UN CHECK POR CADA FILA
+             $objetoConsultas->crearContenidoTabla(<Resultado de consulta a la base de datos>);
+         */
+         echo "<tbody id='datosPanel'>";
+         $sec=1 ;
+         while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
+
+             echo "<tr class='datos-tabla' onclick='seleccionarFila($datos[0])' id='".$datos[0]."'>";
+             echo "<td><input type='checkbox' id='check_".$sec."'  name='check'  value='".$datos[0]."'></td>" ;
+             $sec=$sec+1 ;
+             array_shift($datos);
+             $m=0 ;
+             foreach( $datos as $valor ){
+               if($m==1){
+                 // empieza a imprimir a partir del 2do elemento del array
+                 echo "<td>".$valor." </td>";
+               }else{$m=1;}
+
+             }
+             echo "</tr>";
+         }
+         echo"</tbody>";
+     }
+
 
     public function crearCabeceraTabla($titulos,$tamanhos=['*']){
         /*
@@ -169,6 +214,7 @@ class Consultas extends Conexion{
         echo "</tr>";
         echo"</thead>";
     }
+
    private function crearContenidoTabla($resultadoConsulta){
         /*
             METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA
@@ -185,6 +231,7 @@ class Consultas extends Conexion{
         }
         echo"</tbody>";
     }
+
     public function opciones_sino($nombreOpcion,$valor) {
      if($valor=="si" || $valor=="no" ) {
        // MODIFICA REGISTRO
