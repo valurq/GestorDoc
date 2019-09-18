@@ -66,10 +66,10 @@ class Consultas extends Conexion{
             $query.="WHERE ".$campoCondicion." != '".$valorCondicion."'";
 
           }
-          //  echo $query;
+           //echo $query;
         //    echo "<script>alert(".$query.")</script>" ;
         }
-
+        //echo $query;
         return $this->conexion->query($query);
     }
 
@@ -128,7 +128,7 @@ class Consultas extends Conexion{
             NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
         */
         //$this->crearPaqueteModificacion($campos,$valores);
-        //echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
+      //  echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
         $this->conexion->query("UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'");
 
     }
@@ -150,6 +150,59 @@ class Consultas extends Conexion{
 
         $this->crearContenidoTabla($res);
     }
+
+    public function crearTablaCheck_marca($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
+        /*
+            METODO PARA PODER CREAR UNA TABLA EN EL LUGAR DONDE FUE INVOCADO EL METODO
+            $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
+            $objetoConsultas->crearTabla(['ID','Categoria'],['id','nom_categoria'],'categorias')
+        */
+        echo "<table id='tablaPanel' cellspacing='0' style='width:100%'>";
+        array_unshift($camposBD,"id");
+        $this->crearCabeceraTabla($cabecera,$tamanhos);
+
+        if($tipo!="") {
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond,$tipo);
+          }else{
+            $res=$this->consultarDatos($camposBD,$tabla,'',$condicion,$valorCond);
+          }
+
+        $this->crearContenidoTablaCheck_marca($res);
+    }
+
+
+        private function crearContenidoTablaCheck_marca($resultadoConsulta){
+             /*
+                 METODO PARA PODER CREAR LOS DATOS DENTRO DE UNA TABLA CON UN CHECK POR CADA FILA
+                 $objetoConsultas->crearContenidoTabla(<Resultado de consulta a la base de datos>);
+             */
+             echo "<tbody id='datosPanel'>";
+             $sec=1 ;
+             while($datos=$resultadoConsulta->fetch_array(MYSQLI_NUM)){
+
+                 echo "<tr class='datos-tabla' >";
+
+                 if($datos[3]!="SI"){
+                   echo "<td><input type='checkbox' id='check_".$sec."'  name='check'  value='".$datos[0]."' ></td>" ;
+                 }else {
+                   echo "<td><input type='checkbox' id='check_".$sec."'  name='check'  value='".$datos[0]."' checked ></td>" ;
+                 }
+
+                 $sec=$sec+1 ;
+                 array_shift($datos);
+                 array_pop($datos) ;
+                 $m=0 ;
+                 foreach( $datos as $valor ){
+                   if($m==1){
+                     // empieza a imprimir a partir del 2do elemento del array
+                     echo "<td>".$valor." </td>";
+                   }else{$m=1;}
+
+                 }
+                 echo "</tr>";
+             }
+             echo"</tbody>";
+         }
 
     public function crearTablaCheck($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
         /*

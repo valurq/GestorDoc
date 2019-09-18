@@ -181,11 +181,46 @@ if(isset( $_POST['perfil'] )) {
   */
   if(isset($idForm)&&($idForm!=0)){
       $inserta_Datos->modificarDato('perfil',$campos,$valores,'id',$idForm);
+
+//    obtengo las opciones de menu para setear con el nuevo perfil
+      $menuOpcion=$inserta_Datos->consultarDatos(array('id'),'menu_opcion' );
+      $menuOpcionTodos=$menuOpcion->fetch_all(MYSQLI_NUM);
+
+//    recorro toda la tabla de menu_opcion y busco si ya existe en la tabla acceso
+      foreach ($menuOpcionTodos as $idOpcion) {
+          $resultado=$inserta_Datos->conexion->query("select id from acceso where perfil_id='".$idForm."' and menu_opcion_id='".$idOpcion[0]."'" );
+          $ver=$resultado->fetch_all(MYSQLI_NUM);
+
+//        Si NO hay la opcion de menu en la tabla acceso, agrego la opcion de menu.-
+          $camposAccesos = array('menu_opcion_id','perfil_id','habilita');
+          if($ver[0]==''){
+              $valoresAccesos = "'".$idOpcion[0]."','".$idForm."','NO'" ;
+              $inserta_Datos->insertarDato('acceso',$camposAccesos,$valoresAccesos);
+          }
+      }
+
+
   }else{
       $inserta_Datos->insertarDato('perfil',$campos,$valores);
+
+//    obtengo el nuevo ID del perfil insertado
+      $idNuevo=$inserta_Datos->consultarDatos(array('id'),'perfil','order by id DESC limit 1');
+      $idNuevo=$idNuevo->fetch_array(MYSQLI_NUM);
+
+//    obtengo las opciones de menu para setear con el nuevo perfil
+      $menuOpcion=$inserta_Datos->consultarDatos(array('id'),'menu_opcion' );
+      $menuOpcionTodos=$menuOpcion->fetch_all(MYSQLI_NUM);
+
+//    Grabo en tabla acceso el nuevo perfil con todas las opciones disponibles.
+      $camposAccesos = array('menu_opcion_id','perfil_id','habilita');
+      foreach ($menuOpcionTodos as $idOpcion) {
+//        ECHO "opcion :" . $idOpcion[0]."<br>" ;
+          $valoresAccesos = "'".$idOpcion[0]."','".$idNuevo[0]."','NO'" ;
+          $inserta_Datos->insertarDato('acceso',$camposAccesos,$valoresAccesos);
+      }
+
   }
 
-  echo "<script>window.location='perfil_panel.php'</script>" ;
 }
 ?>
 <script type="text/javascript">
