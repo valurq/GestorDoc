@@ -16,7 +16,7 @@ echo "*pass ".$_SESSION['contra']."*<br>" ;*/
     //echo $resultado[1]."/".$_SESSION['perfil']."--".$_SESSION['usuario']."/".$resultado[2]."--".$_SESSION['contra']."/".$resultado[3] ;
 
 
-    if(!(($_SESSION['perfil']!=$resultado[1]) || ($_SESSION['usuario']!=$resultado[2]) || ($_SESSION['contra']!=$resultado[3]))){
+    if((($_SESSION['perfil']!=$resultado[1]) || ($_SESSION['usuario']!=$resultado[2]) || ($_SESSION['contra']!=$resultado[3]))){
         session_unset();
         session_write_close();
         echo "<script>window.location='login.php'</script>";

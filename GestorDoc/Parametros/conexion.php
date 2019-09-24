@@ -15,7 +15,7 @@ class Conexion{
     private $user="root";
     private $ip="localhost";
     private $bd="gestordoc";
-    private $pass="valurq123";
+    private $pass="";
     public $conexion;
 
 
@@ -65,6 +65,25 @@ class Consultas extends Conexion{
         }
         return $this->conexion->query($query);
     }
+    function consultarDatosQ($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion=""){
+
+        $texto=(implode(",", $campos));
+        $query="SELECT ".$texto." FROM ".$tabla." ";
+        if(is_array($campoCondicion)==TRUE){
+            $query.="WHERE ";
+            for ($i=0; $i <count($campoCondicion)-1 ; $i++) {
+                $query.=$campoCondicion[$i]." = '".$valorCondicion[$i]."' && ";
+            }
+            $query.=$campoCondicion[$i]." = '".$valorCondicion[$i]."' ";
+        }else{
+            if(($campoCondicion!="")&&($valorCondicion!="")){
+                $query.="WHERE ".$campoCondicion." = '".$valorCondicion."' ";
+            }
+        }
+        //echo "$query";
+        $query.=$orden;
+        return $this->conexion->query($query);
+    }
     public function buscarDato($campos,$tabla,$campoCondicion,$valorCondicion){
          /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
@@ -97,7 +116,7 @@ class Consultas extends Conexion{
             $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'");
             NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
         */
-        
+
         $this->conexion->query("INSERT INTO ".$tabla." ( ".(implode(",", $campos))." ) VALUES (".$valores.")");
 
     }
@@ -121,6 +140,18 @@ class Consultas extends Conexion{
         */
         //$this->crearPaqueteModificacion($campos,$valores);
         //echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
+        $this->conexion->query("UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'");
+
+    }
+    public function modificarDatoQ($tabla,$campos,$valores,$campoIdentificador,$valorIdentificador){
+        /*
+            METODO PARA INSERTAR UN REGISTRO NUEVO A LA BASE DE DATOS
+            $objetoConsultas->insertarDato(<tablade la bd>,<Array de campos>,<string de valores>)
+            $consulta->insertarDato('remision_enviada',['campo1','campo2','campo3'],"'valor1','valor2','valor3'");
+            NOTA : los valores tienen que estar en un string, en el mismo orden que se pasaron los campos
+        */
+        //$this->crearPaqueteModificacion($campos,$valores);
+        echo"UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'";
         $this->conexion->query("UPDATE ".$tabla." SET ".$this->crearPaqueteModificacion($campos,$valores)." WHERE ".$campoIdentificador." = '".$valorIdentificador."'");
 
     }
