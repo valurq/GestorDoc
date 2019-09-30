@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <?php
+session_start() ;
 include("Parametros/conexion.php");
+include("Parametros/verificarConexion.php");
 $consultas=new Consultas();
 
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
 // ========================================================================
-$cabecera=['Descripcion','Observaciones','F.creacion'];
-$campos=['mueble','substr(obs,1,40)','fecreacion'];
+$cabecera=['Descripcion','Observaciones','Propietario','F.creacion'];
+$campos=['mueble','substr(obs,1,40)','(select propietario from propietarios where objeto_id =ubi_mueble.id)','fecreacion'];
 
 ?>
 <html lang="en" dir="ltr">
@@ -60,7 +62,9 @@ $campos=['mueble','substr(obs,1,40)','fecreacion'];
         </div>
 
         <div class="mostrar-tabla">
-            <?php  $consultas->crearTabla($cabecera,$campos,'ubi_mueble');?>
+            <?php $usuario = 9 ;
+            // $_SESSION['idUsu']
+             $consultas->crearTabla_mueble($cabecera,$campos,'ubi_mueble','id',$usuario);?>
         </div>
 
     </body>

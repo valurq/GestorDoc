@@ -2,7 +2,9 @@
 <html lang="es" dir="ltr">
     <head>
         <?php
+            session_start();
             include('Parametros/conexion.php');
+            include("Parametros/verificarConexion.php");
             $consulta= new Consultas();
         ?>
         <meta charset="utf-8">

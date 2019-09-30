@@ -32,6 +32,8 @@
             $_SESSION['usuario']=$resultado[2];
             $_SESSION['perfil']=$resultado[1];
             $_SESSION['pass']=$resultado[3];
+            $_SESSION['contra']=$resultado[3];
+
         }else{
             $respuesta = 'errorPass' ;
 

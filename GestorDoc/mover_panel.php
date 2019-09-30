@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
+session_start() ;
 include("Parametros/conexion.php");
+include("Parametros/verificarConexion.php");
+
 $consultas=new Consultas();
 
 // ========================================================================
@@ -74,9 +77,14 @@ $campos=['id','bus_fecha','bus_numero',
                        c=c+1 ;
                     }
 
-                    // PROCESO EN PHP QUE HACE EL CAMBIO DE GABETAS.
-                    destino = document.getElementById('ubi_gavetas_id').value ;
-                    window.location.href = 'ProcesoMover.php?documentosid='+elegidos+'&destino='+ destino;
+                    if(document.getElementById('motivo').value ==''){
+                      popup('Advertencia','Es necesario ingresar un motivo')  ;
+                    }else{
+                        // PROCESO EN PHP QUE HACE EL CAMBIO DE GABETAS.
+                        destino = document.getElementById('ubi_gavetas_id').value ;
+                        motivo = document.getElementById('motivo').value ;
+                        window.location.href = 'ProcesoMover.php?documentosid='+elegidos+'&destino='+ destino+'&motivo='+motivo;
+                      }
                 }
             }
 
@@ -153,7 +161,7 @@ $campos=['id','bus_fecha','bus_numero',
                   <font color="#808080" class="ws12"><B>MOVER DOCUMENTOS</B></font>
             </div>
 
-            <div style="margin-left:35%; border:1px solid grey; width:350px;padding-left:10px;padding-top:5px;padding-bottom:5px" >
+            <div style="margin-left:35%; border:1px solid grey; width:650px;padding-left:10px;padding-top:5px;padding-bottom:5px" >
 
                 <span style="font-family:arial;font-weight:bold;font-size:12pt">Destino</span><br>
 
@@ -165,6 +173,8 @@ $campos=['id','bus_fecha','bus_numero',
                   <input  type="button"  class="botonlista" onclick = "popup_listaFiltro('etiqueta','ubi_gabetas','etiqueta','id','ubi_gavetas_id','ubi_mueble_id','idubicacion');" >
                   <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="hidden" style="width:50px;z-index:2">
                   &nbsp;&nbsp;&nbsp;&nbsp;
+                Motivo
+                  <input name="motivo" id="motivo" type="text" style="width:200px;height: 25px;z-index:2">
                   <input type="button" class="boton_panel" name="mueve" onclick = "RevisarCheck();" value="Mover">
 
             </div>

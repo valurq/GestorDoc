@@ -7,7 +7,9 @@
   SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
   ========================================================================
   */
+  session_start();
   include("Parametros/conexion.php");
+  include("Parametros/verificarConexion.php");
   $inserta_Datos=new Consultas();
   $id=0;
   $resultado="";

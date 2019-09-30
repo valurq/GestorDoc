@@ -2,14 +2,19 @@
 <html>
 <head>
   <?php
+  session_start();
         /*
         SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
         ========================================================================
         */
         include("Parametros/conexion.php");
+        include("Parametros/verificarConexion.php");
+
         $inserta_Datos=new Consultas();
         $id=0;
         $resultado="";
+
+        $camposProp = array('objeto_id','objeto','tipo','propietario','creador','propietario_id');
 
         /*
             VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO
@@ -61,6 +66,7 @@
       }
 </style>
       <link rel="stylesheet" href="CSS/popup.css">
+      <link rel="stylesheet" type="text/css" href="CSS/estilos.css">
       <script
 			  src="https://code.jquery.com/jquery-3.4.0.js"
 			  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
@@ -81,6 +87,25 @@
                     }
                 }
             }
+
+            function popup_lista(destino,tabla,valor,idvalor,iddestino)
+            {
+              /*
+              Funcion : genera una ventana HTML con las opciones de seleccionables,de una tablita de parametros,
+                        para cargar un campo del forms
+              Parametros
+              --------------
+              destino : campo del form donde se carga la opcion seleccionada.-
+              tabla : tabla del cual se toman los valores para que el usuario lo seleccione.
+              valor : dato de la tabla que se muestra al usuario.
+              idvalor : identificador del valores
+              iddestino : campo del form para cargar el id del valor.-
+              */
+
+                var url = "../GestorDoc/parametros/popup_lista.php?destino="+destino+"&tabla="+tabla+"&valor="+valor+"&idvalor="+idvalor+"&iddestino="+iddestino ;
+                var configuracion = "width=500,height=300, toolbar=no,titlebar=yes,resizable=0,menubar=no,location=0,directories=no,status=no" ;
+                var myWindow = window.open(url,"Opciones", configuracion);
+            }
         </script>
 
 </head>
@@ -92,11 +117,17 @@
     <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
 
   <input name="nombre" id ="nombre" type="text" maxlength=80 style="position:absolute;width:200px;left:133px;top:100px;z-index:2">
-  <textarea name="nota" id="nota" style="position:absolute;left:134px;top:130px;width:379px;height:97px;z-index:3"></textarea>
+
+  <input name="propietario" id="propietario" type="text" readonly style="position:absolute;width:160px;left:133px;top:130px;z-index:2">
+      <input  type="button"  class="botonlista" style="position:absolute;left:300px;top:130px;z-index:2"
+       onclick = "popup_lista('propietario','vista_propietarios','dato','id','idpropietario');" >
+      <input name="idpropietario" id="idpropietario" type="hidden" style=" width:50px;z-index:2">
+
+  <textarea name="nota" id="nota" style="position:absolute;left:134px;top:160px;width:379px;height:97px;z-index:3"></textarea>
 
   <!-- BOTONES -->
   <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:320px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='muebles_panel.php';" style="position:absolute;left:131px;top:320px;z-index:7">
+  <input name="volver" type="button"  class="botones" value="Volver" onclick = "location='muebles_panel.php';" style="position:absolute;left:131px;top:320px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
@@ -111,7 +142,12 @@
       <div><font color="#333333" class="ws11">Nombre *:</font></div>
       </div></div>
 
-      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:142px; width:100px;; height:23px; z-index:4">
+      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:130px; width:90px;; height:23px; z-index:4">
+      <div class="wpmd">
+      <div><font color="#333333" class="ws11">Propietario :</font></div>
+      </div></div>
+
+      <div id="text2" style="position:absolute; overflow:hidden; left:24px; top:160px; width:100px;; height:23px; z-index:4">
       <div class="wpmd">
       <div><font color="#333333" class="ws11">Comentario :</font></div>
       </div></div>
@@ -129,11 +165,20 @@ LLAMADA A FUNCION JS CORRESPONDIENTE A CARGAR DATOS EN LOS CAMPOS DEL FORMULARIO
 if(($id!=0 )){
     /*
         CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
+        SECTOR DE CODIGO QUE CARGA LOS CAMPOS CON EL REGISTRO CUANDO SE INGRESA EN MODO EDITAR...
     */
     $valores=implode(",",$resultado);
     $camposIdForm=implode(",",$camposIdForm);
     //LLAMADA A LA FUNCION JS
     echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+
+    $dato_propietario=$inserta_Datos->consultarDatos($camposProp,'propietarios','','objeto_id',$id);
+    $dato_propietario=$dato_propietario->fetch_array(MYSQLI_NUM);
+    $dsc_propietario = $dato_propietario[3] ;
+    $id_propietario = $dato_propietario[5] ;
+    $valoresPropietarios = $dsc_propietario.",'".$id_propietario."'" ;
+    $camposPropietarios = 'propietario,id_propietario';
+    echo '<script>cargarCampos("'.$camposPropietarios.'","'.$valoresPropietarios.'")</script>';
 }
 
 if (isset($_POST['nombre'])  ){
@@ -142,21 +187,52 @@ if (isset($_POST['nombre'])  ){
     //======================================================================================
     $nombre     =trim($_POST['nombre']);
     $obs        =trim($_POST['nota']);
-    $creador    ="UsuarioLogin" ;
+    $creador    =$_SESSION['usuario'] ;
     $idForm = $_POST['Idformulario'];
+
+    $propietario = trim($_POST['propietario']);
+    $idpropieatario = $_POST['idpropietario'] ;
+    $verTipo = substr($propietario, -5);
+    if($verTipo=='grupo'){
+      $tipo="grupo" ;
+    }else{
+      $tipo="usuario" ;
+    }
 
 
     $campos = array( 'mueble','creador','obs' ) ;
     $valores="'".$nombre."','".$creador."','".$obs."'" ;
-
+    $valoresProp = "'".$idForm."','mueble','".$tipo."','".$propietario."','".$creador."','".$idpropieatario."'" ;
 
         /*
           VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
         */
         if(isset($idForm)&&($idForm!=0)){
             $inserta_Datos->modificarDato('ubi_mueble',$campos,$valores,'id',$idForm);
+
+            // propietario
+            $objetoId=$inserta_Datos->consultarDatos(array('objeto_id'),'propietarios',"",'objeto_id',$idForm);
+            $objetoId=$objetoId->fetch_array(MYSQLI_NUM);
+            if( $objetoId[0]!=''){
+              // si existe modifica
+              $inserta_Datos->modificarDato('propietarios',$camposProp,$valoresProp,'objeto_id',$idForm);
+            }else{
+                  //no existe, agrega NUEVO
+                  $valoresProp = "'".$idForm."','mueble','".$tipo."','".$propietario."','".$creador."','".$idpropieatario."'" ;
+                  // Propietario
+                  $inserta_Datos->insertarDato('propietarios',$camposProp,$valoresProp);
+                }
+
         }else{
             $inserta_Datos->insertarDato('ubi_mueble',$campos,$valores);
+
+            $ultmoID=$inserta_Datos->consultarDatos(array('id'),'ubi_mueble',"ORDER BY id desc limit 1");
+            $ultmoID=$ultmoID->fetch_array(MYSQLI_NUM);
+            $idForm = $ultmoID[0] ;
+            $valoresProp = "'".$idForm."','mueble','".$tipo."','".$propietario."','".$creador."','".$idpropieatario."'" ;
+
+            // Propietario
+            $inserta_Datos->insertarDato('propietarios',$camposProp,$valoresProp);
           }
 
           echo "<script>window.location='muebles_panel.php'</script>" ;

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <?php
+  session_start() ;
     include("Parametros/conexion.php");
+    include("Parametros/verificarConexion.php");
     $consultas=new Consultas();
 
 ?>

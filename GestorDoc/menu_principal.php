@@ -4,29 +4,17 @@
     session_start();
     include("Parametros/conexion.php");
     $consulta= new Consultas();
-    $campos=array('id','perfil_id','usuario','pass');
-/*
-echo "*id ".$_SESSION['idUSu']."*<br>" ;
-echo "*perfil ".$_SESSION['perfil']."*<br>" ;
-echo "*usu ".$_SESSION['usuario']."*<br>" ;
-echo "*pass ".$_SESSION['contra']."*<br>" ;*/
-
-    $resultado=$consulta->consultarDatos($campos,'usuario',"","usuario",$_SESSION['usuario'] );
-    $resultado=$resultado->fetch_array(MYSQLI_NUM);
-    //echo $resultado[1]."/".$_SESSION['perfil']."--".$_SESSION['usuario']."/".$resultado[2]."--".$_SESSION['contra']."/".$resultado[3] ;
-
-
-    if(!(($_SESSION['perfil']!=$resultado[1]) || ($_SESSION['usuario']!=$resultado[2]) || ($_SESSION['contra']!=$resultado[3]))){
-        session_unset();
-        session_write_close();
-        echo "<script>window.location='login.php'</script>";
-    }
+    include("Parametros/verificarConexion.php");
 
 
  ?>
     <head>
         <script>
             var cont=1;
+            function cerrar() {
+              window.location='cerrar_app.php'
+            }
+
         </script>
 
         <script
@@ -59,14 +47,16 @@ echo "*pass ".$_SESSION['contra']."*<br>" ;*/
                 <iframe src="" frameborder="0" name="frame-trabajo" id="frame-trabajo"></iframe>
             </div>
         </div>
-
+        <input type="button" id="cerrar" value="cerrar" onclick = "cerrar();"  style="position:absolute;left:19px;top:20px;z-index:6">
     </body>
     <?php
-        $menu=$consulta->consultarMenu($_SESSION['perfil']);
+        $menu=$consulta->consultarMenu($_SESSION['idUsu']);
 
         while ($fila=mysqli_fetch_array($menu)) {
                 echo "<script>crearMenu('".$fila[0]."','".$fila[1]."','".$fila[2]."','".$fila[3]."')</script>";
         }
 
      ?>
+
+
 </html>

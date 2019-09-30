@@ -39,7 +39,6 @@
 Colores intercalados en la tabla de paneles, la parte de datos.
 */
 
-
 tr:nth-child(odd) {
     background-color:#d3d6da;
 }
@@ -64,5 +63,10 @@ background-color:#f0d657;
   font-size: 15px;
   overflow-y: scroll;
 
+
+}
+
+.tablaNormal{
+  background-color: #ffffff ;
 
 }

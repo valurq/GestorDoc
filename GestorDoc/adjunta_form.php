@@ -10,6 +10,7 @@ session_start();
       ========================================================================
       */
       include("Parametros/conexion.php");
+      include("Parametros/verificarConexion.php");
       $inserta_Datos=new Consultas();
       $id=0;
       $resultado="";
@@ -196,6 +197,7 @@ session_start();
               <td><input name="etiqueta" id="etiqueta" type="text" readonly style="width:160px;z-index:2">
                 <input  type="button"  class="botonlista" onclick = "popup_listaFiltro('etiqueta','ubi_gabetas','etiqueta','id','ubi_gavetas_id','ubi_mueble_id','idubicacion');" >
                 <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="hidden" style="width:50px;z-index:2">
+                <input name="HistoricoGabetaid" id="HistoricoGabetaid" type="hidden" style="width:50px;z-index:2">
             </td>
         </tr>
         <tr>
@@ -237,6 +239,7 @@ session_start();
         $resu_gaveta=$resultado_gaveta->fetch_array(MYSQLI_NUM);
         echo '<script>cargarCampos("'."etiqueta".'","'.$resu_gaveta[0].'")</script>';
         echo '<script>cargarCampos("'."ubi_gavetas_id".'","'.$resu_gaveta[2].'")</script>';
+        echo '<script>cargarCampos("'."HistoricoGabetaid".'","'.$resu_gaveta[2].'")</script>';
 
 //      mueble descripcion y ID
         $resultado_mueble=$inserta_Datos->consultarDatos(array('mueble','id'),'ubi_mueble',"","id",$resu_gaveta['1'] );

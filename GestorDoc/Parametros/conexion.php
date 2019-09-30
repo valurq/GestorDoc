@@ -48,8 +48,6 @@ class Consultas extends Conexion{
         parent::__construct();
     }
 
-
-
     public function consultarDatos($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion="",$tipo=""){
         /*
             METODO PARA PODER OBTENER DATOS DE UNA TABLA ESPECIFICADA
@@ -66,6 +64,30 @@ class Consultas extends Conexion{
             $query.="WHERE ".$campoCondicion." != '".$valorCondicion."'";
 
           }
+           //echo $query;
+        //    echo "<script>alert(".$query.")</script>" ;
+        }
+        //echo $query;
+        return $this->conexion->query($query);
+    }
+
+    public function consultarDatos_muebles($campos,$tabla,$orden="",$campoCondicion="",$valorCondicion="",$tipo=""){
+        /*
+            METODO PARA PODER OBTENER VIAUALIZACION DE MUEBLE... respetando su propietario
+
+            SELECT id,mueble FROM ubi_mueble
+WHERE id IN(SELECT objeto_id FROM propietarios WHERE propietario_id = 9) OR
+id IN(SELECT objeto_id FROM propietarios WHERE propietario_id  IN(SELECT grupos_id FROM usuario_grupo WHERE usuario_id = 9))
+        */
+
+        $texto=(implode(",", $campos));
+        $query="SELECT ".$texto." FROM ".$tabla." ".$orden;
+        if(($campoCondicion!="")&&($valorCondicion!="")){
+
+            $query.="WHERE ".$campoCondicion.
+            " IN(SELECT objeto_id FROM propietarios WHERE propietario_id ='".$valorCondicion."') OR ".
+            "id IN(SELECT objeto_id FROM propietarios WHERE propietario_id  IN(SELECT grupos_id FROM usuario_grupo WHERE usuario_id = '".$valorCondicion."'))";
+
            //echo $query;
         //    echo "<script>alert(".$query.")</script>" ;
         }
@@ -133,6 +155,25 @@ class Consultas extends Conexion{
 
     }
 
+    public function crearTabla_mueble($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
+        /*
+            METODO PARA PODER CREAR UNA TABLA EN EL LUGAR DONDE FUE INVOCADO EL METODO
+            $objetoConsultas->crearTabla(<Array de cabeceras>,<array de los campos>.<nombre de la tabla>,<condicion de busqueda>,<tamaños de las columnas>);
+            $objetoConsultas->crearTabla(['ID','Categoria'],['id','nom_categoria'],'categorias')
+        */
+        echo "<table id='tablaPanel' cellspacing='0' style='width:100%'>";
+        array_unshift($camposBD,"id");
+        $this->crearCabeceraTabla($cabecera,$tamanhos);
+        if($tipo!="") {
+            $res=$this->consultarDatos_muebles($camposBD,$tabla,'',$condicion,$valorCond,$tipo);
+          }else{
+            $res=$this->consultarDatos_muebles($camposBD,$tabla,'',$condicion,$valorCond);
+          }
+
+        $this->crearContenidoTabla($res);
+
+    }
+
     public function crearTabla($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
         /*
             METODO PARA PODER CREAR UNA TABLA EN EL LUGAR DONDE FUE INVOCADO EL METODO
@@ -149,6 +190,7 @@ class Consultas extends Conexion{
           }
 
         $this->crearContenidoTabla($res);
+
     }
 
     public function crearTablaCheck_marca($cabecera,$camposBD,$tabla,$condicion="",$valorCond="",$tipo="",$tamanhos=['*']){
@@ -282,7 +324,7 @@ class Consultas extends Conexion{
             }
             echo "</tr>";
         }
-        echo"</tbody>";
+        echo"</tbody> </table>";
     }
 
     public function opciones_sino($nombreOpcion,$valor) {

@@ -2,33 +2,39 @@
 <html>
 <head>
     <?php
+    session_start();
         /*
         SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
         ========================================================================
         */
-        session_start() ;
         include("Parametros/conexion.php");
         include("Parametros/verificarConexion.php");
+        
         $inserta_Datos=new Consultas();
         $id=0;
         $resultado="";
 
+        //    PARAMETROS RECIBIDOS
+              $id = $_GET['idDocumento'] ;
+              $idNota = $_GET['idNota'] ;
+
         /*
             VALIDAR SI EL FORMULARIO FUE LLAMADO PARA LA MODIFICACION O CREACION DE UN REGISTRO
         */
-        if(isset($_POST['seleccionado'])){
-            $id=$_POST['seleccionado'];
-            $campos=array('categoria','obs');
+      //  if(isset($_POST['seleccionado'])){
+          //  $id=$_POST['seleccionado'];
+            $campos=array('nota','fe_aviso','mail_aviso','ejecutado');
             /*
                 CONSULTAR DATOS CON EL ID PASADO DESDE EL PANEL CORRESPONDIENTE
             */
-            $resultado=$inserta_Datos->consultarDatos($campos,'categoria',"","id",$id );
+            $resultado=$inserta_Datos->consultarDatos($campos,'recordatorios',"","id",$idNota );
             $resultado=$resultado->fetch_array(MYSQLI_NUM);
+            $ejecutado=$resultado[3];
             /*
                 CREAR EL VECTOR CON LOS ID CORRESPONDIENTES A CADA CAMPO DEL FORMULARIO HTML DE LA PAGINA
             */
-            $camposIdForm=array('categoria,obs');
-        }
+            $camposIdForm=array('nota','fe_aviso','mail_aviso','ejecutado');
+      //  }
     ?>
 
 
@@ -72,32 +78,48 @@
 </head>
 <body style="background-color:white">
   <!-- DISEÑO DEL FORMULARIO, CAMPOS -->
-<form name="CATEGORIA" method="POST" onsubmit="return verificar()" style="margin:0px" >
+<form name="RECORDATORIO" method="POST" onsubmit="return verificar()" style="margin:0px" >
   <!-- Campo oculto para controlar EDICION DEL REGISTRO -->
   <input type="hidden" name="Idformulario" id='Idformulario' value=<?php echo $id;?>>
-  <input name="categoria" id ="categoria" type="text"   maxlength=80 style="position:absolute;width:200px;left:133px;top:97px;z-index:2" >
-  <textarea name="obs" id="obs" style="position:absolute;left:134px;top:137px;width:379px;height:97px;z-index:3"></textarea>
+  <input type="hidden" name="idNota" id='idNota' value=<?php echo $idNota;?>>
+
+<table style="position:absolute;left:16px;top:40px;">
+    <tr>
+        <td>Nota*:</td>
+        <td>
+            <textarea rows="3" cols="40" name="nota" id="nota" value="<?php echo $resultado[0];?>" ></textarea>
+        </td>
+    </tr>
+
+    <tr>
+      <td>Fecha de aviso*:</td>
+      <td><input type="date" name="fe_aviso" id='fe_aviso' value=<?php echo $resultado[1];?>></td>
+    </tr>
+    <tr>
+        <td>Mail*:</td>
+        <td><input type="text" name="mail_aviso" id='mail_aviso' size="38px" value=<?php echo $resultado[2];?>></td>
+    </tr>
+    <tr>
+        <td>Ejecutado:</td>
+        <td>  <?php
+            $inserta_Datos->opciones_sino("ejecutado",$ejecutado) ;
+          ?>
+          </td>
+    </tr>
+</table>
 
   <!-- BOTONES -->
-  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:275px;z-index:6">
-  <input name="volver" type="button" value="Volver" onclick = "location='categoria_panel.php';" style="position:absolute;left:131px;top:273px;z-index:7">
+  <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:195px;z-index:6">
+  <input name="volver" type="button" value="Volver" onclick = "window.close();" style="position:absolute;left:131px;top:195px;z-index:7">
 </form>
 
   <!-- Titulos y etiquetas -->
 <div id="text1" style="position:absolute; overflow:hidden; left:20px; top:21px; width:224px; height:22px; z-index:1">
 <div class="wpmd">
-<div><font color="#808080" class="ws12"><B>Categoria de documentos</B></font></div>
+<div><font color="#808080" class="ws12"><B>Notas a recordar</B></font></div>
 </div></div>
 
-<div id="text2" style="position:absolute; overflow:hidden; left:24px; top:97px; width:100px;; height:23px; z-index:4">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Descripcion :</font></div>
-</div></div>
 
-<div id="text3" style="position:absolute; overflow:hidden; left:23px; top:135px; width:100px;; height:23px; z-index:5">
-<div class="wpmd">
-<div><font color="#333333" class="ws11">Comentarios:</font></div>
-</div></div>
 
   <!-- Fin titulos y etiquetas -->
 
@@ -107,7 +129,7 @@
 /*
     LLAMADA A FUNCION JS CORRESPONDIENTE A CARGAR DATOS EN LOS CAMPOS DEL FORMULARIO HTML
 */
-    if(($id!=0 )){
+    if(($idNota!=0 )){
         /*
             CONVERTIR LOS ARRAY A UN STRING PARA PODER ENVIAR POR PARAMETRO A LA FUNCION JS
         */
@@ -118,29 +140,40 @@
     }
 
 
-if (isset($_POST['categoria'])) {
+
     //======================================================================================
-    // NUEVO REGISTRO
+    // EVALUE  NUEVO REGISTRO / MODIFICACION
     //======================================================================================
-    if(isset($_POST['categoria'])){
-        $categoria =trim($_POST['categoria']);
-        $obs       =trim($_POST['obs']);
+    if(isset($_POST['nota'])){
+        $nota =trim($_POST['nota']);
+        $fe_aviso=$_POST['fe_aviso'] ;
+        $mail = $_POST['mail_aviso'] ;
+        $ejecutado = $_POST['ejecutado'];
+
+
         $idForm=$_POST['Idformulario'];
-        $creador    ="UsuarioLogin";
-        $campos = array( 'categoria','creador','obs' );
-        $valores="'".$categoria."','".$creador."','".$obs."'";
+        $idNota=$_POST['idNota'];
+        $creador   = $_SESSION['usuario'] ;
+
+        $campos = array( 'nota','documento_id','creador','fe_aviso','mail_aviso','ejecutado' );
+        $valores="'".$nota."','".$idForm."','".$creador."','".$fe_aviso."','".$mail."','".$ejecutado."'";
+
         /*
             VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO
         */
-        if(isset($idForm)&&($idForm!=0)){
-            $inserta_Datos->modificarDato('categoria',$campos,$valores,'id',$idForm);
-        }else{
-            $inserta_Datos->insertarDato('categoria',$campos,$valores);
+
+        if(isset($idForm) && ($idForm!=0) && ($idNota==0) ){
+          // una NUEVA NOTA
+            $inserta_Datos->insertarDato('recordatorios',$campos,$valores);
+        }
+        if($idNota!=''){
+          // modifica NOTA EXISTENTE
+            $inserta_Datos->modificarDato('recordatorios',$campos,$valores,'id',$idNota);
         }
 
-        echo "<script>window.location='categoria_panel.php'</script>" ;
+       echo "<script>window.close() ;</script>" ;
     }
-}
+
 ?>
 <script type="text/javascript">
 
@@ -149,12 +182,12 @@ if (isset($_POST['categoria'])) {
 // FUNCION QUE VALIDA EL FORMULARIO Y LUEGO ENVIA LOS DATOS A GRABACION
 //======================================================================
 	function verificar(){
-		if( (document.getElementById('categoria').value !='')  ){
+		if( (document.getElementById('nota').value !='')  ){
 		    return true ;
 
 		}else{
         // Error - Advertencia - Informacion
-            popup('Advertencia','Es necesario ingresar la descripcion de la categoria') ;
+            popup('Advertencia','Es necesario ingresar datos requeridos') ;
             return false ;
 		}
 	}

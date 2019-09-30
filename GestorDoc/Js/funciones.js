@@ -94,7 +94,7 @@ function eliminar(tabla){
    if((sel=="")||(sel==' ')||(sel==0)){
        popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER ELIMINARLO");
    }else {
-           //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta
+           //metodo,url destino, nombre parametros y valores a enviar, nombre con el que recibe la consulta           
            $.post("Parametros/eliminador.php", {id : sel , tabla : tabla}, function(msg) {
                if(msg==1){
                    document.getElementById('seleccionado').value="";
@@ -109,7 +109,7 @@ function editar(direccion){
     var sel=document.getElementById('seleccionado').value;
    // alert(sel)
     if((sel=="")||(sel==' ')||(sel==0)){
-        popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER Editarlo");
+        popup('Advertencia',"DEBE SELECCIONAR UN ELEMENTO PARA PODER EDITARLO");
     }else {
         document.getElementById("formularioMultiuso").action=direccion;
         document.getElementById("formularioMultiuso").submit();

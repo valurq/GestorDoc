@@ -2,6 +2,7 @@
 session_start();
 
 include("Parametros/conexion.php") ;
+include("Parametros/verificarConexion.php");
 $accesoFunciones=new Consultas() ;
 $message = '';
 if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar' && $_POST['Idformulario'] == '0')
@@ -48,7 +49,7 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar' && $_POST['
           $obs        = trim( $_POST['obs'] ) ;
           $ubi_gabetas_id=trim($_POST['ubi_gavetas_id']);
           $categoriaid  = trim($_POST['idcategoria']);
-          $creador    ="creador" ;
+          $creador    =$_SESSION['usuario'] ;
           $path_server ='/almacen_digital' ;
           $fec_engabeta=date('Y-m-d', time());
 
@@ -101,8 +102,9 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar' && $_POST['
             $vto        = trim( $_POST['vto'] ) ;
             $obs        = trim( $_POST['obs'] ) ;
             $ubi_gabetas_id=trim($_POST['ubi_gavetas_id']);
+            $hist_gabetas_id=trim($_POST['HistoricoGabetaid']);
             $categoriaid = trim($_POST['idcategoria']);
-            $creador     = "creador" ;
+            $creador     = $_SESSION['usuario'] ;
             $path_server = '/almacen_digital' ;
             $fec_engabeta= date('Y-m-d', time());
 
@@ -120,6 +122,17 @@ if (isset($_POST['uploadBtn']) && $_POST['uploadBtn'] == 'Confirmar' && $_POST['
                         $notificar_diasantes."','".$notificar."'" ;
 
             $accesoFunciones->modificarDato('documento',$campos,$valores,'id',$_POST['Idformulario'] );
+
+//          si fue cambiado la gabeta, se registra en el historico el dato anterior de gabeta
+            if($ubi_gabetas_id!=$hist_gabetas_id){
+              $motivo = 'Modificado en ficha' ;
+              $campoHistorico =array('documento_id','fec_fingabeta','mov_usuario','motivo','idgabeta') ;
+              $HistoricoValores = "'".$_POST['Idformulario']."','".$fec_engabeta."','".$creador."','".$motivo."','".$hist_gabetas_id."'" ;
+
+              // Registra en historico
+             $accesoFunciones->insertarDato('historico_gabeta',$campoHistorico,$HistoricoValores);
+            }
+
 
             if($marca!='indexa'){
                 $_SESSION['message'] = $message;

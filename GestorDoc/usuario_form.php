@@ -2,11 +2,15 @@
 <html>
 <head>
   <?php
+  session_start();
+
           /*
           SECCION PARA OBTENER VALORES NECESARIOS PARA LA MODIFICACION DE REGISTROS
           ========================================================================
           */
           include("Parametros/conexion.php");
+          include("Parametros/verificarConexion.php");
+          
           $inserta_Datos=new Consultas();
           $id=0;
           $resultado="";
@@ -109,6 +113,7 @@
 ?>
 </div>
 <input name="pass" id ="pass" type="password" maxlength=100 style="position:absolute;width:380px;left:133px;top:265px;z-index:2">
+<input name="OldPass" id ="OldPass" type="hidden" maxlength=100 style="position:absolute;width:380px;left:450px;top:265px;z-index:2">
 
   <!-- BOTONES -->
   <input name="guardar" type="submit" value="Guardar" style="position:absolute;left:439px;top:395px;z-index:6">
@@ -178,6 +183,8 @@ if(($id!=0 )){
     $camposIdForm=implode(",",$camposIdForm);
     //LLAMADA A LA FUNCION JS
     echo '<script>cargarCampos("'.$camposIdForm.'","'.$valores.'")</script>';
+    echo '<script>cargarCampos("OldPass","'.$resultado[8].'")</script>';
+//echo 'pass : '.$resultado[8];
 }
 
 
@@ -187,17 +194,17 @@ if (isset($_POST['usuario'])){
     //======================================================================================
     // NUEVO REGISTRO
     //======================================================================================
-    $usuario     =trim($_POST['usuario']);
+    $usuario      =trim($_POST['usuario']);
     $nombre       =trim($_POST['nombre']);
     $apellido     =trim($_POST['apellido']);
-    $cargo     =trim($_POST['cargo']);
-    $dpto     =trim($_POST['dpto']);
-    $obs     =trim($_POST['nota']);
-    $mail     =trim($_POST['mail']);
-    $perfil_id     =$_POST['perfil'];
-    $pass = md5($_POST['pass'] ) ;
-    $creador    ="UsuarioLogin" ;
-    $idForm = $_POST['Idformulario'];
+    $cargo        =trim($_POST['cargo']);
+    $dpto         =trim($_POST['dpto']);
+    $obs          =trim($_POST['nota']);
+    $mail         =trim($_POST['mail']);
+    $perfil_id    =$_POST['perfil'];
+    $pass         = md5($_POST['pass'] ) ;
+    $creador      =$_SESSION['usuario'] ;
+    $idForm       = $_POST['Idformulario'];
 
 
     $campos = array( 'perfil_id','usuario','nombre','apellido','cargo','dpto','obs','mail','creador','pass' );
@@ -205,7 +212,14 @@ if (isset($_POST['usuario'])){
 
     /*    VERIFICAR SI LOS DATOS SON PARA MODIFICAR UN REGISTRO O CARGAR UNO NUEVO     */
       if(isset($idForm)&&($idForm!=0)){
-          $inserta_Datos->modificarDato('usuario',$campos,$valores,'id',$idForm);
+         if($_POST['pass']!=$_POST['OldPass']){  // hubo cambio de password
+              $inserta_Datos->modificarDato('usuario',$campos,$valores,'id',$idForm);
+
+          }else {  //NO hubo cambio de password, por lo tanto no se graba el PASSWORD
+            $campos = array( 'perfil_id','usuario','nombre','apellido','cargo','dpto','obs','mail','creador');
+            $valores="'".$perfil_id."','".$usuario."','".$nombre."','".$apellido."','".$cargo."','".$dpto."','".$obs."','".$mail."','".$creador."'" ;
+            $inserta_Datos->modificarDato('usuario',$campos,$valores,'id',$idForm);
+          }
       }else{
         $inserta_Datos->insertarDato('usuario',$campos,$valores);
       }

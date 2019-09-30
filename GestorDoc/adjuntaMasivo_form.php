@@ -10,6 +10,7 @@ session_start();
       ========================================================================
       */
       include("Parametros/conexion.php");
+      include("Parametros/verificarConexion.php");
       $inserta_Datos=new Consultas();
       $id=0;
       $resultado="";
@@ -136,21 +137,28 @@ session_start();
               <td width="20%">Categoria *: </td>
               <td><input name="categoria" id="categoria" type="text" readonly style="width:160px;z-index:2">
                   <input  type="button"  class="botonlista" onclick = "popup_lista('categoria','categoria','categoria','id','idcategoria');" >
-                  <input name="idcategoria" id="idcategoria" type="text" style="visibility:hidden; width:50px;z-index:2">
+                  <input name="idcategoria" id="idcategoria" type="hidden" style="width:50px;z-index:2">
             </td>
+
+            <td>Propietario:
+              <input name="propie" id="propie" type="text" readonly style="width:160px;z-index:2">
+                  <input  type="button"  class="botonlista" onclick = "popup_lista('categoria','categoria','categoria','id','idcategoria');" >
+                  <input name="idpropie" id="idpropie" type="hidden" style="width:50px;z-index:2">
+            </td>
+
         </tr>
         <tr>
               <td width="20%">Mueble *: </td>
               <td><input name="ubicacion" id="ubicacion" type="text" readonly style="width:160px;z-index:2">
                 <input  type="button"  class="botonlista" onclick = "popup_lista('ubicacion','ubi_mueble','mueble','id','idubicacion');" >
-                  <input name="idubicacion" id="idubicacion" type="text" style="visibility:hidden; width:50px;z-index:2">
+                  <input name="idubicacion" id="idubicacion" type="hidden" style="width:50px;z-index:2">
             </td>
         </tr>
         <tr>
               <td width="20%">Gaveta *: </td>
               <td><input name="etiqueta" id="etiqueta" type="text" readonly style="width:160px;z-index:2">
                 <input  type="button"  class="botonlista" onclick = "popup_listaFiltro('etiqueta','ubi_gabetas','etiqueta','id','ubi_gavetas_id','ubi_mueble_id','idubicacion');" >
-                <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="text" style="visibility:hidden; width:50px;z-index:2">
+                <input name="ubi_gavetas_id" id="ubi_gavetas_id" type="hidden" style="visibility:hidden; width:50px;z-index:2">
             </td>
         </tr>
 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
+session_start() ;
 include("Parametros/conexion.php");
+include("Parametros/verificarConexion.php");
 $consultas=new Consultas();
 
 // ========================================================================
@@ -64,9 +66,10 @@ $campos=['id','bus_fecha','bus_numero',
 
 
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='adjunta_form.php';" value="Nuevo">
-            <input type="button" class="boton_panel" name="Editar" value="Editar" onclick="editar('adjunta_form.php')">
+            <input type="button" class="boton_panel" name="Editar" value="Editar datos" onclick="editar('adjunta_form.php')">
             <input type="button" class="boton_panel" name="Eliminar" value="Eliminar" onclick="eliminar('documento');" >&nbsp;&nbsp;&nbsp;
             <input type="button" class="boton_panel" name="Nuevo" onclick = "location='adjuntaMasivo_form.php';" value="Carga masiva">
+            <input type="button" class="boton_panel" name="display" value="Visualizar" onclick="editar('display_form.php')">
         </div>
 
         <div class="mostrar-tabla">

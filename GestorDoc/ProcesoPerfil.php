@@ -2,6 +2,8 @@
 session_start();
 
 include("Parametros/conexion.php") ;
+include("Parametros/verificarConexion.php");
+
 $accesoFunciones=new Consultas() ;
 
 // DATOS DE URL

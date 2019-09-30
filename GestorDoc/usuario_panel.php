@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <?php
+session_start();
 include("Parametros/conexion.php");
+include("Parametros/verificarConexion.php");
+
 $consultas=new Consultas();
+
+
 
 // ========================================================================
 //Seteo de cabecera y campos en el mismo orden para tomar de la $tabla
